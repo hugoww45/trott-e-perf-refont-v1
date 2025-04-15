@@ -3,14 +3,14 @@
 import { motion, useScroll, useTransform, useMotionValue, useSpring, AnimatePresence } from "framer-motion"
 import { Navigation } from "@/components/navigation"
 import { Footer } from "@/components/footer"
-import { 
-  Paintbrush, 
-  Zap, 
-  Gauge, 
-  ArrowRight, 
-  Sparkles, 
-  Palette, 
-  Sliders, 
+import {
+  Paintbrush,
+  Zap,
+  Gauge,
+  ArrowRight,
+  Sparkles,
+  Palette,
+  Sliders,
   ChevronDown,
   Battery,
   Shield,
@@ -22,6 +22,25 @@ import { Button } from "@/components/ui/button"
 import Link from "next/link"
 import gsap from "gsap"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
+import { Metadata } from "next"
+
+export const metadata: Metadata = {
+  title: "Customisation | Services de Personnalisation de Trottinettes",
+  description: "Transformez votre trottinette électrique avec nos services de customisation premium. Performance, design et innovation sur mesure pour une expérience de conduite unique.",
+  keywords: ["customisation trottinette", "personnalisation trottinette électrique", "tuning trottinette", "performance trottinette", "design trottinette"],
+  openGraph: {
+    title: "Services de Customisation Premium | Trott E Perf",
+    description: "Personnalisez votre trottinette électrique selon vos besoins. Optimisation de performance, design unique et innovations technologiques pour une expérience exceptionnelle.",
+    images: [
+      {
+        url: "https://trotteperf.com/customisation-og.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Services de customisation Trott E Perf"
+      }
+    ]
+  }
+}
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger)
@@ -131,7 +150,7 @@ export default function CustomisationPage() {
       <div ref={containerRef}>
         {/* Hero Section */}
         <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-          <motion.div 
+          <motion.div
             className="absolute inset-0 w-full h-full"
             style={{
               backgroundImage: "url('https://images.unsplash.com/photo-1604868189744-bf0227c9c85b?w=1600&h=900&fit=crop')",
@@ -143,15 +162,15 @@ export default function CustomisationPage() {
             }}
           />
           <div className="absolute inset-0 bg-black/60 backdrop-blur-[1px] z-10" />
-          
+
           <div className="relative z-20 container mx-auto px-4">
-            <motion.div 
+            <motion.div
               className="max-w-4xl mx-auto text-center"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
             >
-              <motion.div 
+              <motion.div
                 className="mb-8"
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
@@ -176,8 +195,8 @@ export default function CustomisationPage() {
                 transition={{ delay: 0.4, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
                 className="flex flex-col sm:flex-row gap-4 justify-center items-center"
               >
-                <Button 
-                  size="lg" 
+                <Button
+                  size="lg"
                   className="min-w-[200px] h-12 rounded-full bg-white text-black hover:bg-white/90"
                 >
                   Découvrir
@@ -187,7 +206,7 @@ export default function CustomisationPage() {
             </motion.div>
           </div>
 
-          <motion.div 
+          <motion.div
             className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -348,8 +367,8 @@ export default function CustomisationPage() {
                 Nos experts sont là pour donner vie à votre vision
               </p>
               <Link href="/contact">
-                <Button 
-                  size="lg" 
+                <Button
+                  size="lg"
                   className="min-w-[200px] h-12 rounded-full bg-white text-black hover:bg-white/90"
                 >
                   Démarrer votre projet
