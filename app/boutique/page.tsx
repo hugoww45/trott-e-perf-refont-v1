@@ -12,25 +12,6 @@ import { PRODUCTS_QUERY } from '@/lib/shopify/queries'
 import { Product } from '@/lib/shopify/types'
 import { Button } from "@/components/ui/button"
 import { ChevronLeft, ChevronRight, Loader2, RefreshCw } from 'lucide-react'
-import { Metadata } from "next"
-
-export const metadata: Metadata = {
-  title: "Boutique | Trottinettes Électriques et Accessoires",
-  description: "Découvrez notre sélection de trottinettes électriques haut de gamme, pièces détachées et accessoires. Qualité premium, livraison rapide et service client expert.",
-  keywords: ["trottinette électrique achat", "boutique trottinette", "accessoires trottinette", "pièces détachées trottinette", "trottinette haut de gamme"],
-  openGraph: {
-    title: "Boutique Trott E Perf | Trottinettes Électriques Premium",
-    description: "Trouvez la trottinette électrique parfaite pour vos besoins. Large gamme de modèles, accessoires et pièces détachées de qualité supérieure.",
-    images: [
-      {
-        url: "https://trotteperf.com/boutique-og.jpg",
-        width: 1200,
-        height: 630,
-        alt: "Boutique Trott E Perf"
-      }
-    ]
-  }
-}
 
 export default function BoutiquePage() {
   const [products, setProducts] = useState<Product[]>([])

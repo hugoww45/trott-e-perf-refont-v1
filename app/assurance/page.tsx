@@ -5,23 +5,15 @@ import { Footer } from "@/components/footer";
 import { Button } from "@/components/ui/button";
 import { motion, useScroll } from "framer-motion";
 import { useRef } from "react";
-import { Shield, Lock, Tool, Sparkles, ThumbsUp, Phone, ArrowRight, CheckCircle, XCircle, AlertCircle } from "lucide-react";
+import { Shield, Lock, Wrench, Sparkles, ThumbsUp, Phone, ArrowRight, CheckCircle, XCircle, AlertCircle } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { Metadata } from "next";
-
-// Cette exportation sera utilisée par le système de métadonnées de Next.js
-export const metadata: Metadata = {
-  title: "Assurance | Protection pour trottinettes",
-  description: "Protégez votre trottinette Trott-e avec nos solutions d'assurance complètes et flexibles. Ridez en toute sérénité.",
-  keywords: ["assurance trottinette", "protection trottinette", "vol trottinette", "accident trottinette"],
-};
 
 export default function AssurancePage() {
   const { scrollYProgress } = useScroll();
-  const insuranceRef = useRef(null);
-  const coverageRef = useRef(null);
-  const experienceRef = useRef(null);
+  const insuranceRef = useRef<HTMLElement>(null);
+  const coverageRef = useRef<HTMLElement>(null);
+  const experienceRef = useRef<HTMLElement>(null);
 
   return (
     <main className="min-h-screen bg-background">
@@ -98,7 +90,11 @@ export default function AssurancePage() {
             <Button
               size="lg"
               className="rounded-full bg-white text-black hover:bg-white/90 min-w-[200px] transition-all duration-300 h-12 text-base"
-              onClick={() => experienceRef.current?.scrollIntoView({ behavior: "smooth" })}
+              onClick={() => {
+                if (experienceRef.current) {
+                  experienceRef.current.scrollIntoView({ behavior: "smooth" });
+                }
+              }}
             >
               Découvrir
               <ArrowRight className="ml-2 h-4 w-4" />
@@ -141,7 +137,7 @@ export default function AssurancePage() {
       </div>
 
       {/* Section "Pourquoi s'assurer ?" */}
-      <section ref={insuranceRef} className="py-24 md:py-32 bg-black relative overflow-hidden">
+      <section ref={insuranceRef as React.RefObject<HTMLDivElement>} className="py-24 md:py-32 bg-black relative overflow-hidden">
         {/* Grid pattern background */}
         <div className="absolute inset-0 bg-[linear-gradient(rgba(50,50,50,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(50,50,50,0.03)_1px,transparent_1px)] bg-[size:60px_60px] opacity-30"></div>
 
@@ -189,7 +185,7 @@ export default function AssurancePage() {
               {
                 title: "Assistance & Dépannage",
                 description: "Service d'assistance 24/7 et dépannage en cas de panne. Nous vous récupérons, vous et votre trottinette, où que vous soyez.",
-                icon: <Tool className="h-6 w-6" />,
+                icon: <Wrench className="h-6 w-6" />,
                 color: "bg-amber-500",
                 delay: 0.5
               }
@@ -247,7 +243,7 @@ export default function AssurancePage() {
       </div>
 
       {/* Section "Notre couverture" */}
-      <section ref={coverageRef} className="py-24 md:py-32 bg-gradient-to-b from-black to-black/90 relative overflow-hidden">
+      <section ref={coverageRef as React.RefObject<HTMLDivElement>} className="py-24 md:py-32 bg-gradient-to-b from-black to-black/90 relative overflow-hidden">
         {/* Diagonal grid background */}
         <div className="absolute inset-0 bg-[linear-gradient(45deg,rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(-45deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:30px_30px] opacity-25"></div>
 
@@ -353,7 +349,7 @@ export default function AssurancePage() {
       </section>
 
       {/* Section Expérience client / garantie */}
-      <section ref={experienceRef} className="py-24 md:py-36 bg-neutral-950 relative overflow-hidden">
+      <section ref={experienceRef as React.RefObject<HTMLDivElement>} className="py-24 md:py-36 bg-neutral-950 relative overflow-hidden">
         {/* Dark background with pattern */}
         <div className="absolute inset-0 opacity-30">
           <div className="absolute inset-0 bg-[radial-gradient(circle_400px_at_center,rgba(120,120,255,0.03),transparent)]"></div>
