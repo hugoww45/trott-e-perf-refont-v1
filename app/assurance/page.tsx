@@ -8,6 +8,14 @@ import { useRef } from "react";
 import { Shield, Lock, Tool, Sparkles, ThumbsUp, Phone, ArrowRight, CheckCircle, XCircle, AlertCircle } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { Metadata } from "next";
+
+// Cette exportation sera utilisée par le système de métadonnées de Next.js
+export const metadata: Metadata = {
+  title: "Assurance | Protection pour trottinettes",
+  description: "Protégez votre trottinette Trott-e avec nos solutions d'assurance complètes et flexibles. Ridez en toute sérénité.",
+  keywords: ["assurance trottinette", "protection trottinette", "vol trottinette", "accident trottinette"],
+};
 
 export default function AssurancePage() {
   const { scrollYProgress } = useScroll();

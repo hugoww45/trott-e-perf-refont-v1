@@ -25,7 +25,7 @@ export default function ProductPage({ params }: ProductPageProps) {
   const [selectedVariant, setSelectedVariant] = useState<any>(null)
   const [loading, setLoading] = useState(true)
   const [addingToCart, setAddingToCart] = useState(false)
-  const { addToCart, isAuthenticated } = useCartStore()
+  const { addToCart, isAuthenticated, fetchCart } = useCartStore()
   const router = useRouter()
 
   useEffect(() => {
@@ -90,6 +90,8 @@ export default function ProductPage({ params }: ProductPageProps) {
     setAddingToCart(true)
     try {
       await addToCart(selectedVariant.id, 1)
+      // Assurer la mise à jour du panier après ajout
+      await fetchCart()
       toast.success('Produit ajouté au panier')
     } catch (error) {
       toast.error("Erreur lors de l'ajout au panier")

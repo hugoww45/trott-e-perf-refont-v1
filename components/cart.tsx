@@ -28,10 +28,12 @@ export function Cart() {
     updateCartItem,
     removeFromCart,
     addToCart,
+    fetchCart,
   } = useCartStore()
 
   const { accessToken, customer } = useAuthStore()
   const [customerFirstName, setCustomerFirstName] = useState<string | null>(null)
+  const [isSheetOpen, setIsSheetOpen] = useState(false)
 
   // Initialiser le panier au chargement
   useEffect(() => {
@@ -53,6 +55,13 @@ export function Cart() {
       toast.error(error)
     }
   }, [error])
+
+  // Rafraîchir le panier à l'ouverture
+  useEffect(() => {
+    if (isSheetOpen && isAuthenticated) {
+      fetchCart()
+    }
+  }, [isSheetOpen, isAuthenticated, fetchCart])
 
   const handleQuantityChange = async (lineId: string, currentQuantity: number, change: number) => {
     if (!isAuthenticated) {
@@ -93,7 +102,7 @@ export function Cart() {
   }
 
   return (
-    <Sheet>
+    <Sheet onOpenChange={setIsSheetOpen}>
       <SheetTrigger asChild>
         <Button variant="outline" size="icon" className="relative">
           <ShoppingCart className="h-5 w-5" />
