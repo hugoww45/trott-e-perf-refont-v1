@@ -67,6 +67,239 @@ const navItems = [
   { name: "Support", href: "/support" },
 ]
 
+// Définition du composant MobileMenu
+function MobileMenu({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
+  if (!isOpen) return null;
+
+  // Version HTML pure avec design amélioré
+  return (
+    <div
+      id="mobile-menu"
+      style={{
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        width: '100vw',
+        height: '100vh',
+        backgroundColor: '#000000',
+        color: 'white',
+        zIndex: 9999,
+        overflow: 'auto',
+        padding: '24px'
+      }}
+    >
+      <div>
+        <button
+          onClick={onClose}
+          style={{
+            position: 'absolute',
+            top: '24px',
+            right: '24px',
+            background: 'rgba(80, 80, 80, 0.4)',
+            border: 'none',
+            borderRadius: '50%',
+            width: '40px',
+            height: '40px',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            cursor: 'pointer',
+            transition: 'all 0.2s ease'
+          }}
+        >
+          <X style={{ color: 'white', width: '20px', height: '20px' }} />
+        </button>
+
+        <div style={{ marginTop: '80px' }}>
+          <div style={{ marginBottom: '30px' }}>
+            <div style={{ position: 'relative' }}>
+              <input
+                type="text"
+                placeholder="Rechercher"
+                style={{
+                  width: '100%',
+                  height: '50px',
+                  backgroundColor: 'rgba(60, 60, 60, 0.5)',
+                  color: 'white',
+                  borderRadius: '12px',
+                  border: 'none',
+                  padding: '0 16px 0 44px',
+                  fontSize: '16px',
+                  outline: 'none'
+                }}
+              />
+              <Search style={{
+                position: 'absolute',
+                left: '16px',
+                top: '50%',
+                transform: 'translateY(-50%)',
+                color: '#999',
+                width: '18px',
+                height: '18px'
+              }} />
+            </div>
+          </div>
+
+          <a href="/" style={{
+            display: 'block',
+            color: 'white',
+            fontSize: '24px',
+            fontWeight: '600',
+            margin: '24px 0',
+            textDecoration: 'none',
+            letterSpacing: '0.2px'
+          }}>
+            Accueil
+          </a>
+
+          <a href="/boutique" style={{
+            display: 'block',
+            color: 'white',
+            fontSize: '24px',
+            fontWeight: '600',
+            margin: '24px 0 12px',
+            textDecoration: 'none',
+            letterSpacing: '0.2px'
+          }}>
+            Boutique
+          </a>
+
+          <div style={{
+            marginLeft: '24px',
+            borderLeft: '1px solid rgba(255, 255, 255, 0.1)',
+            paddingLeft: '16px'
+          }}>
+            <a href="/boutique/trottinettes" style={{
+              display: 'block',
+              color: 'rgba(255, 255, 255, 0.7)',
+              fontSize: '18px',
+              margin: '12px 0',
+              textDecoration: 'none',
+              transition: 'color 0.2s ease'
+            }}>
+              Trottinettes électriques
+            </a>
+            <a href="/boutique/accessoires" style={{
+              display: 'block',
+              color: 'rgba(255, 255, 255, 0.7)',
+              fontSize: '18px',
+              margin: '12px 0',
+              textDecoration: 'none',
+              transition: 'color 0.2s ease'
+            }}>
+              Accessoires
+            </a>
+            <a href="/boutique/pieces" style={{
+              display: 'block',
+              color: 'rgba(255, 255, 255, 0.7)',
+              fontSize: '18px',
+              margin: '12px 0',
+              textDecoration: 'none',
+              transition: 'color 0.2s ease'
+            }}>
+              Pièces détachées
+            </a>
+          </div>
+
+          <a href="/services" style={{
+            display: 'block',
+            color: 'white',
+            fontSize: '24px',
+            fontWeight: '600',
+            margin: '24px 0 12px',
+            textDecoration: 'none',
+            letterSpacing: '0.2px'
+          }}>
+            Services
+          </a>
+
+          <div style={{
+            marginLeft: '24px',
+            borderLeft: '1px solid rgba(255, 255, 255, 0.1)',
+            paddingLeft: '16px'
+          }}>
+            <a href="/assurance" style={{
+              display: 'block',
+              color: 'rgba(255, 255, 255, 0.7)',
+              fontSize: '18px',
+              margin: '12px 0',
+              textDecoration: 'none',
+              transition: 'color 0.2s ease'
+            }}>
+              Assurance
+            </a>
+            <a href="/financement" style={{
+              display: 'block',
+              color: 'rgba(255, 255, 255, 0.7)',
+              fontSize: '18px',
+              margin: '12px 0',
+              textDecoration: 'none',
+              transition: 'color 0.2s ease'
+            }}>
+              Financement
+            </a>
+          </div>
+
+          <a href="/a-propos" style={{
+            display: 'block',
+            color: 'white',
+            fontSize: '24px',
+            fontWeight: '600',
+            margin: '24px 0',
+            textDecoration: 'none',
+            letterSpacing: '0.2px'
+          }}>
+            À propos
+          </a>
+
+          <a href="/support" style={{
+            display: 'block',
+            color: 'white',
+            fontSize: '24px',
+            fontWeight: '600',
+            margin: '24px 0',
+            textDecoration: 'none',
+            letterSpacing: '0.2px'
+          }}>
+            Support
+          </a>
+        </div>
+
+        <div style={{
+          marginTop: '40px',
+          paddingTop: '24px',
+          borderTop: '1px solid rgba(255, 255, 255, 0.1)',
+          display: 'flex',
+          justifyContent: 'space-between'
+        }}>
+          <a href="/compte" style={{
+            color: 'rgba(255, 255, 255, 0.7)',
+            fontSize: '16px',
+            textDecoration: 'none',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '8px'
+          }}>
+            Mon compte
+          </a>
+          <a href="/contact" style={{
+            color: 'rgba(255, 255, 255, 0.7)',
+            fontSize: '16px',
+            textDecoration: 'none',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '8px'
+          }}>
+            Contact
+          </a>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export function Navigation() {
   const [isScrolled, setIsScrolled] = React.useState(false)
   const [isOpen, setIsOpen] = React.useState(false)
@@ -113,6 +346,19 @@ export function Navigation() {
     }, 150)
   }
 
+  // Empêcher le scroll du corps quand le menu mobile est ouvert
+  React.useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden'
+    } else {
+      document.body.style.overflow = ''
+    }
+
+    return () => {
+      document.body.style.overflow = ''
+    }
+  }, [isOpen])
+
   // Utilise resolvedTheme pour avoir la valeur réelle même en cas de préférence système
   const isDark = mounted && (theme === 'dark' || (theme === 'system' && resolvedTheme === 'dark'))
 
@@ -143,6 +389,10 @@ export function Navigation() {
       setSearchOpen(false)
       setSearchQuery("")
     }
+  }
+
+  const handleMenuToggle = () => {
+    setIsOpen(!isOpen)
   }
 
   return (
@@ -203,8 +453,8 @@ export function Navigation() {
               <Button
                 variant="ghost"
                 size="icon"
-                className="md:hidden"
-                onClick={() => setIsOpen(!isOpen)}
+                className="md:hidden text-white"
+                onClick={handleMenuToggle}
               >
                 <Menu className="h-5 w-5" />
                 <span className="sr-only">Menu</span>
@@ -264,6 +514,9 @@ export function Navigation() {
           </motion.div>
         )}
       </AnimatePresence>
+
+      {/* Menu mobile */}
+      <MobileMenu isOpen={isOpen} onClose={() => setIsOpen(false)} />
 
       {/* Overlay de recherche style Apple */}
       <AnimatePresence>
@@ -351,48 +604,6 @@ export function Navigation() {
                   </div>
                 </div>
               )}
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-
-      {/* Menu mobile plein écran style Apple */}
-      <AnimatePresence>
-        {isOpen && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.25 }}
-            className={cn(
-              "fixed inset-0 z-40 pt-[44px]",
-              overlayBg,
-              "backdrop-blur-md md:hidden"
-            )}
-          >
-            <div className="h-full overflow-auto px-6 py-8">
-              <nav className="space-y-6">
-                {navItems.map((item) => (
-                  <Link
-                    key={item.name}
-                    href={item.href}
-                    className={cn(
-                      "block text-2xl font-semibold",
-                      textColor
-                    )}
-                  >
-                    {item.name}
-                  </Link>
-                ))}
-              </nav>
-              <div className={cn("mt-10 pt-10 border-t", borderColor)}>
-                <div className="flex space-x-6">
-                  <div className={textColorMuted}>
-                    <SearchComponent className={textColorMuted} />
-                  </div>
-                  <Cart />
-                </div>
-              </div>
             </div>
           </motion.div>
         )}
