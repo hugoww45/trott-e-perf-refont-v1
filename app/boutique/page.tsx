@@ -21,7 +21,7 @@ export default function BoutiquePage() {
   const [error, setError] = useState<string | null>(null)
   const [searchQuery, setSearchQuery] = useState('')
   const [searchTags, setSearchTags] = useState<string[]>([])
-  const [priceRange, setPriceRange] = useState<number[]>([0, 2000])
+  const [priceRange, setPriceRange] = useState<number[]>([0, 20000])
   const [categories, setCategories] = useState<string[]>([])
   const [inStockOnly, setInStockOnly] = useState(false)
   const [loadingMore, setLoadingMore] = useState(false)
@@ -429,7 +429,7 @@ export default function BoutiquePage() {
     }
 
     // Filtre par prix
-    if (priceRange[0] > 0 || priceRange[1] < 2000) {
+    if (priceRange[0] > 0 || priceRange[1] < 20000) {
       filtered = filtered.filter(product => {
         const price = parseFloat(product.priceRange.minVariantPrice.amount)
         return price >= priceRange[0] && price <= priceRange[1]

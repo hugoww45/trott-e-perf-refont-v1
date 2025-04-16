@@ -2,7 +2,7 @@
 
 import * as React from "react"
 import Link from "next/link"
-import { usePathname } from "next/navigation"
+import { usePathname, useRouter } from "next/navigation"
 import { cn } from "@/lib/utils"
 import Image from "next/image"
 import { Zap, Search, ShoppingBag, ChevronDown, X, Menu } from "lucide-react"
@@ -11,6 +11,7 @@ import { useTheme } from "next-themes"
 import { useEffect, useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Cart } from "@/components/cart"
+import { Search as SearchComponent } from "@/components/search"
 
 // Définition des éléments de navigation avec mega menu pour certains
 const navItems = [
@@ -41,12 +42,14 @@ const navItems = [
   },
   {
     name: "Services",
-    href: "/services",
+    href: "",
     hasMegaMenu: true,
     columns: [
       {
         title: "Nos services",
         links: [
+          { name: "Assurance", href: "/assurance" },
+          { name: "Financement", href: "/financement" },
           { name: "Réparation", href: "/services/reparation" },
           { name: "Customisation", href: "/services/customisation" },
         ]
@@ -68,10 +71,13 @@ export function Navigation() {
   const [isScrolled, setIsScrolled] = React.useState(false)
   const [isOpen, setIsOpen] = React.useState(false)
   const [searchOpen, setSearchOpen] = React.useState(false)
+  const [searchQuery, setSearchQuery] = useState("")
   const [hoveredItem, setHoveredItem] = React.useState<string | null>(null)
   const [mounted, setMounted] = React.useState(false)
   const menuTimeoutRef = React.useRef<NodeJS.Timeout>()
+  const searchInputRef = React.useRef<HTMLInputElement>(null)
   const pathname = usePathname()
+  const router = useRouter()
   const { theme, setTheme, resolvedTheme } = useTheme()
 
   // Résout le problème de l'hydratation et du flash blanc
@@ -129,6 +135,16 @@ export function Navigation() {
   const overlayBg = isDark ? 'bg-black/90' : 'bg-white/90'
   const megaMenuBg = isDark ? 'bg-black/80' : 'bg-[rgba(240,240,240,0.98)]'
 
+  // Gérer la soumission du formulaire de recherche
+  const handleSearchSubmit = (e: React.FormEvent) => {
+    e.preventDefault()
+    if (searchQuery.trim()) {
+      router.push(`/boutique?q=${encodeURIComponent(searchQuery.trim())}`)
+      setSearchOpen(false)
+      setSearchQuery("")
+    }
+  }
+
   return (
     <>
       {/* Barre de navigation style Apple */}
@@ -177,16 +193,9 @@ export function Navigation() {
 
             {/* Icônes à droite */}
             <div className="flex items-center space-x-7">
-              <button
-                onClick={() => setSearchOpen(!searchOpen)}
-                className={cn(
-                  "hidden md:flex items-center justify-center transition-opacity duration-200",
-                  isOpen && "opacity-60",
-                  textColorMuted
-                )}
-              >
-                <Search className="h-4 w-4" />
-              </button>
+              <div className="hidden md:block">
+                <SearchComponent className={textColorMuted} />
+              </div>
 
               <Cart />
 
@@ -271,10 +280,13 @@ export function Navigation() {
             )}
           >
             <div className="max-w-[980px] mx-auto px-6 pt-6">
-              <div className="relative">
+              <form onSubmit={handleSearchSubmit} className="relative">
                 <Search className={cn("absolute left-4 top-3 h-4 w-4", textColorMuted)} />
                 <input
+                  ref={searchInputRef}
                   type="text"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
                   placeholder="Rechercher sur trott-e-perf.com"
                   autoFocus
                   className={cn(
@@ -286,31 +298,59 @@ export function Navigation() {
                   )}
                 />
                 <button
+                  type="button"
                   onClick={() => setSearchOpen(false)}
                   className="absolute right-3 top-3"
                 >
                   <X className={cn("h-4 w-4", textColorMuted)} />
                 </button>
-              </div>
-              <div className="mt-6">
-                <p className={cn("text-sm font-medium", textColorMuted)}>Recherches suggérées</p>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-3">
-                  {['Trottinettes électriques', 'Nouveautés', 'Accessoires', 'Réparation'].map((item) => (
-                    <Link
-                      key={item}
-                      href={`/search?q=${encodeURIComponent(item)}`}
-                      className={cn(
-                        "block p-3 rounded-lg",
-                        hoverBg,
-                        textColor,
-                        "text-sm"
-                      )}
-                    >
-                      {item}
-                    </Link>
-                  ))}
+              </form>
+
+              {searchQuery.length >= 2 && (
+                <div className="mt-4 bg-background rounded-lg overflow-hidden shadow-lg border">
+                  <div className="p-2">
+                    <div>
+                      <h3 className={cn("text-sm font-medium mb-3", textColorMuted)}>Rechercher dans la boutique</h3>
+                      <Link
+                        href={`/boutique?q=${encodeURIComponent(searchQuery)}`}
+                        className={cn(
+                          "flex items-center py-2 px-3 rounded-lg hover:bg-muted/50 transition-colors",
+                          textColor
+                        )}
+                        onClick={() => setSearchOpen(false)}
+                      >
+                        <Search className="h-4 w-4 mr-3 flex-shrink-0" />
+                        <div className="text-sm font-medium">
+                          Rechercher "{searchQuery}" dans les produits
+                        </div>
+                      </Link>
+                    </div>
+                  </div>
                 </div>
-              </div>
+              )}
+
+              {searchQuery.length < 2 && (
+                <div className="mt-6">
+                  <p className={cn("text-sm font-medium", textColorMuted)}>Recherches suggérées</p>
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-3">
+                    {['Trottinettes électriques', 'Nouveautés', 'Accessoires', 'Réparation'].map((item) => (
+                      <Link
+                        key={item}
+                        href={`/boutique?q=${encodeURIComponent(item)}`}
+                        onClick={() => setSearchOpen(false)}
+                        className={cn(
+                          "block p-3 rounded-lg",
+                          hoverBg,
+                          textColor,
+                          "text-sm"
+                        )}
+                      >
+                        {item}
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
           </motion.div>
         )}
@@ -347,9 +387,9 @@ export function Navigation() {
               </nav>
               <div className={cn("mt-10 pt-10 border-t", borderColor)}>
                 <div className="flex space-x-6">
-                  <Link href="/search" className={textColorMuted}>
-                    <Search className="h-5 w-5" />
-                  </Link>
+                  <div className={textColorMuted}>
+                    <SearchComponent className={textColorMuted} />
+                  </div>
                   <Cart />
                 </div>
               </div>
