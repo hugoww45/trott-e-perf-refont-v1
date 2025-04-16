@@ -61,17 +61,30 @@ export const PRODUCT_QUERY = `#graphql
       title
       handle
       description
+      descriptionHtml
       productType
       availableForSale
-      images(first: 5) {
+      tags
+      metafields(first: 20) {
+        edges {
+          node {
+            key
+            value
+            namespace
+          }
+        }
+      }
+      images(first: 10) {
         edges {
           node {
             url
             altText
+            width
+            height
           }
         }
       }
-      variants(first: 10) {
+      variants(first: 50) {
         edges {
           node {
             id
@@ -85,6 +98,8 @@ export const PRODUCT_QUERY = `#graphql
               currencyCode
             }
             availableForSale
+            quantityAvailable
+            sku
             selectedOptions {
               name
               value
@@ -95,6 +110,15 @@ export const PRODUCT_QUERY = `#graphql
       options {
         name
         values
+      }
+      vendor
+      collections(first: 5) {
+        edges {
+          node {
+            title
+            handle
+          }
+        }
       }
     }
   }
@@ -543,3 +567,27 @@ export const GET_CART_QUERY = `
     }
   }
 `
+
+export const PRODUCT_RECOMMENDATIONS_QUERY = `#graphql
+  query ProductRecommendations($productId: ID!) {
+    productRecommendations(productId: $productId) {
+      id
+      title
+      handle
+      priceRange {
+        minVariantPrice {
+          amount
+          currencyCode
+        }
+      }
+      images(first: 1) {
+        edges {
+          node {
+            url
+            altText
+          }
+        }
+      }
+    }
+  }
+`;

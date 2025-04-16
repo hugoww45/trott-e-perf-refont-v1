@@ -274,20 +274,6 @@ export default function AccountPage() {
                     <span>Commandes</span>
                   </Link>
                   <Link
-                    href="/compte/adresses"
-                    className="flex items-center space-x-3 px-4 py-2 rounded-lg hover:bg-accent transition-colors"
-                  >
-                    <MapPin className="w-5 h-5" />
-                    <span>Adresses</span>
-                  </Link>
-                  <Link
-                    href="/compte/paiement"
-                    className="flex items-center space-x-3 px-4 py-2 rounded-lg hover:bg-accent transition-colors"
-                  >
-                    <CreditCard className="w-5 h-5" />
-                    <span>Paiement</span>
-                  </Link>
-                  <Link
                     href="/compte/parametres"
                     className="flex items-center space-x-3 px-4 py-2 rounded-lg hover:bg-accent transition-colors"
                   >

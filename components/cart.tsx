@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useCallback } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger, SheetClose } from '@/components/ui/sheet'
@@ -34,6 +34,7 @@ export function Cart() {
   const { accessToken, customer } = useAuthStore()
   const [customerFirstName, setCustomerFirstName] = useState<string | null>(null)
   const [isSheetOpen, setIsSheetOpen] = useState(false)
+  const [isContentReady, setIsContentReady] = useState(false)
 
   // Initialiser le panier au chargement
   useEffect(() => {
@@ -56,12 +57,28 @@ export function Cart() {
     }
   }, [error])
 
-  // Rafraîchir le panier à l'ouverture
-  useEffect(() => {
-    if (isSheetOpen && isAuthenticated) {
-      fetchCart()
+  // Fonction pour gérer l'ouverture du panier
+  const handleOpenChange = useCallback((open: boolean) => {
+    setIsSheetOpen(open)
+
+    if (open) {
+      // Réinitialiser l'état du contenu
+      setIsContentReady(false)
+
+      // Si l'utilisateur est authentifié, charger le panier
+      if (isAuthenticated) {
+        // Petit délai pour assurer que l'animation commence avant le chargement
+        setTimeout(() => {
+          fetchCart().finally(() => {
+            setIsContentReady(true)
+          })
+        }, 100)
+      } else {
+        // Si pas authentifié, marquer le contenu comme prêt immédiatement
+        setIsContentReady(true)
+      }
     }
-  }, [isSheetOpen, isAuthenticated, fetchCart])
+  }, [isAuthenticated, fetchCart])
 
   const handleQuantityChange = async (lineId: string, currentQuantity: number, change: number) => {
     if (!isAuthenticated) {
@@ -102,9 +119,9 @@ export function Cart() {
   }
 
   return (
-    <Sheet onOpenChange={setIsSheetOpen}>
+    <Sheet open={isSheetOpen} onOpenChange={handleOpenChange}>
       <SheetTrigger asChild>
-        <Button variant="outline" size="icon" className="relative">
+        <Button variant="outline" size="icon" className="relative focus:outline-none">
           <ShoppingCart className="h-5 w-5" />
           {isAuthenticated && totalQuantity > 0 && (
             <span className="absolute -top-2 -right-2 h-5 w-5 rounded-full bg-primary text-primary-foreground text-xs font-medium flex items-center justify-center">
@@ -133,7 +150,11 @@ export function Cart() {
           )}
         </SheetHeader>
 
-        {!isAuthenticated ? (
+        {!isContentReady ? (
+          <div className="flex-1 flex items-center justify-center">
+            <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />
+          </div>
+        ) : !isAuthenticated ? (
           <div className="flex-1 flex flex-col items-center justify-center text-center px-4">
             <div className="relative w-40 h-40 mb-8">
               <Image
