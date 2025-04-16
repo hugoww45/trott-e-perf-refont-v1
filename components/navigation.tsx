@@ -71,10 +71,13 @@ const navItems = [
 function MobileMenu({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
   if (!isOpen) return null;
 
-  // Version HTML pure avec design amélioré
   return (
-    <div
+    <motion.div
       id="mobile-menu"
+      initial={{ opacity: 0, x: "100%" }}
+      animate={{ opacity: 1, x: 0 }}
+      exit={{ opacity: 0, x: "100%" }}
+      transition={{ duration: 0.3, ease: "easeInOut" }}
       style={{
         position: 'fixed',
         top: 0,
@@ -91,8 +94,11 @@ function MobileMenu({ isOpen, onClose }: { isOpen: boolean; onClose: () => void 
       }}
     >
       <div>
-        <button
+        <motion.button
           onClick={onClose}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.2 }}
           style={{
             position: 'absolute',
             top: '24px',
@@ -108,12 +114,22 @@ function MobileMenu({ isOpen, onClose }: { isOpen: boolean; onClose: () => void 
             cursor: 'pointer',
             transition: 'all 0.2s ease'
           }}
+          whileHover={{
+            scale: 1.1,
+            background: 'rgba(100, 100, 100, 0.6)'
+          }}
+          whileTap={{ scale: 0.95 }}
         >
           <X style={{ color: 'white', width: '20px', height: '20px' }} />
-        </button>
+        </motion.button>
 
         <div style={{ marginTop: '80px' }}>
-          <div style={{ marginBottom: '30px' }}>
+          <motion.div
+            style={{ marginBottom: '30px' }}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.1 }}
+          >
             <div style={{ position: 'relative' }}>
               <input
                 type="text"
@@ -140,163 +156,140 @@ function MobileMenu({ isOpen, onClose }: { isOpen: boolean; onClose: () => void 
                 height: '18px'
               }} />
             </div>
-          </div>
+          </motion.div>
 
-          <a href="/" style={{
-            display: 'block',
-            color: 'white',
-            fontSize: '24px',
-            fontWeight: '600',
-            margin: '24px 0',
-            textDecoration: 'none',
-            letterSpacing: '0.2px'
-          }}>
+          <motion.a
+            href="/"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2 }}
+            whileHover={{ x: 5 }}
+            style={{
+              display: 'block',
+              color: 'white',
+              fontSize: '24px',
+              fontWeight: '600',
+              margin: '24px 0',
+              textDecoration: 'none',
+              letterSpacing: '0.2px'
+            }}
+          >
             Accueil
-          </a>
+          </motion.a>
 
-          <a href="/boutique" style={{
-            display: 'block',
-            color: 'white',
-            fontSize: '24px',
-            fontWeight: '600',
-            margin: '24px 0 12px',
-            textDecoration: 'none',
-            letterSpacing: '0.2px'
-          }}>
-            Boutique
-          </a>
+          {navItems.map((item, index) => (
+            <motion.div
+              key={item.name}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2 + (index * 0.1) }}
+            >
+              <motion.a
+                href={item.href}
+                whileHover={{ x: 5 }}
+                style={{
+                  display: 'block',
+                  color: 'white',
+                  fontSize: '24px',
+                  fontWeight: '600',
+                  margin: '24px 0 12px',
+                  textDecoration: 'none',
+                  letterSpacing: '0.2px'
+                }}
+              >
+                {item.name}
+              </motion.a>
 
-          <div style={{
-            marginLeft: '24px',
-            borderLeft: '1px solid rgba(255, 255, 255, 0.1)',
-            paddingLeft: '16px'
-          }}>
-            <a href="/boutique/trottinettes" style={{
-              display: 'block',
-              color: 'rgba(255, 255, 255, 0.7)',
-              fontSize: '18px',
-              margin: '12px 0',
-              textDecoration: 'none',
-              transition: 'color 0.2s ease'
-            }}>
-              Trottinettes électriques
-            </a>
-            <a href="/boutique/accessoires" style={{
-              display: 'block',
-              color: 'rgba(255, 255, 255, 0.7)',
-              fontSize: '18px',
-              margin: '12px 0',
-              textDecoration: 'none',
-              transition: 'color 0.2s ease'
-            }}>
-              Accessoires
-            </a>
-            <a href="/boutique/pieces" style={{
-              display: 'block',
-              color: 'rgba(255, 255, 255, 0.7)',
-              fontSize: '18px',
-              margin: '12px 0',
-              textDecoration: 'none',
-              transition: 'color 0.2s ease'
-            }}>
-              Pièces détachées
-            </a>
-          </div>
+              {item.hasMegaMenu && item.columns && (
+                <div style={{
+                  marginLeft: '24px',
+                  borderLeft: '1px solid rgba(255, 255, 255, 0.1)',
+                  paddingLeft: '16px'
+                }}>
+                  {item.columns.map((column) => (
+                    <div key={column.title} style={{ marginBottom: '16px' }}>
+                      <p style={{
+                        fontSize: '14px',
+                        color: 'rgba(255, 255, 255, 0.5)',
+                        margin: '12px 0 8px',
+                        fontWeight: '500',
+                        letterSpacing: '0.5px',
+                        textTransform: 'uppercase'
+                      }}>
+                        {column.title}
+                      </p>
 
-          <a href="/services" style={{
-            display: 'block',
-            color: 'white',
-            fontSize: '24px',
-            fontWeight: '600',
-            margin: '24px 0 12px',
-            textDecoration: 'none',
-            letterSpacing: '0.2px'
-          }}>
-            Services
-          </a>
-
-          <div style={{
-            marginLeft: '24px',
-            borderLeft: '1px solid rgba(255, 255, 255, 0.1)',
-            paddingLeft: '16px'
-          }}>
-            <a href="/assurance" style={{
-              display: 'block',
-              color: 'rgba(255, 255, 255, 0.7)',
-              fontSize: '18px',
-              margin: '12px 0',
-              textDecoration: 'none',
-              transition: 'color 0.2s ease'
-            }}>
-              Assurance
-            </a>
-            <a href="/financement" style={{
-              display: 'block',
-              color: 'rgba(255, 255, 255, 0.7)',
-              fontSize: '18px',
-              margin: '12px 0',
-              textDecoration: 'none',
-              transition: 'color 0.2s ease'
-            }}>
-              Financement
-            </a>
-          </div>
-
-          <a href="/a-propos" style={{
-            display: 'block',
-            color: 'white',
-            fontSize: '24px',
-            fontWeight: '600',
-            margin: '24px 0',
-            textDecoration: 'none',
-            letterSpacing: '0.2px'
-          }}>
-            À propos
-          </a>
-
-          <a href="/support" style={{
-            display: 'block',
-            color: 'white',
-            fontSize: '24px',
-            fontWeight: '600',
-            margin: '24px 0',
-            textDecoration: 'none',
-            letterSpacing: '0.2px'
-          }}>
-            Support
-          </a>
+                      {column.links.map((link, i) => (
+                        <motion.a
+                          key={link.name}
+                          href={link.href}
+                          initial={{ opacity: 0, x: -10 }}
+                          animate={{ opacity: 1, x: 0 }}
+                          transition={{ delay: 0.3 + ((index * 0.1) + (i * 0.05)) }}
+                          whileHover={{ x: 5, color: 'rgba(255, 255, 255, 0.9)' }}
+                          style={{
+                            display: 'block',
+                            color: 'rgba(255, 255, 255, 0.7)',
+                            fontSize: '18px',
+                            margin: '12px 0',
+                            textDecoration: 'none',
+                            transition: 'color 0.2s ease'
+                          }}
+                        >
+                          {link.name}
+                        </motion.a>
+                      ))}
+                    </div>
+                  ))}
+                </div>
+              )}
+            </motion.div>
+          ))}
         </div>
 
-        <div style={{
-          marginTop: '40px',
-          paddingTop: '24px',
-          borderTop: '1px solid rgba(255, 255, 255, 0.1)',
-          display: 'flex',
-          justifyContent: 'space-between'
-        }}>
-          <a href="/compte" style={{
-            color: 'rgba(255, 255, 255, 0.7)',
-            fontSize: '16px',
-            textDecoration: 'none',
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.7 }}
+          style={{
+            marginTop: '40px',
+            paddingTop: '24px',
+            borderTop: '1px solid rgba(255, 255, 255, 0.1)',
             display: 'flex',
-            alignItems: 'center',
-            gap: '8px'
-          }}>
+            justifyContent: 'space-between'
+          }}
+        >
+          <motion.a
+            href="/compte"
+            whileHover={{ y: -3 }}
+            style={{
+              color: 'rgba(255, 255, 255, 0.7)',
+              fontSize: '16px',
+              textDecoration: 'none',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '8px'
+            }}
+          >
             Mon compte
-          </a>
-          <a href="/contact" style={{
-            color: 'rgba(255, 255, 255, 0.7)',
-            fontSize: '16px',
-            textDecoration: 'none',
-            display: 'flex',
-            alignItems: 'center',
-            gap: '8px'
-          }}>
+          </motion.a>
+          <motion.a
+            href="/contact"
+            whileHover={{ y: -3 }}
+            style={{
+              color: 'rgba(255, 255, 255, 0.7)',
+              fontSize: '16px',
+              textDecoration: 'none',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '8px'
+            }}
+          >
             Contact
-          </a>
-        </div>
+          </motion.a>
+        </motion.div>
       </div>
-    </div>
+    </motion.div>
   );
 }
 
