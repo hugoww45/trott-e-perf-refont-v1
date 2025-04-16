@@ -158,13 +158,13 @@ export function Cart() {
           <div className="flex-1 flex flex-col items-center justify-center text-center px-4">
             <div className="relative w-40 h-40 mb-8">
               <Image
-                src="/empty-cart.png"
+                src="/placeholder-product.png"
                 alt="Connexion requise"
                 fill
                 className="object-contain"
               />
-            </div>
-            <h3 className="text-2xl font-semibold tracking-tight mb-2">Veuillez vous connecter</h3>
+              </div>
+              <h3 className="mt-[2rem] text-2xl font-semibold tracking-tight mb-2">Veuillez vous connecter</h3>
             <p className="text-muted-foreground mb-8">
               Connectez-vous pour accéder à votre panier et effectuer vos achats
             </p>
@@ -185,7 +185,7 @@ export function Cart() {
           <div className="flex-1 flex flex-col items-center justify-center text-center px-4">
             <div className="relative w-40 h-40 mb-8">
               <Image
-                src="/empty-cart.png"
+                src="/placeholder-product.png"
                 alt="Panier vide"
                 fill
                 className="object-contain"

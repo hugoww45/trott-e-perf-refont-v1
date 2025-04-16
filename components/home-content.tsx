@@ -6,6 +6,7 @@ import Image from "next/image"
 import Link from "next/link"
 import { motion, useAnimationControls, useScroll, useTransform, useMotionValue, useSpring, AnimatePresence } from "framer-motion"
 import { TextReveal } from "@/components/magicui/text-reveal"
+import LogoCloud from "@/components/logo-cloud"
 import { useEffect, useRef, useState } from "react"
 import { Card, Carousel } from "@/components/ui/apple-cards-carousel"
 
@@ -533,47 +534,7 @@ export function HomeContent() {
       {/* Clients Section */}
       <section className="py-24 md:py-32 bg-black overflow-hidden">
         <div className="container mx-auto px-4">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-            className="text-center mb-16"
-          >
-            <h2 className="text-3xl md:text-4xl font-medium tracking-tight mb-4">
-              Ils nous font confiance
-            </h2>
-            <p className="text-gray-400 text-lg max-w-2xl mx-auto">
-              Des partenaires de renom qui partagent notre vision de la mobilité urbaine.
-            </p>
-          </motion.div>
-
-          <div className="relative">
-            <motion.div
-              className="flex gap-8 items-center"
-              animate={controls}
-            >
-              {infiniteClients.map((client, index) => (
-                <motion.div
-                  key={`${client.name}-${index}`}
-                  className="flex-shrink-0"
-                  whileHover={{
-                    scale: 1.05,
-                    transition: { duration: 0.2 }
-                  }}
-                >
-                  <div className="relative w-40 h-20 grayscale hover:grayscale-0 transition-all duration-300">
-                    <Image
-                      src={client.logo}
-                      alt={client.name}
-                      fill
-                      className="object-contain"
-                    />
-                  </div>
-                </motion.div>
-              ))}
-            </motion.div>
-          </div>
+         <LogoCloud />
         </div>
       </section>
 

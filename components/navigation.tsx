@@ -48,24 +48,20 @@ const navItems = [
         title: "Nos services",
         links: [
           { name: "Réparation", href: "/services/reparation" },
-          { name: "Entretien", href: "/services/entretien" },
           { name: "Customisation", href: "/services/customisation" },
-          { name: "Location", href: "/services/location" }
         ]
       },
       {
         title: "Assistance",
         links: [
           { name: "FAQ", href: "/services/faq" },
-          { name: "Prendre rendez-vous", href: "/services/rendez-vous" },
           { name: "Garantie", href: "/services/garantie" },
-          { name: "Contact service client", href: "/services/contact" }
         ]
       }
     ]
   },
-  { name: "Support", href: "/support" },
   { name: "À propos", href: "/a-propos" },
+  { name: "Support", href: "/support" },
 ]
 
 export function Navigation() {
