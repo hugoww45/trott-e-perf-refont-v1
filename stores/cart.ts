@@ -37,7 +37,7 @@ interface CartState {
   error: string | null;
   isAuthenticated: boolean;
   customerAccessToken: string | null;
-  createCart: () => Promise<string | undefined>;
+  createCart: () => Promise<string | null>;
   addToCart: (variantId: string, quantity: number) => Promise<void>;
   updateCartItem: (lineId: string, quantity: number) => Promise<void>;
   removeFromCart: (lineId: string) => Promise<void>;
@@ -152,6 +152,7 @@ export const useCartStore = create<CartState>()(
             localStorage.setItem('cartId', id);
             return id;
           }
+          return null;
         } catch (error) {
           console.error('Error creating cart:', error);
           set({ error: 'Erreur lors de la création du panier' });

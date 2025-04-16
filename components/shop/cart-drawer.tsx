@@ -13,7 +13,7 @@ interface CartDrawerProps {
 }
 
 export function CartDrawer({ open, onClose }: CartDrawerProps) {
-  const { items, removeItem, updateQuantity, total } = useCartStore()
+  const { items, removeFromCart, updateCartItem, subtotalAmount } = useCartStore()
 
   return (
     <Sheet open={open} onOpenChange={onClose}>
@@ -29,25 +29,25 @@ export function CartDrawer({ open, onClose }: CartDrawerProps) {
             <>
               <div className="space-y-4">
                 {items.map((item) => (
-                  <div key={item.variant.id} className="flex items-center gap-4">
+                  <div key={item.merchandise.id} className="flex items-center gap-4">
                     <div className="relative h-20 w-20 overflow-hidden rounded-lg">
                       <Image
-                        src={item.variant.image?.url || ''}
-                        alt={item.variant.title}
+                        src={item.merchandise.product.images.edges[0]?.node.url || ''}
+                        alt={item.merchandise.title}
                         fill
                         className="object-cover"
                       />
                     </div>
                     <div className="flex-1">
-                      <h4 className="font-medium">{item.variant.title}</h4>
+                      <h4 className="font-medium">{item.merchandise.product.title}</h4>
                       <p className="text-sm text-gray-400">
-                        {formatPrice(item.variant.price.amount, item.variant.price.currencyCode)}
+                        {formatPrice(item.merchandise.price.amount, item.merchandise.price.currencyCode || 'EUR')}
                       </p>
                       <div className="mt-2 flex items-center gap-2">
                         <Button
                           variant="outline"
                           size="icon"
-                          onClick={() => updateQuantity(item.variant.id, Math.max(0, item.quantity - 1))}
+                          onClick={() => updateCartItem(item.id, Math.max(0, item.quantity - 1))}
                         >
                           <Minus className="h-4 w-4" />
                         </Button>
@@ -55,7 +55,7 @@ export function CartDrawer({ open, onClose }: CartDrawerProps) {
                         <Button
                           variant="outline"
                           size="icon"
-                          onClick={() => updateQuantity(item.variant.id, item.quantity + 1)}
+                          onClick={() => updateCartItem(item.id, item.quantity + 1)}
                         >
                           <Plus className="h-4 w-4" />
                         </Button>
@@ -64,7 +64,7 @@ export function CartDrawer({ open, onClose }: CartDrawerProps) {
                     <Button
                       variant="ghost"
                       size="icon"
-                      onClick={() => removeItem(item.variant.id)}
+                      onClick={() => removeFromCart(item.id)}
                     >
                       <Trash2 className="h-4 w-4" />
                     </Button>
@@ -75,7 +75,7 @@ export function CartDrawer({ open, onClose }: CartDrawerProps) {
               <div className="mt-8 space-y-4">
                 <div className="flex justify-between text-lg font-medium">
                   <span>Total</span>
-                  <span>{formatPrice(total().toString(), 'EUR')}</span>
+                  <span>{formatPrice(subtotalAmount, 'EUR')}</span>
                 </div>
                 <Button className="w-full" size="lg">
                   Passer la commande

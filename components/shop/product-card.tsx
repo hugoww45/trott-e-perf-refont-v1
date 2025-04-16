@@ -16,16 +16,14 @@ export function ProductCard({ product }: ProductCardProps) {
   const [imageLoaded, setImageLoaded] = useState(false)
   const [imageError, setImageError] = useState(false)
 
-  // Image prioritaire : l'image de la variante par défaut, sinon la première image du produit
-  const variantImage = product.variants.edges[0]?.node.image?.url
+  // Utiliser la première image du produit
   const firstImage = product.images.edges[0]?.node
-  const productImageUrl = variantImage || (firstImage ? firstImage.url : null)
+  const productImageUrl = firstImage ? firstImage.url : null
 
   const minPrice = product.priceRange.minVariantPrice
 
   // Vérifier si le produit a du stock (soit au niveau du produit, soit au niveau des variantes)
   const isInStock = product.availableForSale ||
-                    (product.totalInventory && product.totalInventory > 0) ||
                     product.variants.edges.some(edge => edge.node.availableForSale)
 
   // Image par défaut (fallback)

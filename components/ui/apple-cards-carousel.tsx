@@ -185,7 +185,7 @@ export const Card = ({
   useEffect(() => {
     if (!containerRef.current || !open) return;
 
-    const handleClickOutside = (event: MouseEvent) => {
+    const handleClickOutside = (event: MouseEvent | TouchEvent) => {
       if (containerRef.current && !containerRef.current.contains(event.target as Node)) {
         handleClose();
       }

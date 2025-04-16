@@ -280,7 +280,7 @@ export default function BoutiquePage() {
     console.log('=== Inspection des données brutes de l\'API ===');
 
     // Rechercher des produits contenant "Xiaomi" ou "Accélérateur" dans les données brutes
-    const searchInRawData = (data: any, searchTerm: string, path = '') => {
+    const searchInRawData = (data: any, searchTerm: string, path = ''): { path: string; value: string; object: any } | null => {
       if (!data) return null
 
       // Si c'est un objet
@@ -452,7 +452,6 @@ export default function BoutiquePage() {
     if (inStockOnly) {
       filtered = filtered.filter(product => {
         return product.availableForSale === true ||
-               (product.totalInventory && product.totalInventory > 0) ||
                product.variants.edges.some(edge => edge.node.availableForSale)
       })
       console.log("Après filtrage par stock:", filtered.length, "produits")

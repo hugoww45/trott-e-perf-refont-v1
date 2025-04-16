@@ -42,7 +42,7 @@ export function ProductDetails({ handle }: ProductDetailsProps) {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
   const [currentImage, setCurrentImage] = useState<string | null>(null)
-  const addItem = useCartStore((state) => state.addItem)
+  const addToCart = useCartStore((state) => state.addToCart)
   const defaultImageUrl = '/placeholder-product.png' // Image par défaut
 
   useEffect(() => {
@@ -89,7 +89,7 @@ export function ProductDetails({ handle }: ProductDetailsProps) {
       (edge) => edge.node.id === selectedVariant
     )?.node
     if (variant) {
-      addItem(variant, quantity)
+      addToCart(variant.id, quantity)
     }
   }
 

@@ -201,17 +201,20 @@ export function HomeContent() {
     // Joue la prochaine vidéo
     if (videoRefs.current[nextSlide]) {
       try {
-        videoRefs.current[nextSlide].currentTime = 0;
-        const playPromise = videoRefs.current[nextSlide]?.play();
+        const videoElement = videoRefs.current[nextSlide];
+        if (videoElement) {
+          videoElement.currentTime = 0;
+          const playPromise = videoElement.play();
 
-        // Gestion des promesses de lecture vidéo
-        if (playPromise !== undefined) {
-          playPromise.catch(error => {
-            console.error("Erreur lors de la lecture de la vidéo:", error);
-            const newErrors = [...videoErrors];
-            newErrors[nextSlide] = true;
-            setVideoErrors(newErrors);
-          });
+          // Gestion des promesses de lecture vidéo
+          if (playPromise !== undefined) {
+            playPromise.catch(error => {
+              console.error("Erreur lors de la lecture de la vidéo:", error);
+              const newErrors = [...videoErrors];
+              newErrors[nextSlide] = true;
+              setVideoErrors(newErrors);
+            });
+          }
         }
       } catch (error) {
         console.error("Erreur de lecture vidéo:", error);
@@ -231,8 +234,11 @@ export function HomeContent() {
 
     // Joue la vidéo précédente
     if (videoRefs.current[prevSlide]) {
-      videoRefs.current[prevSlide].currentTime = 0;
-      videoRefs.current[prevSlide]?.play();
+      const videoElement = videoRefs.current[prevSlide];
+      if (videoElement) {
+        videoElement.currentTime = 0;
+        videoElement.play();
+      }
     }
 
     setCurrentSlide(prevSlide);
@@ -380,8 +386,11 @@ export function HomeContent() {
 
                   // Joue la vidéo sélectionnée
                   if (videoRefs.current[index]) {
-                    videoRefs.current[index].currentTime = 0;
-                    videoRefs.current[index]?.play();
+                    const videoElement = videoRefs.current[index];
+                    if (videoElement) {
+                      videoElement.currentTime = 0;
+                      videoElement.play();
+                    }
                   }
 
                   setCurrentSlide(index);

@@ -1,11 +1,11 @@
-import { serverClient } from './server'
+import { getStorefrontApiUrl, getPublicTokenHeaders } from './server'
 import { PRODUCTS_QUERY } from './queries'
 
 export async function generateStaticParams() {
   try {
-    const response = await fetch(serverClient.getStorefrontApiUrl(), {
+    const response = await fetch(getStorefrontApiUrl(), {
       method: 'POST',
-      headers: serverClient.getPublicTokenHeaders(),
+      headers: getPublicTokenHeaders(),
       body: JSON.stringify({
         query: PRODUCTS_QUERY,
         variables: { first: 250 }
