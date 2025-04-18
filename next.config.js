@@ -5,6 +5,34 @@ const nextConfig = {
   images: { unoptimized: true },
   eslint: {
     ignoreDuringBuilds: true,
+  },
+  // Configuration pour les headers HTTP
+  async headers() {
+    return [
+      {
+        source: '/sitemap.xml',
+        headers: [
+          {
+            key: 'Content-Type',
+            value: 'application/xml',
+          },
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=3600, s-maxage=86400',
+          },
+        ],
+      },
+    ]
+  },
+
+  // Configuration pour rediriger les anciennes URLs
+  async rewrites() {
+    return [
+      {
+        source: '/sitemap.xml',
+        destination: '/api/sitemap',
+      }
+    ]
   }
 };
 

@@ -40,6 +40,7 @@ import {
 } from "@/components/ui/accordion"
 import { Badge } from '@/components/ui/badge'
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip'
+import ProductSchema from '@/app/productschema'
 
 // Exemples de caractéristiques produit à personnaliser selon vos produits
 const productFeatures = [
@@ -253,6 +254,9 @@ export default function ProductPage({ params }: ProductPageProps) {
     <div className="min-h-screen bg-background">
       <Navigation />
       <main className="pt-24 pb-16">
+        {/* Ajouter le ProductSchema ici */}
+        {product && <ProductSchema product={product} />}
+
         {/* Fil d'Ariane */}
         <div className="container mx-auto px-4 mb-4">
           <nav className="flex items-center space-x-2 text-sm text-muted-foreground">

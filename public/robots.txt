@@ -1,0 +1,48 @@
+# robots.txt for TROTT'e Perf
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /admin/
+Disallow: /debug/
+Disallow: /_next/
+
+# Spécifique pour Googlebot
+User-agent: Googlebot
+Allow: /
+Disallow: /api/
+Disallow: /admin/
+Disallow: /debug/
+Disallow: /_next/
+
+# Spécifique pour Bingbot
+User-agent: Bingbot
+Allow: /
+Disallow: /api/
+Disallow: /admin/
+Disallow: /debug/
+Disallow: /_next/
+
+# Ajout des autres robots courants
+User-agent: Yandex
+Allow: /
+Disallow: /api/
+Disallow: /admin/
+Disallow: /debug/
+Disallow: /_next/
+
+User-agent: Baiduspider
+Allow: /
+Disallow: /api/
+Disallow: /admin/
+Disallow: /debug/
+Disallow: /_next/
+
+User-agent: DuckDuckBot
+Allow: /
+Disallow: /api/
+Disallow: /admin/
+Disallow: /debug/
+Disallow: /_next/
+
+# Sitemap
+Sitemap: https://trotte-perf.fr/sitemap.xml
