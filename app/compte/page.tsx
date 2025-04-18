@@ -384,7 +384,11 @@ export default function AccountPage() {
                               <span>
                                 {item.node.title} x {item.node.quantity}
                               </span>
-                              <span>{item.node.variant.price.amount} €</span>
+                              <span>
+                                {item.node.variant
+                                  ? `${item.node.variant.price.amount} €`
+                                  : 'Prix indisponible'}
+                              </span>
                             </div>
                           ))}
                         </div>

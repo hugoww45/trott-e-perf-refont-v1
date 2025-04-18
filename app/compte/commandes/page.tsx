@@ -174,7 +174,11 @@ export default function OrdersPage() {
                               <span>
                                 {item.node.title} x {item.node.quantity}
                               </span>
-                              <span>{parseFloat(item.node.variant.price.amount).toFixed(2)} €</span>
+                              <span>
+                                {item.node.variant
+                                  ? `${parseFloat(item.node.variant.price.amount).toFixed(2)} €`
+                                  : 'Prix indisponible'}
+                              </span>
                             </div>
                           ))}
                         </div>
