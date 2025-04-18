@@ -26,7 +26,7 @@ export function ProductCard({ product }: ProductCardProps) {
   const isInStock = product.availableForSale ||
                     product.variants.edges.some(edge => edge.node.availableForSale)
 
-  // Image par défaut (fallback)
+  // Logo de l'entreprise comme image par défaut (fallback)
   const defaultImageUrl = '/placeholder-product.png'
 
   // Vérifiez si au moins une variante est en promotion
@@ -54,35 +54,43 @@ export function ProductCard({ product }: ProductCardProps) {
   return (
     <div className="group rounded-lg overflow-hidden border border-neutral-800 bg-neutral-950/50 hover:border-neutral-700 hover:shadow-md hover:shadow-primary/10 transition-all duration-300 cursor-pointer">
       <Link href={`/boutique/${product.handle}`}>
-        <div className="relative pt-[100%] bg-neutral-900/50">
-          <div className="absolute inset-0 flex items-center justify-center p-8">
+        <div className="relative pt-[100%] bg-neutral-900/20">
+          <div className="absolute inset-0 flex items-center justify-center overflow-hidden">
             {(productImageUrl && !imageError) ? (
               <div className="relative w-full h-full flex items-center justify-center">
                 <Image
                   src={productImageUrl}
                   alt={firstImage?.altText || product.title}
-                  width={200}
-                  height={200}
-                  className="max-h-[80%] max-w-[80%] object-contain transition-all duration-300 group-hover:scale-105"
+                  fill
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                  className="object-contain transition-all duration-300 group-hover:scale-110"
+                  style={{
+                    padding: '5%',
+                    backgroundColor: 'transparent'
+                  }}
                   onLoad={() => setImageLoaded(true)}
                   onError={handleImageError}
                 />
               </div>
             ) : (
               <div className="relative w-full h-full flex items-center justify-center">
-                <Image
-                  src={defaultImageUrl}
-                  alt={product.title}
-                  width={200}
-                  height={200}
-                  className="max-h-[80%] max-w-[80%] object-contain opacity-70 transition-all duration-300 group-hover:scale-105"
-                />
+                <div className="absolute inset-0 flex items-center justify-center opacity-10">
+                  <Image
+                    src={defaultImageUrl}
+                    alt="TROTT'e Perf logo"
+                    fill
+                    className="object-contain p-4 opacity-30 transition-opacity duration-300 group-hover:opacity-40"
+                  />
+                </div>
+                <div className="absolute bottom-0 left-0 right-0 text-center text-sm text-neutral-500 py-2">
+                  {product.title}
+                </div>
               </div>
             )}
           </div>
 
           {/* Badges pour stock et promotions */}
-          <div className="absolute top-2 right-2 flex flex-col gap-2">
+          <div className="absolute top-2 right-2 flex flex-col gap-2 z-10">
             {hasPromotion && (
               <Badge className="bg-red-500 hover:bg-red-600">
                 Promotion

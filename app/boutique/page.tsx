@@ -375,9 +375,11 @@ export default function BoutiquePage() {
     filterProducts()
   }, [searchQuery, searchTags, priceRange, categories, inStockOnly, products])
 
+  // Fonction pour gérer la recherche depuis le composant SearchBar
   const handleSearch = (query: string, tags: string[]) => {
     setSearchQuery(query)
     setSearchTags(tags)
+    fetchInitialProducts(query, true)
   }
 
   const handleFilterChange = (newPriceRange: number[], newCategories: string[], newInStockOnly: boolean) => {
@@ -398,38 +400,59 @@ export default function BoutiquePage() {
       const lowercaseQuery = searchQuery.toLowerCase()
       console.log("Recherche de:", lowercaseQuery)
 
+      // Alternatives de recherche (avec et sans tirets)
+      const queryAlternatives = [
+        lowercaseQuery,
+        lowercaseQuery.replace(/-/g, ' '),
+        lowercaseQuery.replace(/\s+/g, '-'),
+        lowercaseQuery.replace(/\s+/g, '')
+      ]
+
+      console.log("Alternatives de recherche:", queryAlternatives)
+
       // Recherche améliorée plus flexible
       filtered = filtered.filter(product => {
-        const titleMatches = product.title.toLowerCase().includes(lowercaseQuery)
-        const descMatches = product.description?.toLowerCase().includes(lowercaseQuery)
-        const vendorMatches = product.vendor?.toLowerCase().includes(lowercaseQuery)
-        const typeMatches = product.productType?.toLowerCase().includes(lowercaseQuery)
-        const variantMatches = product.variants.edges.some(edge =>
-          edge.node.title.toLowerCase().includes(lowercaseQuery)
+        const title = product.title.toLowerCase()
+        const description = product.description?.toLowerCase() || ''
+        const vendor = product.vendor?.toLowerCase() || ''
+        const productType = product.productType?.toLowerCase() || ''
+        const tags = product.tags?.map(t => t.toLowerCase()) || []
+        const variantTitles = product.variants.edges.map(edge => edge.node.title.toLowerCase())
+
+        // Normaliser les valeurs du produit (alternatives avec/sans tirets)
+        const productValues = [
+          title,
+          title.replace(/-/g, ' '),
+          title.replace(/\s+/g, '-'),
+          title.replace(/\s+/g, ''),
+          description,
+          vendor,
+          productType,
+          ...tags,
+          ...variantTitles
+        ]
+
+        // Vérifier si l'une des alternatives de recherche correspond à l'une des valeurs du produit
+        const matches = queryAlternatives.some(query =>
+          productValues.some(value => value.includes(query))
         )
-        const tagMatches = product.tags?.some(tag => tag.toLowerCase().includes(lowercaseQuery))
 
         // Gestion spéciale pour "Accélérateur Xiaomi - Noir"
         if (lowercaseQuery === "accélérateur xiaomi - noir" ||
             lowercaseQuery === "accélérateur xiaomi noir") {
-          const isXiaomi = (product.title.toLowerCase().includes("xiaomi") ||
-                            product.vendor?.toLowerCase().includes("xiaomi"))
-          const isAccelerateur = product.title.toLowerCase().includes("accélérateur")
-          const isNoir = (product.title.toLowerCase().includes("noir") ||
-                          product.variants.edges.some(edge =>
-                            edge.node.title.toLowerCase().includes("noir")))
+          const isXiaomi = (title.includes("xiaomi") || vendor.includes("xiaomi"))
+          const isAccelerateur = title.includes("accélérateur")
+          const isNoir = (title.includes("noir") || variantTitles.some(t => t.includes("noir")))
 
-          const matches = isXiaomi && isAccelerateur && isNoir
-          if (matches) {
+          const specialMatch = isXiaomi && isAccelerateur && isNoir
+          if (specialMatch) {
             console.log("Trouvé spécifiquement:", product.title, product.id)
           }
-          return matches
+          return specialMatch
         }
 
-        const matches = titleMatches || descMatches || vendorMatches || typeMatches || variantMatches || tagMatches
-
         // Log les correspondances trouvées
-        if (matches && lowercaseQuery.includes("xiaomi")) {
+        if (matches) {
           console.log("Produit correspondant trouvé:", product.title, "- ID:", product.id)
         }
 
@@ -1024,50 +1047,7 @@ export default function BoutiquePage() {
               Notre Collection
             </h1>
             <div className="w-full max-w-3xl">
-              <div className="flex flex-col justify-center items-center py-2 w-full">
-                <div className="flex items-center w-[85%] gap-3">
-                  <div className="flex flex-1 relative">
-                    <div className="absolute left-4 top-1/2 transform -translate-y-1/2">
-                      <Search className="w-4 h-4 text-gray-400" />
-                    </div>
-                    <Input
-                      type="text"
-                      className="pl-10 pr-4 py-2 rounded-full bg-gray-100 border-none"
-                      placeholder="Rechercher des produits..."
-                      value={searchQuery}
-                      onChange={(e) => setSearchQuery(e.target.value)}
-                      onKeyDown={(e) => {
-                        if (e.key === 'Enter') {
-                          fetchInitialProducts(searchQuery, true);
-                        }
-                      }}
-                    />
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <Button
-                      onClick={() => fetchInitialProducts(searchQuery, true)}
-                      className={buttonVariants({ variant: "outline" })}
-                    >
-                      <Search className="w-4 h-4 mr-2" />
-                      Rechercher
-                    </Button>
-                    <Button
-                      onClick={() => fetchInitialProducts('', true)}
-                      className={buttonVariants({ variant: "outline" })}
-                      title="Rafraîchir la liste des produits"
-                    >
-                      <div className="w-4 h-4 mr-2">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                          <path d="M21 12a9 9 0 0 1-9 9c-4.97 0-9-4.03-9-9s4.03-9 9-9h3" />
-                          <path d="M18 3v6h6" />
-                          <path d="M16 16a4 4 0 0 1-4 4c-2.2 0-4-1.8-4-4s1.8-4 4-4h1" />
-                        </svg>
-                      </div>
-                      Actualiser
-                    </Button>
-                  </div>
-                </div>
-              </div>
+              <SearchBar onSearch={handleSearch} />
             </div>
           </div>
 
