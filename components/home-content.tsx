@@ -9,6 +9,9 @@ import { TextReveal } from "@/components/magicui/text-reveal"
 import LogoCloud from "@/components/logo-cloud"
 import { useEffect, useRef, useState } from "react"
 import { Card, Carousel } from "@/components/ui/apple-cards-carousel"
+import { PressSection } from "@/components/press-section"
+import { BrandsSlider } from "@/components/brands-slider"
+import { NewsSection } from "@/components/news-section"
 
 // Configuration du carousel du header
 const headerSlides = [
@@ -261,39 +264,30 @@ export function HomeContent() {
 
   return (
     <>
-      {/* Carousel Hero Section avec vidéos style Lamborghini */}
-      <section className="relative h-screen overflow-hidden">
-        {/* Background vidéos */}
-        {headerSlides.map((slide, index) => (
-          <motion.div
-            key={slide.id}
-            className="absolute inset-0 w-full h-full"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: currentSlide === index ? 1 : 0 }}
-            transition={{ duration: 1, ease: "easeInOut" }}
-          >
-            <div className="absolute inset-0 bg-black/50 backdrop-blur-sm z-10" />
-            {!videoErrors[index] ? (
+      {/* Header existant avec le slider de vidéos */}
+      <header className="h-screen relative flex flex-col text-center md:text-left">
+        {/* Arrière-plan vidéo avec overlay */}
+        <div className="absolute inset-0 z-0">
+          {headerSlides.map((slide, index) => (
+            <div key={slide.id} className={`absolute inset-0 transition-opacity duration-1000 ${currentSlide === index ? 'opacity-100' : 'opacity-0'}`}>
+              <div className="absolute inset-0 bg-black/40 z-10"></div>
               <video
                 ref={el => videoRefs.current[index] = el}
                 src={slide.video}
                 className="w-full h-full object-cover"
+                loop
                 muted
                 playsInline
-                loop
-                preload="auto"
+                onEnded={() => setVideoEnded(true)}
                 onError={() => {
-                  console.error(`Erreur de chargement de la vidéo ${index}`);
                   const newErrors = [...videoErrors];
                   newErrors[index] = true;
                   setVideoErrors(newErrors);
                 }}
               />
-            ) : (
-              <div className="absolute inset-0 bg-gradient-to-b from-neutral-900 to-black z-0" />
-            )}
-          </motion.div>
-        ))}
+            </div>
+          ))}
+        </div>
 
         {/* Contenu du slide */}
         <AnimatePresence mode="wait">
@@ -440,73 +434,25 @@ export function HomeContent() {
             <ArrowDown className="h-4 w-4 text-white animate-bounce" />
           </div>
         </motion.div>
-      </section>
+      </header>
 
-      {/* Concept Section */}
-      <section className="py-24 md:py-32 bg-neutral-950">
+      {/* Section Caractéristiques */}
+      <section className="py-20 md:py-28 bg-neutral-950">
         <div className="container mx-auto px-4">
-          <div className="grid md:grid-cols-2 gap-12 items-center">
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8 }}
-            >
-              <h2 className="text-3xl md:text-4xl font-medium tracking-tight mb-6">
-                Une nouvelle approche de la mobilité urbaine
-              </h2>
-              <p className="text-gray-400 text-lg leading-relaxed">
-                Nous redéfinissons les standards de la mobilité électrique en associant technologie de pointe, design raffiné et performance exceptionnelle. Chaque détail est pensé pour vous offrir une expérience de conduite unique.
-              </p>
-            </motion.div>
-            <motion.div
-              initial={{ opacity: 0, x: 20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8 }}
-              className="relative h-[400px] rounded-2xl overflow-hidden"
-            >
-              <Image
-                src="/header-p4.jpg"
-                alt="Concept"
-                fill
-                className="object-cover"
-              />
-            </motion.div>
-          </div>
-        </div>
-      </section>
-
-      {/* Features Section */}
-      <section className="py-24 md:py-32 bg-black">
-        <div className="container mx-auto px-4">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-            className="text-center mb-16"
-          >
-            <h2 className="text-3xl md:text-4xl font-medium tracking-tight mb-4">
-              Une expérience unique
-            </h2>
-            <p className="text-gray-400 text-lg max-w-2xl mx-auto">
-              Des services premium pour une mobilité électrique sans compromis.
-            </p>
-          </motion.div>
-
           <div className="grid md:grid-cols-3 gap-8">
             {features.map((feature, index) => (
               <motion.div
                 key={feature.title}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.2, duration: 0.8 }}
-                className="text-center p-6"
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                viewport={{ once: true, margin: "-10%" }}
+                className="bg-neutral-900/50 backdrop-blur-sm rounded-xl p-6 border border-neutral-800"
               >
-                <feature.icon className="h-8 w-8 mx-auto mb-4" />
-                <h3 className="text-xl font-medium mb-2">{feature.title}</h3>
+                <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mb-4">
+                  <feature.icon className="h-6 w-6 text-primary" />
+                </div>
+                <h3 className="text-xl font-semibold mb-2">{feature.title}</h3>
                 <p className="text-gray-400">{feature.description}</p>
               </motion.div>
             ))}
@@ -514,41 +460,55 @@ export function HomeContent() {
         </div>
       </section>
 
-      {/* Services Section with Apple Cards Carousel */}
-      <section className="py-24 md:py-32 bg-neutral-950">
+      {/* Section Services */}
+      <section id="services" className="py-24 bg-background relative overflow-hidden">
         <div className="container mx-auto px-4">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-            className="text-center mb-16"
-          >
-            <h2 className="text-3xl md:text-4xl font-medium tracking-tight mb-4">
-              Nos Services
-            </h2>
-            <p className="text-gray-400 text-lg max-w-2xl mx-auto">
-              Découvrez notre gamme complète de services premium.
-            </p>
-          </motion.div>
+          <div className="flex flex-col items-center text-center mb-12">
+            <motion.div
+              initial={fadeIn.initial}
+              whileInView={fadeIn.animate}
+              transition={fadeIn.transition}
+              viewport={{ once: true, margin: "-10%" }}
+              className="max-w-3xl"
+            >
+              <h2 className="text-3xl md:text-4xl font-bold mb-4">Nos Services</h2>
+              <p className="text-neutral-400">
+                TROTT'e Perf vous propose une gamme complète de services premium pour répondre à tous vos besoins en matière de mobilité électrique.
+              </p>
+            </motion.div>
+          </div>
 
           <Carousel
             items={services.map((service, index) => (
-              <Card key={service.title} card={service} index={index} layout />
+              <Card
+                key={service.title}
+                card={{
+                  title: service.title,
+                  category: service.category,
+                  content: service.content,
+                  src: service.src
+                }}
+                index={index}
+                layout
+              />
             ))}
           />
         </div>
       </section>
 
-      {/* Clients Section */}
-      <section className="py-24 md:py-32 bg-black overflow-hidden">
-        <div className="container mx-auto px-4">
-         <LogoCloud />
-        </div>
-      </section>
+      {/* SECTION - DISTRIBUTEUR OFFICIEL */}
+      <BrandsSlider />
+
+
 
       {/* Text Reveal Section */}
       <TextReveal>{revealText}</TextReveal>
+
+      {/* SECTION - ACTUALITÉS */}
+      <NewsSection />
+
+      {/* SECTION - ILS PARLENT DE NOUS */}
+      <PressSection />
 
       {/* CTA Section */}
       <section className="py-24 md:py-32 bg-neutral-950">
@@ -556,7 +516,7 @@ export function HomeContent() {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
+            viewport={{ once: true, margin: "-10%" }}
             transition={{ duration: 0.8 }}
           >
             <h2 className="text-3xl md:text-4xl font-medium tracking-tight mb-6">
