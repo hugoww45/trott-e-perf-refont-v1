@@ -504,9 +504,6 @@ export function HomeContent() {
       {/* Text Reveal Section */}
       <TextReveal>{revealText}</TextReveal>
 
-      {/* SECTION - ACTUALITÉS */}
-      <NewsSection />
-
       {/* SECTION - ILS PARLENT DE NOUS */}
       <PressSection />
 

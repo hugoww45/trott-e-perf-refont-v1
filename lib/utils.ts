@@ -20,23 +20,28 @@ export function formatPrice(amount: string, currencyCode: string) {
  * @returns Le numéro formaté (ex: +33612345678)
  */
 export function formatPhoneNumber(phone: string): string {
-  // Supprime tous les caractères non numériques
-  let cleaned = phone.replace(/\D/g, '')
-
-  // Si le numéro ne commence pas par +, ajouter +33 (France)
-  if (cleaned.length > 0 && !phone.startsWith('+')) {
-    // Si commence par 0, remplacer par +33
-    if (cleaned.startsWith('0')) {
-      cleaned = '33' + cleaned.substring(1)
-    } else {
-      cleaned = '33' + cleaned
-    }
+  // Si vide, retourner une chaîne vide
+  if (!phone || phone.trim() === '') {
+    return '';
   }
 
-  // Ajouter le + si nécessaire
-  if (cleaned.length > 0 && !cleaned.startsWith('+')) {
-    cleaned = '+' + cleaned
+  // Supprime tous les caractères non numériques et le + (on le rajoutera après)
+  let cleaned = phone.replace(/[^0-9]/g, '');
+
+  // Pour les numéros français
+  if (cleaned.startsWith('0') && cleaned.length === 10) {
+    // Remplacer le 0 initial par 33
+    cleaned = '33' + cleaned.substring(1);
+  }
+  // Si le numéro commence déjà par 33 et a la bonne longueur
+  else if (cleaned.startsWith('33') && cleaned.length === 11) {
+    // On le laisse tel quel
+  }
+  // Si le numéro a 9 chiffres et commence probablement par un 6 ou 7 (mobile français)
+  else if ((cleaned.startsWith('6') || cleaned.startsWith('7')) && cleaned.length === 9) {
+    cleaned = '33' + cleaned;
   }
 
-  return cleaned
+  // Ajouter le + au début
+  return '+' + cleaned;
 }

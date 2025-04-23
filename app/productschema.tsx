@@ -16,8 +16,8 @@ export default function ProductSchema({ product }: ProductSchemaProps) {
     const imageUrl = firstImage?.url || ''
 
     const firstVariant = product.variants.edges[0]?.node
-    const price = firstVariant?.price.amount || product.priceRange.minVariantPrice.amount
-    const currency = firstVariant?.price.currencyCode || product.priceRange.minVariantPrice.currencyCode
+    const price = firstVariant?.price.amount || (product.priceRange?.minVariantPrice?.amount || '0')
+    const currency = firstVariant?.price.currencyCode || (product.priceRange?.minVariantPrice?.currencyCode || 'EUR')
 
     const inStock = product.availableForSale ||
                    product.variants.edges.some(edge => edge.node.availableForSale)
@@ -33,6 +33,11 @@ export default function ProductSchema({ product }: ProductSchemaProps) {
       url: `https://trotte-perf.fr/boutique/${product.handle}?variant=${edge.node.id}`
     }))
 
+    // Calculer le prix minimum en vérifiant si priceRange existe
+    const lowPrice = product.priceRange?.minVariantPrice?.amount ||
+                    firstVariant?.price.amount ||
+                    '0'
+
     const productSchema = {
       '@context': 'https://schema.org',
       '@type': 'Product',
@@ -47,7 +52,7 @@ export default function ProductSchema({ product }: ProductSchemaProps) {
       },
       offers: {
         '@type': 'AggregateOffer',
-        lowPrice: product.priceRange.minVariantPrice.amount,
+        lowPrice: lowPrice,
         priceCurrency: currency,
         availability: inStock
           ? 'https://schema.org/InStock'

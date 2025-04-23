@@ -41,7 +41,7 @@ export default function FinancementPage() {
         {/* Nouveau divider avec animation */}
         <div className="relative h-32 overflow-hidden">
           <motion.div
-            className="absolute inset-0 bg-gradient-to-r from-primary/10 via-blue-500/10 to-primary/10"
+            className="absolute inset-0 bg-gradient-to-r"
             animate={{
               backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"],
             }}
@@ -73,34 +73,6 @@ export default function FinancementPage() {
           <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.01)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.01)_1px,transparent_1px)] bg-[size:40px_40px] opacity-30"></div>
 
           {/* Particules flottantes */}
-          <div className="absolute inset-0 z-0">
-            {Array.from({ length: 10 }).map((_, i) => (
-              <motion.div
-                key={i}
-                className="absolute w-2 h-2 rounded-full bg-primary"
-                initial={{
-                  x: Math.random() * 100 + "%",
-                  y: Math.random() * 100 + "%",
-                  opacity: 0.1,
-                  scale: 0.8
-                }}
-                animate={{
-                  y: [0, -15, 0],
-                  opacity: [0.2, 0.7, 0.2],
-                  scale: [1, 1.2, 1],
-                }}
-                transition={{
-                  duration: 5 + i * 0.5,
-                  repeat: Infinity,
-                  ease: "easeInOut"
-                }}
-                style={{
-                  filter: "blur(1px)"
-                }}
-              />
-            ))}
-          </div>
-
           <div className="container mx-auto px-4 relative z-10">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -186,27 +158,7 @@ export default function FinancementPage() {
         </section>
 
         {/* Decorative Element */}
-        <div className="relative overflow-hidden">
-          <div className="absolute left-0 w-96 h-96 rounded-full bg-primary/10 blur-[100px] opacity-60 -translate-y-1/2" />
-          <div className="container mx-auto px-4 py-16">
-            <div className="flex justify-center">
-              <div className="w-16 h-16 rounded-full bg-primary/5 border border-primary/20 flex items-center justify-center">
-                <motion.div
-                  className="w-4 h-4 bg-primary rounded-full"
-                  animate={{
-                    scale: [1, 1.5, 1],
-                    opacity: [0.5, 1, 0.5],
-                  }}
-                  transition={{
-                    duration: 2,
-                    repeat: Infinity,
-                    ease: "easeInOut",
-                  }}
-                />
-              </div>
-            </div>
-          </div>
-        </div>
+
 
         <StepsSection />
         <TestimonialSection />

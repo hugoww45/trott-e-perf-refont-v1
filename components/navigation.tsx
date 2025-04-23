@@ -5,7 +5,7 @@ import Link from "next/link"
 import { usePathname, useRouter } from "next/navigation"
 import { cn } from "@/lib/utils"
 import Image from "next/image"
-import { Zap, Search, ShoppingBag, ChevronDown, X, Menu } from "lucide-react"
+import { Zap, Search, ShoppingBag, ChevronDown, X, Menu, User } from "lucide-react"
 import { motion, AnimatePresence } from "framer-motion"
 import { useTheme } from "next-themes"
 import { useEffect, useState } from "react"
@@ -428,7 +428,7 @@ export function Navigation() {
                     )}
                   >
                     {item.name}
-                    {item.hasMegaMenu}
+                    {item.hasMegaMenu && <ChevronDown className="h-4 w-4 opacity-70" />}
                   </Link>
                 </div>
               ))}
@@ -441,6 +441,16 @@ export function Navigation() {
               </div>
 
               <Cart />
+
+              <Link href="/compte">
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="text-white focus:outline-none hover:bg-white/10 transition-colors"
+                >
+                  <User className="h-5 w-5" />
+                </Button>
+              </Link>
 
               {/* Bouton hamburger mobile */}
               <Button

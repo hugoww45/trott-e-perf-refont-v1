@@ -1,7 +1,7 @@
 "use client"
 
 import Link from "next/link"
-import { Zap } from "lucide-react"
+import { Zap, Twitter, Instagram, Linkedin } from "lucide-react"
 import { motion } from "framer-motion"
 
 const footerLinks = {
@@ -26,6 +26,12 @@ const footerLinks = {
     { name: "Mentions légales", href: "/mentions-legales" },
   ],
 }
+
+const socialLinks = [
+  { name: "Twitter", href: "https://twitter.com", icon: Twitter },
+  { name: "Instagram", href: "https://instagram.com", icon: Instagram },
+  { name: "LinkedIn", href: "https://linkedin.com", icon: Linkedin },
+]
 
 export function Footer() {
   return (
@@ -102,8 +108,9 @@ export function Footer() {
 
         {/* Bottom Footer */}
         <div className="border-t border-neutral-900 py-8">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-            <div className="flex items-center space-x-4">
+          <div className="flex flex-col md:flex-row items-center md:justify-between gap-4">
+            {/* Logo à gauche */}
+            <div className="flex items-center md:w-1/4">
               <Link
                 href="/"
                 className="flex items-center text-sm font-medium text-gray-300 hover:text-white transition-colors"
@@ -113,35 +120,25 @@ export function Footer() {
               </Link>
             </div>
 
-            <p className="text-sm text-gray-400">
-              Copyright © {new Date().getFullYear()} Trott E Perf. Tous droits réservés.
-            </p>
+            {/* Réseaux sociaux au milieu */}
+            <div className="flex items-center justify-center space-x-8 my-6 md:my-0 order-last md:order-none md:w-2/4">
+              {socialLinks.map((social) => (
+                <Link
+                  key={social.name}
+                  href={social.href}
+                  className="text-gray-400 hover:text-white transition-colors transform hover:scale-110 duration-200"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={social.name}
+                >
+                  <social.icon className="h-6 w-6 md:h-7 md:w-7" />
+                </Link>
+              ))}
+            </div>
 
-            <div className="flex space-x-6">
-              <Link
-                href="https://twitter.com"
-                className="text-gray-400 hover:text-white transition-colors"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Twitter
-              </Link>
-              <Link
-                href="https://instagram.com"
-                className="text-gray-400 hover:text-white transition-colors"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Instagram
-              </Link>
-              <Link
-                href="https://linkedin.com"
-                className="text-gray-400 hover:text-white transition-colors"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                LinkedIn
-              </Link>
+            {/* Copyright à droite en plus petit */}
+            <div className="text-xs text-gray-500 md:w-1/4 md:text-right">
+              Copyright © {new Date().getFullYear()} Trott E Perf. Tous droits réservés.
             </div>
           </div>
         </div>

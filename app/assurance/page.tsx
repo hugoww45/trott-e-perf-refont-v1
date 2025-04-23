@@ -24,108 +24,245 @@ export default function AssurancePage() {
 
       {/* Barre de progression */}
       <motion.div
-        className="fixed top-0 left-0 right-0 h-[3px] bg-primary z-50 origin-left"
+        className="fixed top-0 left-0 right-0 h-[2px] bg-primary z-[60] origin-left"
         style={{ scaleX: scrollYProgress }}
       />
 
-      {/* Hero Section */}
-      <section className="relative h-screen flex items-center justify-center overflow-hidden">
-        {/* Fond avec gradient animé */}
+      {/* Hero Section - Style Apple */}
+      <section className="relative min-h-screen flex flex-col justify-center overflow-hidden bg-black">
+        {/* Canvas de fond avec effet profondeur */}
         <div className="absolute inset-0 w-full h-full">
-          <div className="absolute inset-0 bg-black/70 backdrop-blur-sm z-10" />
-          <Image
-            src="/header-p3.jpg"
-            alt="Assurance trottinette"
-            fill
-            className="object-cover opacity-40"
+          <div className="absolute inset-0 bg-gradient-to-b from-black via-neutral-950 to-black z-10" />
+
+          {/* Image de fond avec effet de parallaxe subtil */}
+          <motion.div
+            className="absolute inset-0 w-full h-full"
+            initial={{ scale: 1.05 }}
+            animate={{ scale: 1 }}
+            transition={{ duration: 3, ease: "easeOut" }}
+          >
+            <Image
+              src="/header-p3.jpg"
+              alt="Assurance trottinette"
+              fill
+              className="object-cover opacity-30 blur-[1px]"
+              priority
+            />
+          </motion.div>
+        </div>
+
+        {/* Overlays lumineux */}
+        <div className="absolute inset-0 z-20 overflow-hidden">
+          {/* Glow primaire */}
+          <motion.div
+            className="absolute top-1/3 left-1/4 w-[800px] h-[800px] rounded-full bg-primary/5 blur-[150px]"
+            animate={{
+              scale: [1, 1.1, 1],
+              opacity: [0.4, 0.6, 0.4],
+            }}
+            transition={{
+              duration: 8,
+              repeat: Infinity,
+              repeatType: "mirror",
+              ease: "easeInOut"
+            }}
+          />
+
+          {/* Glow secondaire */}
+          <motion.div
+            className="absolute bottom-1/4 right-1/4 w-[600px] h-[600px] rounded-full bg-blue-500/5 blur-[150px]"
+            animate={{
+              scale: [1, 1.15, 1],
+              opacity: [0.3, 0.5, 0.3],
+            }}
+            transition={{
+              duration: 10,
+              repeat: Infinity,
+              repeatType: "mirror",
+              ease: "easeInOut",
+              delay: 1
+            }}
           />
         </div>
 
-        {/* Gradient lumineux animé */}
-        <motion.div
-          className="absolute top-1/4 left-1/3 w-[500px] h-[500px] rounded-full bg-primary/10 blur-[150px] opacity-30"
-          animate={{
-            x: [0, 30, 0],
-            y: [0, -20, 0],
-            opacity: [0.2, 0.35, 0.2]
-          }}
-          transition={{
-            duration: 8,
-            repeat: Infinity,
-            ease: "easeInOut"
-          }}
-        />
-
-        <motion.div
-          className="relative z-20 container mx-auto px-4 text-center"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 1, delay: 0.3 }}
-        >
-          <motion.h1
-            className="text-6xl md:text-7xl lg:text-8xl font-medium tracking-tight mb-6"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.5 }}
-          >
-            Ridez couvert,
-            <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-primary/70">
-              en toute sérénité.
-            </span>
-          </motion.h1>
-          <motion.p
-            className="text-xl md:text-2xl text-gray-200 max-w-2xl mx-auto mb-12 font-light"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.7 }}
-          >
-            Nos trottinettes méritent la meilleure protection. Vous aussi.
-          </motion.p>
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.9 }}
-          >
-            <Button
-              size="lg"
-              className="rounded-full bg-white text-black hover:bg-white/90 min-w-[200px] transition-all duration-300 h-12 text-base"
-              onClick={() => {
-                if (experienceRef.current) {
-                  experienceRef.current.scrollIntoView({ behavior: "smooth" });
-                }
-              }}
+        {/* Contenu principal */}
+        <div className="container mx-auto px-4 relative z-30 mt-20">
+          <div className="flex flex-col items-center">
+            {/* Badge premium */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+              className="mb-8"
             >
-              Découvrir
-              <ArrowRight className="ml-2 h-4 w-4" />
-            </Button>
+              <span className="inline-flex items-center px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-xl border border-white/20 text-sm font-medium text-white">
+                <Shield className="h-3.5 w-3.5 mr-2 text-primary" />
+                Protection Premium
+              </span>
+            </motion.div>
+
+            {/* Titre avec animation séquentielle */}
+            <div className="relative">
+              <motion.h1
+                className="text-7xl md:text-8xl lg:text-9xl font-bold tracking-tight text-center mb-6 text-white"
+                initial={{ opacity: 0, y: 40 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.3 }}
+              >
+                <span className="inline-block">Sécurité</span>{" "}
+                <span className="inline-block relative">
+                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-primary/90 to-blue-400">
+                    absolue
+                  </span>
+                  <motion.span
+                    className="absolute bottom-0 left-0 h-1 bg-gradient-to-r from-primary to-blue-400 w-full opacity-70"
+                    initial={{ scaleX: 0 }}
+                    animate={{ scaleX: 1 }}
+                    transition={{ duration: 1.2, delay: 1.1 }}
+                  />
+                </span>
+              </motion.h1>
+            </div>
+
+            {/* Sous-titre */}
+            <motion.p
+              className="text-xl md:text-2xl text-gray-400 max-w-2xl mx-auto mb-12 text-center font-light"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.6 }}
+            >
+              Une protection complète conçue pour votre tranquillité.
+              Aussi innovante que votre trottinette.
+            </motion.p>
+
+            {/* CTA boutons */}
+            <motion.div
+              className="flex flex-col sm:flex-row gap-4 items-center justify-center"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.9 }}
+            >
+              <Button
+                size="lg"
+                className="rounded-full bg-primary hover:bg-primary/90 min-w-[200px] transition-all duration-300 h-14 text-base font-medium"
+                onClick={() => {
+                  if (experienceRef.current) {
+                    experienceRef.current.scrollIntoView({ behavior: "smooth" });
+                  }
+                }}
+              >
+                Obtenir un devis
+                <ArrowRight className="ml-2 h-4 w-4" />
+              </Button>
+
+              <Button
+                variant="outline"
+                size="lg"
+                className="rounded-full border-white/20 hover:bg-white/10 min-w-[200px] transition-all duration-300 h-14 text-base font-medium"
+                onClick={() => {
+                  if (coverageRef.current) {
+                    coverageRef.current.scrollIntoView({ behavior: "smooth" });
+                  }
+                }}
+              >
+                Découvrir nos formules
+              </Button>
+            </motion.div>
+          </div>
+
+          {/* Aperçu visuel du produit */}
+          <motion.div
+            className="mt-16 md:mt-20 relative max-w-5xl mx-auto"
+            initial={{ opacity: 0, y: 40 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1, delay: 1.2 }}
+          >
+            <div className="relative">
+              {/* Cadre avec effet de profondeur */}
+              <div className="absolute inset-0 -m-6 bg-gradient-to-b from-primary/20 to-blue-500/20 rounded-3xl blur-xl opacity-30" />
+
+              {/* Image de la carte d'assurance */}
+              <div className="bg-gradient-to-br from-neutral-900 to-black rounded-2xl p-8 border border-white/10 shadow-2xl flex items-center justify-between overflow-hidden relative">
+                <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-primary/5 to-black/0" />
+
+                <div className="relative z-10 flex flex-col md:flex-row items-center justify-between w-full gap-6">
+                  <div className="text-left">
+                    <div className="text-sm text-gray-400 mb-1">ASSURANCE TROTT E PERF</div>
+                    <h3 className="text-2xl font-medium text-white mb-4">Protection Intégrale</h3>
+                    <div className="flex items-center gap-4">
+                      <span className="inline-flex items-center text-sm text-white">
+                        <CheckCircle className="h-4 w-4 text-primary mr-1.5" />
+                        Vol & Dommages
+                      </span>
+                      <span className="inline-flex items-center text-sm text-white">
+                        <CheckCircle className="h-4 w-4 text-primary mr-1.5" />
+                        Assistance 24/7
+                      </span>
+                    </div>
+                  </div>
+
+                  <div className="relative flex items-center justify-center">
+                    <div className="absolute inset-0 bg-primary/20 rounded-full blur-xl opacity-70 h-32 w-32" />
+                    <div className="bg-gradient-to-br from-primary to-blue-600 h-20 w-20 rounded-full flex items-center justify-center">
+                      <Shield className="h-10 w-10 text-white" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Logos des partenaires */}
+            <div className="mt-12 flex flex-wrap items-center justify-center gap-x-12 gap-y-6">
+              <motion.p
+                className="text-gray-500 text-sm mr-6"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.8, delay: 1.4 }}
+              >
+                En partenariat avec :
+              </motion.p>
+              {[1, 2, 3].map((_, index) => (
+                <motion.div
+                  key={index}
+                  className="h-6 opacity-50 grayscale hover:grayscale-0 hover:opacity-100 transition-all duration-300"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 0.5 }}
+                  transition={{ duration: 0.5, delay: 1.6 + index * 0.1 }}
+                >
+                  <div className="h-6 w-24 bg-gray-400/20 rounded-md"></div>
+                </motion.div>
+              ))}
+            </div>
           </motion.div>
-        </motion.div>
+        </div>
 
         {/* Scroll indicator */}
         <motion.div
-          className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20"
+          className="absolute bottom-10 left-1/2 -translate-x-1/2 z-30"
           initial={{ opacity: 0 }}
-          animate={{ opacity: 1, y: [0, 10, 0] }}
+          animate={{ opacity: 0.7, y: [0, 8, 0] }}
           transition={{
-            opacity: { delay: 1.5, duration: 1 },
-            y: { delay: 1.5, duration: 1.5, repeat: Infinity, repeatType: "loop" }
+            opacity: { delay: 2, duration: 1 },
+            y: { delay: 2, duration: 1.5, repeat: Infinity, repeatType: "loop" }
           }}
         >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            className="text-white/80"
-          >
-            <path d="M12 5v14M5 12l7 7 7-7" />
-          </svg>
+          <div className="flex flex-col items-center gap-2">
+            <span className="text-xs uppercase tracking-widest text-gray-500">Découvrir</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="text-gray-500"
+            >
+              <path d="M12 5v14M5 12l7 7 7-7" />
+            </svg>
+          </div>
         </motion.div>
       </section>
 
@@ -213,10 +350,9 @@ export default function AssurancePage() {
         </div>
       </section>
 
-      {/* Divider with animation */}
       <div className="relative h-32 overflow-hidden">
         <motion.div
-          className="absolute inset-0 bg-gradient-to-r from-primary/10 via-blue-500/10 to-primary/10"
+          className="absolute inset-0 bg-gradient-to-r "
           animate={{
             backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"],
           }}

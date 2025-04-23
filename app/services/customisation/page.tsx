@@ -1,6 +1,6 @@
 "use client"
 
-import { motion, useScroll, useTransform, useMotionValue, useSpring, AnimatePresence } from "framer-motion"
+import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion"
 import { Navigation } from "@/components/navigation"
 import { Footer } from "@/components/footer"
 import {
@@ -14,37 +14,42 @@ import {
   ChevronDown,
   Battery,
   Shield,
-  Cpu
+  Cpu,
+  ChevronRight,
+  ArrowUpRight,
+  CheckCircle,
+  CircleSlash,
+  Layers
 } from "lucide-react"
 import Image from "next/image"
-import { useRef, useEffect, useState } from "react"
+import { useRef, useState } from "react"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
-import gsap from "gsap"
-import { ScrollTrigger } from "gsap/ScrollTrigger"
-
-if (typeof window !== "undefined") {
-  gsap.registerPlugin(ScrollTrigger)
-}
 
 const features = [
   {
     title: "Performance",
     description: "Optimisation sur mesure de votre trottinette pour des performances exceptionnelles.",
     icon: Gauge,
-    color: "from-blue-500/20 to-blue-500/5"
+    color: "from-amber-500 to-orange-600",
+    bgLight: "bg-amber-500/10",
+    bgDark: "bg-amber-900/30"
   },
   {
     title: "Design",
     description: "Un design unique qui reflète votre personnalité et votre style.",
     icon: Palette,
-    color: "from-purple-500/20 to-purple-500/5"
+    color: "from-purple-500 to-indigo-600",
+    bgLight: "bg-purple-500/10",
+    bgDark: "bg-purple-900/30"
   },
   {
     title: "Innovation",
     description: "Les dernières technologies pour une expérience de conduite inégalée.",
     icon: Cpu,
-    color: "from-green-500/20 to-green-500/5"
+    color: "from-blue-500 to-cyan-600",
+    bgLight: "bg-blue-500/10",
+    bgDark: "bg-blue-900/30"
   }
 ]
 
@@ -53,19 +58,22 @@ const customizationOptions = [
     title: "Motorisation",
     options: ["Standard", "Sport", "Performance"],
     icon: Zap,
-    currentOption: 0
+    currentOption: 0,
+    color: "from-amber-500 to-orange-600"
   },
   {
     title: "Batterie",
     options: ["Urbaine", "Longue Distance", "Ultra Capacité"],
     icon: Battery,
-    currentOption: 0
+    currentOption: 0,
+    color: "from-emerald-500 to-teal-600"
   },
   {
     title: "Protection",
     options: ["Basic", "Advanced", "Ultimate"],
     icon: Shield,
-    currentOption: 0
+    currentOption: 0,
+    color: "from-blue-500 to-indigo-600"
   }
 ]
 
@@ -87,280 +95,640 @@ const steps = [
   }
 ]
 
+const comparisons = [
+  {
+    feature: "Design personalisé",
+    standard: false,
+    custom: true
+  },
+  {
+    feature: "Performance optimisée",
+    standard: false,
+    custom: true
+  },
+  {
+    feature: "Pièces premium",
+    standard: false,
+    custom: true
+  },
+  {
+    feature: "Batterie améliorée",
+    standard: false,
+    custom: true
+  },
+  {
+    feature: "Personnalisation complète",
+    standard: false,
+    custom: true
+  },
+]
+
 export default function CustomisationPage() {
   const containerRef = useRef<HTMLDivElement>(null)
   const [activeFeature, setActiveFeature] = useState(0)
-  const mouseX = useMotionValue(0)
-  const mouseY = useMotionValue(0)
-  const springConfig = { damping: 25, stiffness: 700 }
-  const mouseXSpring = useSpring(mouseX, springConfig)
-  const mouseYSpring = useSpring(mouseY, springConfig)
+  const [activeTab, setActiveTab] = useState(0)
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start end", "end start"]
   })
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setActiveFeature((prev) => (prev + 1) % features.length)
-    }, 5000)
-    return () => clearInterval(interval)
-  }, [])
-
-  useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      const { clientX, clientY } = e
-      const { innerWidth, innerHeight } = window
-      const x = clientX / innerWidth
-      const y = clientY / innerHeight
-      mouseX.set(x)
-      mouseY.set(y)
-    }
-
-    window.addEventListener("mousemove", handleMouseMove)
-    return () => window.removeEventListener("mousemove", handleMouseMove)
-  }, [mouseX, mouseY])
-
   return (
-    <main className="min-h-screen bg-background">
-      <div className="fixed top-0 z-50 w-full backdrop-blur-xl bg-background/20 supports-[backdrop-filter]:bg-background/20 border-b border-border/40">
+    <main className="min-h-screen bg-black text-white">
+      {/* Barre de progression */}
+      <motion.div
+        className="fixed top-0 left-0 right-0 h-[2px] bg-white z-[60] origin-left"
+        style={{ scaleX: scrollYProgress }}
+      />
+
+      <div className="fixed top-0 z-50 w-full backdrop-blur-xl bg-black/20 supports-[backdrop-filter]:bg-black/20 border-b border-white/10">
         <Navigation />
       </div>
 
       <div ref={containerRef}>
-        {/* Hero Section */}
-        <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-          <motion.div
-            className="absolute inset-0 w-full h-full"
-            style={{
-              backgroundImage: "url('https://images.unsplash.com/photo-1604868189744-bf0227c9c85b?w=1600&h=900&fit=crop')",
-              backgroundSize: "cover",
-              backgroundPosition: "center",
-              scale: 1.1,
-              x: useTransform(mouseXSpring, [0, 1], [-20, 20]),
-              y: useTransform(mouseYSpring, [0, 1], [-20, 20])
-            }}
-          />
-          <div className="absolute inset-0 bg-black/60 backdrop-blur-[1px] z-10" />
+        {/* Hero Section - Style Apple */}
+        <section className="relative min-h-screen flex flex-col justify-center overflow-hidden bg-black">
+          {/* Canvas de fond avec effet profondeur */}
+          <div className="absolute inset-0 w-full h-full">
+            <div className="absolute inset-0 bg-gradient-to-b from-black via-neutral-950 to-black z-10" />
 
-          <div className="relative z-20 container mx-auto px-4">
+            {/* Image de fond avec effet de parallaxe subtil */}
             <motion.div
-              className="max-w-4xl mx-auto text-center"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
+              className="absolute inset-0 w-full h-full"
+              initial={{ scale: 1.05 }}
+              animate={{ scale: 1 }}
+              transition={{ duration: 3, ease: "easeOut" }}
             >
-              <motion.div
-                className="mb-8"
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ delay: 0.2, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-              >
-                <span className="inline-block px-4 py-2 rounded-full bg-white/10 backdrop-blur-sm text-sm font-medium mb-6">
-                  Customisation Premium
-                </span>
-                <h1 className="text-6xl md:text-7xl lg:text-8xl font-medium tracking-tight mb-8">
-                  L'excellence,
-                  <br />
-                  personnalisée.
-                </h1>
-                <p className="text-xl md:text-2xl text-gray-300 font-light max-w-2xl mx-auto">
-                  Une expérience unique de personnalisation, où chaque détail reflète votre vision.
-                </p>
-              </motion.div>
-
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.4, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-                className="flex flex-col sm:flex-row gap-4 justify-center items-center"
-              >
-                <Button
-                  size="lg"
-                  className="min-w-[200px] h-12 rounded-full bg-white text-black hover:bg-white/90"
-                >
-                  Découvrir
-                  <ArrowRight className="ml-2 h-4 w-4" />
-                </Button>
-              </motion.div>
+              <Image
+                src="https://images.unsplash.com/photo-1604868189744-bf0227c9c85b"
+                alt="Customisation trottinette"
+                fill
+                className="object-cover opacity-30 blur-[1px]"
+                priority
+              />
             </motion.div>
           </div>
 
+          {/* Overlays lumineux */}
+          <div className="absolute inset-0 z-20 overflow-hidden">
+            {/* Glow primaire */}
+            <motion.div
+              className="absolute top-1/3 left-1/4 w-[800px] h-[800px] rounded-full bg-purple-600/5 blur-[150px]"
+              animate={{
+                scale: [1, 1.1, 1],
+                opacity: [0.4, 0.6, 0.4],
+              }}
+              transition={{
+                duration: 8,
+                repeat: Infinity,
+                repeatType: "mirror",
+                ease: "easeInOut"
+              }}
+            />
+
+            {/* Glow secondaire */}
+            <motion.div
+              className="absolute bottom-1/4 right-1/4 w-[600px] h-[600px] rounded-full bg-amber-500/5 blur-[150px]"
+              animate={{
+                scale: [1, 1.15, 1],
+                opacity: [0.3, 0.5, 0.3],
+              }}
+              transition={{
+                duration: 10,
+                repeat: Infinity,
+                repeatType: "mirror",
+                ease: "easeInOut",
+                delay: 1
+              }}
+            />
+          </div>
+
+          {/* Contenu principal */}
+          <div className="container mx-auto px-4 relative z-30 mt-20">
+            <div className="flex flex-col items-center">
+              {/* Badge premium */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6 }}
+                className="mb-8"
+              >
+                <span className="inline-flex items-center px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-xl border border-white/20 text-sm font-medium text-white">
+                  <Paintbrush className="h-3.5 w-3.5 mr-2 text-purple-400" />
+                  Service Personnalisation
+                </span>
+              </motion.div>
+
+              {/* Titre avec animation séquentielle */}
+              <div className="relative">
+                <motion.h1
+                  className="text-7xl md:text-8xl lg:text-9xl font-bold tracking-tight text-center mb-6 text-white"
+                  initial={{ opacity: 0, y: 40 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.8, delay: 0.3 }}
+                >
+                  <span className="inline-block">L'excellence</span>{" "}
+                  <span className="inline-block relative">
+                    <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-purple-500 to-amber-500">
+                      personnalisée
+                    </span>
+                    <motion.span
+                      className="absolute bottom-0 left-0 h-1 bg-gradient-to-r from-purple-400 to-amber-500 w-full opacity-70"
+                      initial={{ scaleX: 0 }}
+                      animate={{ scaleX: 1 }}
+                      transition={{ duration: 1.2, delay: 1.1 }}
+                    />
+                  </span>
+                </motion.h1>
+              </div>
+
+              {/* Sous-titre */}
+              <motion.p
+                className="text-xl md:text-2xl text-gray-400 max-w-2xl mx-auto mb-12 text-center font-light"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.6 }}
+              >
+                Une expérience unique où chaque détail reflète votre vision.
+                Votre trottinette, à votre image.
+              </motion.p>
+
+              {/* CTA boutons */}
+              <motion.div
+                className="flex flex-col sm:flex-row gap-4 items-center justify-center"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.7, delay: 0.9 }}
+              >
+                <Button
+                  size="lg"
+                  className="rounded-full bg-gradient-to-r from-purple-500 to-amber-500 hover:opacity-90 min-w-[200px] transition-all duration-300 h-14 text-base font-medium"
+                >
+                  Personnaliser maintenant
+                  <ArrowRight className="ml-2 h-4 w-4" />
+                </Button>
+
+                <Button
+                  variant="outline"
+                  size="lg"
+                  className="rounded-full border-white/20 hover:bg-white/10 min-w-[200px] transition-all duration-300 h-14 text-base font-medium"
+                >
+                  En savoir plus
+                </Button>
+              </motion.div>
+            </div>
+          </div>
+
+          {/* Scroll indicator */}
           <motion.div
-            className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20"
+            className="absolute bottom-10 left-1/2 -translate-x-1/2 z-30"
             initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 1, duration: 0.8 }}
+            animate={{ opacity: 0.7, y: [0, 8, 0] }}
+            transition={{
+              opacity: { delay: 2, duration: 1 },
+              y: { delay: 2, duration: 1.5, repeat: Infinity, repeatType: "loop" }
+            }}
           >
-            <ChevronDown className="h-6 w-6 animate-bounce text-white/80" />
+            <div className="flex flex-col items-center gap-2">
+              <span className="text-xs uppercase tracking-widest text-gray-500">Découvrir</span>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="text-gray-500"
+              >
+                <path d="M12 5v14M5 12l7 7 7-7" />
+              </svg>
+            </div>
           </motion.div>
         </section>
 
         {/* Features Section */}
-        <section className="py-24 md:py-32 bg-black relative overflow-hidden">
-          <div className="container mx-auto px-4">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8 }}
-              className="text-center mb-16"
-            >
-              <h2 className="text-3xl md:text-4xl font-medium tracking-tight mb-4">
-                Une expérience unique
-              </h2>
-              <p className="text-gray-400 text-lg max-w-2xl mx-auto">
-                Découvrez nos options de personnalisation premium
-              </p>
-            </motion.div>
+        <section className="py-32 bg-black relative overflow-hidden">
+          <div className="absolute inset-0 z-0">
+            <div className="absolute inset-0 bg-[url('/grid-pattern.png')] bg-center opacity-5"></div>
+          </div>
 
-            <div className="grid md:grid-cols-3 gap-8">
-              {features.map((feature, index) => (
-                <motion.div
-                  key={feature.title}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: index * 0.2, duration: 0.8 }}
-                  className={`relative group cursor-pointer ${
-                    activeFeature === index ? 'scale-105' : ''
-                  }`}
-                  onClick={() => setActiveFeature(index)}
-                >
-                  <div className={`absolute inset-0 bg-gradient-to-r ${feature.color} rounded-2xl opacity-0 group-hover:opacity-100 transition-all duration-500`} />
-                  <div className="relative bg-neutral-900/50 backdrop-blur-sm p-8 rounded-2xl border border-border/40">
-                    <feature.icon className="h-8 w-8 mb-6 text-white" />
-                    <h3 className="text-xl font-medium mb-4">{feature.title}</h3>
-                    <p className="text-gray-400">{feature.description}</p>
-                  </div>
-                </motion.div>
-              ))}
+          <div className="container mx-auto px-4 relative z-10">
+            <div className="max-w-7xl mx-auto">
+              <motion.div
+                className="text-center mb-20"
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-100px" }}
+                transition={{ duration: 0.8 }}
+              >
+                <span className="inline-block px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-sm text-sm font-medium mb-6">
+                  CARACTÉRISTIQUES
+                </span>
+                <h2 className="text-4xl md:text-5xl font-bold tracking-tight mb-6">
+                  Une customisation <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-amber-500">sans limites</span>
+                </h2>
+                <p className="text-xl text-gray-400 max-w-2xl mx-auto">
+                  Chaque aspect de votre trottinette peut être personnalisé selon vos préférences et besoins spécifiques.
+                </p>
+              </motion.div>
+
+              <div className="grid md:grid-cols-3 gap-6">
+                {features.map((feature, index) => (
+                  <motion.div
+                    key={index}
+                    className="group relative bg-neutral-900/70 backdrop-blur-sm rounded-3xl p-8 overflow-hidden border border-white/10"
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, margin: "-100px" }}
+                    transition={{ duration: 0.5, delay: index * 0.1 }}
+                    whileHover={{ y: -5 }}
+                  >
+                    <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                      <div className={`absolute inset-0 bg-gradient-to-br ${feature.bgDark} blur-xl opacity-30`}></div>
+                    </div>
+
+                    <div className="relative z-10">
+                      <div className={`w-16 h-16 rounded-2xl ${feature.bgLight} flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300`}>
+                        <feature.icon className={`h-8 w-8 text-gradient bg-gradient-to-r ${feature.color}`} />
+                      </div>
+
+                      <h3 className="text-2xl font-semibold mb-4">{feature.title}</h3>
+                      <p className="text-gray-400 mb-6">{feature.description}</p>
+
+                      <div className="inline-flex items-center text-sm font-medium text-white/70 group-hover:text-white transition-colors">
+                        <span>En savoir plus</span>
+                        <ArrowUpRight className="ml-2 h-4 w-4 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+                      </div>
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
             </div>
           </div>
         </section>
 
-        {/* Customization Options */}
-        <section className="py-24 md:py-32 bg-neutral-950">
-          <div className="container mx-auto px-4">
+        {/* Customization Options Section */}
+        <section className="py-32 bg-neutral-950 relative overflow-hidden">
+          <div className="absolute inset-0 z-0">
+            <div className="absolute top-0 right-0 w-3/4 h-full bg-gradient-radial from-purple-900/5 to-transparent opacity-30"></div>
+            <div className="absolute bottom-0 left-0 w-2/3 h-2/3 bg-gradient-radial from-amber-900/5 to-transparent opacity-20"></div>
+          </div>
+
+          <div className="container mx-auto px-4 relative z-10">
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
+              className="text-center mb-20"
+              initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
+              viewport={{ once: true, margin: "-100px" }}
               transition={{ duration: 0.8 }}
-              className="text-center mb-16"
             >
-              <h2 className="text-3xl md:text-4xl font-medium tracking-tight mb-4">
-                Configurez votre trottinette
+              <span className="inline-block px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-sm text-sm font-medium mb-6">
+                OPTIONS
+              </span>
+              <h2 className="text-4xl md:text-5xl font-bold tracking-tight mb-6">
+                Personnalisez chaque <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-amber-500">détail</span>
               </h2>
-              <p className="text-gray-400 text-lg">
-                Chaque détail compte dans la création de votre machine
+              <p className="text-xl text-gray-400 max-w-2xl mx-auto">
+                Des performances aux finitions, adaptez votre trottinette à votre style de vie.
               </p>
             </motion.div>
 
-            <div className="grid md:grid-cols-3 gap-8">
+            <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
               {customizationOptions.map((option, index) => (
                 <motion.div
-                  key={option.title}
-                  initial={{ opacity: 0, y: 20 }}
+                  key={index}
+                  className="relative bg-black rounded-3xl p-6 overflow-hidden border border-white/10"
+                  initial={{ opacity: 0, y: 30 }}
                   whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: index * 0.2, duration: 0.8 }}
-                  className="bg-neutral-900/50 backdrop-blur-sm p-8 rounded-2xl border border-border/40"
+                  viewport={{ once: true, margin: "-100px" }}
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
                 >
-                  <option.icon className="h-8 w-8 mb-6 text-white" />
-                  <h3 className="text-xl font-medium mb-4">{option.title}</h3>
-                  <div className="space-y-2">
+                  <div className={`absolute top-0 left-0 right-0 h-1 bg-gradient-to-r ${option.color}`}></div>
+
+                  <div className="flex items-center mb-6">
+                    <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${option.color} flex items-center justify-center mr-4`}>
+                      <option.icon className="h-6 w-6 text-white" />
+                    </div>
+                    <h3 className="text-xl font-semibold">{option.title}</h3>
+                  </div>
+
+                  <div className="space-y-3 mb-6">
                     {option.options.map((opt, i) => (
                       <div
-                        key={opt}
-                        className={`p-4 rounded-lg transition-all duration-300 ${
-                          i === option.currentOption
-                            ? 'bg-white/10'
-                            : 'hover:bg-white/5'
-                        }`}
+                        key={i}
+                        className={`p-3 rounded-lg ${i === option.currentOption ? 'bg-white/10 border border-white/20' : 'hover:bg-white/5'} transition-colors cursor-pointer`}
                       >
-                        {opt}
+                        <div className="flex items-center justify-between">
+                          <span className="font-medium">{opt}</span>
+                          {i === option.currentOption && (
+                            <div className="w-5 h-5 rounded-full bg-gradient-to-r from-purple-500 to-amber-500 flex items-center justify-center">
+                              <CheckCircle className="h-3 w-3 text-white" />
+                            </div>
+                          )}
+                        </div>
                       </div>
                     ))}
                   </div>
+
+                  <Button variant="outline" className="w-full rounded-lg border-white/20">
+                    Configurer
+                  </Button>
                 </motion.div>
               ))}
             </div>
           </div>
         </section>
 
-        {/* Process Steps */}
-        <section className="py-24 md:py-32 bg-black">
-          <div className="container mx-auto px-4">
+        {/* Process Section */}
+        <section className="py-32 bg-black relative overflow-hidden">
+          <div className="absolute inset-0 z-0">
+            <div className="absolute inset-0 bg-[url('/grid-pattern.png')] bg-center opacity-5"></div>
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8 }}
+              className="absolute inset-0 bg-gradient-to-br from-purple-900/10 via-black to-amber-900/5"
+              animate={{
+                background: [
+                  "linear-gradient(135deg, rgba(168, 85, 247, 0.05) 0%, rgba(0, 0, 0, 0) 50%, rgba(245, 158, 11, 0.03) 100%)",
+                  "linear-gradient(135deg, rgba(245, 158, 11, 0.05) 0%, rgba(0, 0, 0, 0) 50%, rgba(168, 85, 247, 0.03) 100%)",
+                  "linear-gradient(135deg, rgba(168, 85, 247, 0.05) 0%, rgba(0, 0, 0, 0) 50%, rgba(245, 158, 11, 0.03) 100%)"
+                ]
+              }}
+              transition={{ duration: 10, repeat: Infinity, repeatType: "mirror" }}
+            />
+          </div>
+
+          <div className="container mx-auto px-4 relative z-10">
+            <motion.div
               className="text-center mb-16"
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-100px" }}
+              transition={{ duration: 0.8 }}
             >
-              <h2 className="text-3xl md:text-4xl font-medium tracking-tight mb-4">
-                Notre processus
+              <span className="inline-block px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-sm text-sm font-medium mb-6">
+                PROCESSUS
+              </span>
+              <h2 className="text-4xl md:text-5xl font-bold tracking-tight mb-6">
+                Comment ça <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-amber-500">fonctionne</span>
               </h2>
-              <p className="text-gray-400 text-lg">
-                Une approche structurée pour un résultat exceptionnel
+              <p className="text-xl text-gray-400 max-w-2xl mx-auto">
+                Un processus simple et efficace pour créer la trottinette de vos rêves.
               </p>
             </motion.div>
 
-            <div className="grid md:grid-cols-3 gap-8">
-              {steps.map((step, index) => (
+            <div className="relative max-w-6xl mx-auto">
+              {/* Ligne de connexion animée */}
+              <div className="absolute top-1/2 left-[10%] right-[10%] h-0.5 bg-gradient-to-r from-purple-500 via-white/50 to-amber-500 transform -translate-y-1/2 hidden md:block">
                 <motion.div
-                  key={step.number}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: index * 0.2, duration: 0.8 }}
-                  className="relative"
+                  className="absolute top-0 left-0 right-0 h-full bg-white"
+                  animate={{
+                    left: ["0%", "100%"],
+                    right: ["100%", "0%"],
+                  }}
+                  transition={{
+                    duration: 3,
+                    repeat: Infinity,
+                    ease: "easeInOut"
+                  }}
+                />
+              </div>
+
+              <div className="flex flex-col md:flex-row justify-around items-center md:items-stretch gap-16 md:gap-6 py-8">
+                {steps.map((step, index) => (
+                  <motion.div
+                    key={index}
+                    className="relative flex-1 max-w-sm"
+                    initial={{ opacity: 0, y: 50 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, margin: "-100px" }}
+                    transition={{ duration: 0.6, delay: index * 0.2 }}
+                  >
+                    {/* Carte avec effet de flottement */}
+                    <motion.div
+                      className="relative z-10 h-full bg-gradient-to-b from-white/10 to-white/5 backdrop-blur-sm rounded-2xl p-8 border border-white/10 overflow-hidden"
+                      whileHover={{ y: -8, boxShadow: "0 20px 40px -15px rgba(0, 0, 0, 0.7)" }}
+                      transition={{ duration: 0.5 }}
+                    >
+                      {/* Glow effect */}
+                      <div className={`absolute ${index === 0 ? "top-0 left-0" : index === 1 ? "bottom-0 right-0" : "top-0 right-0"} w-40 h-40 rounded-full bg-gradient-to-r from-purple-500/10 to-amber-500/10 blur-3xl -z-10 opacity-60`}></div>
+
+                      {/* Numéro de l'étape */}
+                      <div className="relative mb-8">
+                        <motion.div
+                          className="w-16 h-16 rounded-2xl bg-gradient-to-r from-purple-500 to-amber-500 flex items-center justify-center text-2xl font-bold"
+                          whileHover={{ rotate: [0, -5, 5, -5, 0] }}
+                          transition={{ duration: 0.5 }}
+                        >
+                          {step.number}
+                        </motion.div>
+                        <div className="absolute top-0 left-0 w-16 h-16 rounded-2xl bg-gradient-to-r from-purple-500 to-amber-500 blur-xl opacity-40 -z-10"></div>
+                      </div>
+
+                      {/* Contenu */}
+                      <motion.div
+                        initial={{ opacity: 0 }}
+                        whileInView={{ opacity: 1 }}
+                        transition={{ duration: 0.5, delay: 0.3 + index * 0.2 }}
+                      >
+                        <h3 className="text-2xl font-bold mb-4">{step.title}</h3>
+                        <p className="text-gray-400 mb-6">{step.description}</p>
+
+                        {/* Indicateur visuel spécifique à chaque étape */}
+                        <div className="flex items-center gap-3 mt-auto">
+                          {index === 0 && (
+                            <motion.div
+                              className="flex items-center gap-2 text-sm text-white/70"
+                              animate={{ x: [0, 5, 0] }}
+                              transition={{ duration: 2, repeat: Infinity, repeatType: "mirror" }}
+                            >
+                              <span className="w-2 h-2 rounded-full bg-purple-500"></span>
+                              Discussion en cours
+                            </motion.div>
+                          )}
+                          {index === 1 && (
+                            <motion.div
+                              className="flex items-center gap-2 text-sm text-white/70"
+                              animate={{ opacity: [0.7, 1, 0.7] }}
+                              transition={{ duration: 2, repeat: Infinity, repeatType: "mirror" }}
+                            >
+                              <span className="w-2 h-2 rounded-full bg-amber-500"></span>
+                              Création en attente
+                            </motion.div>
+                          )}
+                          {index === 2 && (
+                            <motion.div
+                              className="flex items-center gap-2 text-sm text-white/70"
+                              animate={{ scale: [1, 1.05, 1] }}
+                              transition={{ duration: 2, repeat: Infinity, repeatType: "mirror" }}
+                            >
+                              <span className="w-2 h-2 rounded-full bg-green-500"></span>
+                              Livraison garantie
+                            </motion.div>
+                          )}
+                        </div>
+                      </motion.div>
+                    </motion.div>
+
+                    {/* Cercle sur la ligne (visible seulement en desktop) */}
+                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-8 h-8 rounded-full border-2 border-white/20 bg-black hidden md:flex items-center justify-center">
+                      <div className="w-3 h-3 rounded-full bg-gradient-to-r from-purple-500 to-amber-500"></div>
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
+
+              {/* Indicateur d'action */}
+              <motion.div
+                className="flex justify-center mt-16"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: 0.8 }}
+              >
+                <Button
+                  variant="outline"
+                  size="lg"
+                  className="rounded-full border-white/20 hover:bg-white/10 transition-all duration-300 group"
                 >
-                  <div className="absolute -top-4 -left-4 text-6xl font-bold text-white/10">
-                    {step.number}
-                  </div>
-                  <div className="bg-neutral-900/50 backdrop-blur-sm p-8 rounded-2xl border border-border/40">
-                    <h3 className="text-xl font-medium mb-4">{step.title}</h3>
-                    <p className="text-gray-400">{step.description}</p>
-                  </div>
-                </motion.div>
-              ))}
+                  <span>Comprendre le processus en détail</span>
+                  <ChevronRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                </Button>
+              </motion.div>
             </div>
+          </div>
+        </section>
+
+        {/* Comparison Section */}
+        <section className="py-32 bg-neutral-950 relative overflow-hidden">
+          <div className="absolute inset-0 z-0">
+            <div className="absolute top-0 right-0 w-full h-full bg-gradient-radial from-purple-900/5 to-transparent opacity-20"></div>
+          </div>
+
+          <div className="container mx-auto px-4 relative z-10">
+            <motion.div
+              className="text-center mb-20"
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-100px" }}
+              transition={{ duration: 0.8 }}
+            >
+              <span className="inline-block px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-sm text-sm font-medium mb-6">
+                COMPARAISON
+              </span>
+              <h2 className="text-4xl md:text-5xl font-bold tracking-tight mb-6">
+                Standard vs <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-amber-500">Personnalisé</span>
+              </h2>
+              <p className="text-xl text-gray-400 max-w-2xl mx-auto">
+                Découvrez les avantages d'une trottinette entièrement personnalisée.
+              </p>
+            </motion.div>
+
+            <motion.div
+              className="max-w-4xl mx-auto bg-black/50 backdrop-blur-sm rounded-3xl overflow-hidden border border-white/10"
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-100px" }}
+              transition={{ duration: 0.8 }}
+            >
+              <div className="grid grid-cols-3 bg-white/5 p-6">
+                <div className="text-center font-medium text-lg">Fonctionnalité</div>
+                <div className="text-center font-medium text-lg">Standard</div>
+                <div className="text-center font-medium text-lg">Personnalisé</div>
+              </div>
+
+              <div className="divide-y divide-white/10">
+                {comparisons.map((item, index) => (
+                  <motion.div
+                    key={index}
+                    className="grid grid-cols-3 p-6"
+                    initial={{ opacity: 0, y: 10 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, margin: "-100px" }}
+                    transition={{ duration: 0.3, delay: index * 0.1 }}
+                  >
+                    <div className="flex items-center">{item.feature}</div>
+                    <div className="flex items-center justify-center">
+                      {item.standard ? (
+                        <CheckCircle className="h-6 w-6 text-green-500" />
+                      ) : (
+                        <CircleSlash className="h-6 w-6 text-red-500" />
+                      )}
+                    </div>
+                    <div className="flex items-center justify-center">
+                      {item.custom ? (
+                        <CheckCircle className="h-6 w-6 text-green-500" />
+                      ) : (
+                        <CircleSlash className="h-6 w-6 text-red-500" />
+                      )}
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
+            </motion.div>
           </div>
         </section>
 
         {/* CTA Section */}
-        <section className="py-24 md:py-32 bg-neutral-950 relative overflow-hidden">
-          <div className="container mx-auto px-4">
+        <section className="py-32 bg-black relative overflow-hidden">
+          <div className="absolute inset-0 z-0">
+            <div className="absolute inset-0 bg-[url('/grid-pattern.png')] bg-center opacity-5"></div>
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
+              className="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-purple-900/10 to-transparent opacity-30"
+              animate={{
+                opacity: [0.2, 0.3, 0.2]
+              }}
+              transition={{
+                duration: 5,
+                repeat: Infinity,
+                repeatType: "mirror"
+              }}
+            />
+          </div>
+
+          <div className="container mx-auto px-4 relative z-10">
+            <motion.div
+              className="max-w-4xl mx-auto backdrop-blur-md bg-gradient-to-b from-white/5 to-white/10 rounded-3xl p-12 border border-white/10 overflow-hidden relative"
+              initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
+              viewport={{ once: true, margin: "-100px" }}
               transition={{ duration: 0.8 }}
-              className="max-w-2xl mx-auto text-center"
             >
-              <h2 className="text-3xl md:text-4xl font-medium tracking-tight mb-6">
-                Prêt à créer votre chef-d'œuvre ?
-              </h2>
-              <p className="text-gray-400 text-lg mb-8">
-                Nos experts sont là pour donner vie à votre vision
-              </p>
-              <Link href="/contact">
-                <Button
-                  size="lg"
-                  className="min-w-[200px] h-12 rounded-full bg-white text-black hover:bg-white/90"
-                >
-                  Démarrer votre projet
-                  <ArrowRight className="ml-2 h-4 w-4" />
-                </Button>
-              </Link>
+              <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-purple-500 to-amber-500"></div>
+              <div className="absolute inset-0 bg-gradient-radial from-purple-500/5 to-transparent opacity-50"></div>
+
+              <div className="relative z-10">
+                <div className="text-center mb-10">
+                  <h2 className="text-4xl md:text-5xl font-bold tracking-tight mb-6">
+                    Prêt à créer votre <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-amber-500">chef-d'œuvre</span> ?
+                  </h2>
+                  <p className="text-xl text-gray-300 max-w-2xl mx-auto">
+                    Nos experts sont à votre disposition pour donner vie à votre vision et créer une trottinette unique qui vous ressemble.
+                  </p>
+                </div>
+
+                <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                  <Button
+                    size="lg"
+                    className="rounded-full bg-gradient-to-r from-purple-500 to-amber-500 hover:opacity-90 min-w-[220px] transition-all duration-300 h-14 text-base font-medium"
+                  >
+                    Démarrer ma personnalisation
+                    <ArrowRight className="ml-2 h-4 w-4" />
+                  </Button>
+                  <Button
+                    variant="outline"
+                    size="lg"
+                    className="rounded-full border-white/20 hover:bg-white/10 min-w-[200px] transition-all duration-300 h-14 text-base font-medium"
+                  >
+                    Contacter un expert
+                  </Button>
+                </div>
+              </div>
             </motion.div>
           </div>
         </section>
       </div>
-
       <Footer />
     </main>
   )

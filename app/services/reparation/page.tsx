@@ -3,18 +3,18 @@
 import { motion, useScroll, useTransform, useSpring, AnimatePresence, useMotionValue } from "framer-motion"
 import { Navigation } from "@/components/navigation"
 import { Footer } from "@/components/footer"
-import { 
-  Wrench, 
-  Clock, 
-  CheckCircle, 
-  ArrowRight, 
-  Shield, 
-  Settings, 
-  ChevronDown, 
-  Zap, 
-  Timer, 
-  Sparkles, 
-  AlertCircle 
+import {
+  Wrench,
+  Clock,
+  CheckCircle,
+  ArrowRight,
+  Shield,
+  Settings,
+  ChevronDown,
+  Zap,
+  Timer,
+  Sparkles,
+  AlertCircle
 } from "lucide-react"
 import Image from "next/image"
 import { useRef, useEffect, useState } from "react"
@@ -146,73 +146,227 @@ export default function ReparationPage() {
       </div>
 
       <div ref={containerRef}>
-        {/* Hero Section */}
-        <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-          <motion.div 
-            className="absolute inset-0 w-full h-full"
-            style={{
-              backgroundImage: "url('https://images.unsplash.com/photo-1604868189743-ec3e9d6d4471?w=1600&h=900&fit=crop')",
-              backgroundSize: "cover",
-              backgroundPosition: "center",
-              scale: 1.1,
-              x: useTransform(mouseXSpring, [0, 1], [-20, 20]),
-              y: useTransform(mouseYSpring, [0, 1], [-20, 20])
-            }}
-          />
-          <div className="absolute inset-0 bg-black/60 backdrop-blur-[1px] z-10" />
-          
-          <div className="relative z-20 container mx-auto px-4">
-            <motion.div 
-              className="max-w-4xl mx-auto text-center"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
-            >
-              <motion.div 
-                className="mb-8"
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ delay: 0.2, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-              >
-                <span className="inline-block px-4 py-2 rounded-full bg-white/10 backdrop-blur-sm text-sm font-medium mb-6">
-                  Service Premium
-                </span>
-                <h1 className="text-6xl md:text-7xl lg:text-8xl font-medium tracking-tight mb-8">
-                  L'expertise au
-                  <br />
-                  service de votre
-                  <br />
-                  mobilité.
-                </h1>
-                <p className="text-xl md:text-2xl text-gray-300 font-light max-w-2xl mx-auto">
-                  Une équipe d'experts pour maintenir votre trottinette au meilleur niveau.
-                </p>
-              </motion.div>
+        {/* Barre de progression */}
+        <motion.div
+          className="fixed top-0 left-0 right-0 h-[2px] bg-primary z-[60] origin-left"
+          style={{ scaleX: scrollYProgress }}
+        />
 
+        {/* Hero Section - Style Apple */}
+        <section className="relative min-h-screen flex flex-col justify-center overflow-hidden bg-black">
+          {/* Canvas de fond avec effet profondeur */}
+          <div className="absolute inset-0 w-full h-full">
+            <div className="absolute inset-0 bg-gradient-to-b from-black via-neutral-950 to-black z-10" />
+
+            {/* Image de fond avec effet de parallaxe subtil */}
+            <motion.div
+              className="absolute inset-0 w-full h-full"
+              initial={{ scale: 1.05 }}
+              animate={{ scale: 1 }}
+              transition={{ duration: 3, ease: "easeOut" }}
+            >
+              <Image
+                src="https://images.unsplash.com/photo-1604868189743-ec3e9d6d4471"
+                alt="Service de réparation Trott E Perf"
+                fill
+                className="object-cover opacity-30 blur-[1px]"
+                priority
+              />
+            </motion.div>
+          </div>
+
+          {/* Overlays lumineux */}
+          <div className="absolute inset-0 z-20 overflow-hidden">
+            {/* Glow primaire */}
+            <motion.div
+              className="absolute top-1/3 left-1/4 w-[800px] h-[800px] rounded-full bg-blue-600/5 blur-[150px]"
+              animate={{
+                scale: [1, 1.1, 1],
+                opacity: [0.4, 0.6, 0.4],
+              }}
+              transition={{
+                duration: 8,
+                repeat: Infinity,
+                repeatType: "mirror",
+                ease: "easeInOut"
+              }}
+            />
+
+            {/* Glow secondaire */}
+            <motion.div
+              className="absolute bottom-1/4 right-1/4 w-[600px] h-[600px] rounded-full bg-purple-500/5 blur-[150px]"
+              animate={{
+                scale: [1, 1.15, 1],
+                opacity: [0.3, 0.5, 0.3],
+              }}
+              transition={{
+                duration: 10,
+                repeat: Infinity,
+                repeatType: "mirror",
+                ease: "easeInOut",
+                delay: 1
+              }}
+            />
+          </div>
+
+          {/* Contenu principal */}
+          <div className="container mx-auto px-4 relative z-30 mt-20">
+            <div className="flex flex-col items-center">
+              {/* Badge premium */}
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.4, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-                className="flex flex-col sm:flex-row gap-4 justify-center items-center"
+                transition={{ duration: 0.6 }}
+                className="mb-8"
               >
-                <Button 
-                  size="lg" 
-                  className="min-w-[200px] h-12 rounded-full bg-white text-black hover:bg-white/90"
+                <span className="inline-flex items-center px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-xl border border-white/20 text-sm font-medium text-white">
+                  <Wrench className="h-3.5 w-3.5 mr-2 text-blue-400" />
+                  Service Technique Premium
+                </span>
+              </motion.div>
+
+              {/* Titre avec animation séquentielle */}
+              <div className="relative">
+                <motion.h1
+                  className="text-7xl md:text-8xl lg:text-9xl font-bold tracking-tight text-center mb-6 text-white"
+                  initial={{ opacity: 0, y: 40 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.8, delay: 0.3 }}
+                >
+                  <span className="inline-block">Réparation</span>{" "}
+                  <span className="inline-block relative">
+                    <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-blue-500 to-purple-500">
+                      d'experts
+                    </span>
+                    <motion.span
+                      className="absolute bottom-0 left-0 h-1 bg-gradient-to-r from-blue-400 to-purple-500 w-full opacity-70"
+                      initial={{ scaleX: 0 }}
+                      animate={{ scaleX: 1 }}
+                      transition={{ duration: 1.2, delay: 1.1 }}
+                    />
+                  </span>
+                </motion.h1>
+              </div>
+
+              {/* Sous-titre */}
+              <motion.p
+                className="text-xl md:text-2xl text-gray-400 max-w-2xl mx-auto mb-12 text-center font-light"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.6 }}
+              >
+                Une équipe de techniciens certifiés pour maintenir et réparer
+                votre trottinette avec précision et excellence.
+              </motion.p>
+
+              {/* CTA boutons */}
+              <motion.div
+                className="flex flex-col sm:flex-row gap-4 items-center justify-center"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.7, delay: 0.9 }}
+              >
+                <Button
+                  size="lg"
+                  className="rounded-full bg-blue-500 hover:bg-blue-500/90 min-w-[200px] transition-all duration-300 h-14 text-base font-medium"
                 >
                   Prendre rendez-vous
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </Button>
+
+                <Button
+                  variant="outline"
+                  size="lg"
+                  className="rounded-full border-white/20 hover:bg-white/10 min-w-[200px] transition-all duration-300 h-14 text-base font-medium"
+                >
+                  Nos services
+                </Button>
               </motion.div>
+            </div>
+
+            {/* Aperçu visuel du service */}
+            <motion.div
+              className="mt-16 md:mt-20 relative max-w-5xl mx-auto"
+              initial={{ opacity: 0, y: 40 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 1, delay: 1.2 }}
+            >
+              <div className="relative">
+                {/* Cadre avec effet de profondeur */}
+                <div className="absolute inset-0 -m-6 bg-gradient-to-b from-blue-500/20 to-purple-500/20 rounded-3xl blur-xl opacity-30" />
+
+                {/* Carte des services */}
+                <div className="bg-gradient-to-br from-neutral-900 to-black rounded-2xl p-8 border border-white/10 shadow-2xl relative overflow-hidden">
+                  <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-blue-500/5 to-black/0" />
+
+                  <div className="relative z-10">
+                    <div className="grid md:grid-cols-3 gap-6">
+                      {services.map((service, index) => (
+                        <motion.div
+                          key={index}
+                          initial={{ opacity: 0, y: 20 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          transition={{ duration: 0.5, delay: 1.4 + index * 0.1 }}
+                          className={`p-6 rounded-xl bg-gradient-to-b ${service.color} border border-white/10 backdrop-blur-md`}
+                        >
+                          <div className="w-12 h-12 rounded-lg bg-blue-500/20 flex items-center justify-center mb-4">
+                            <service.icon className="h-6 w-6 text-blue-400" />
+                          </div>
+                          <h3 className="text-lg font-semibold text-white mb-2">{service.title}</h3>
+                          <p className="text-sm text-gray-400">{service.description}</p>
+                        </motion.div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Stats en défilement */}
+              <div className="mt-12 flex items-center justify-center">
+                <motion.div
+                  className="flex flex-wrap items-center justify-center gap-x-16 gap-y-8 bg-neutral-900/50 backdrop-blur-lg py-6 px-10 rounded-full border border-white/10"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.8, delay: 1.6 }}
+                >
+                  {stats.map((stat, index) => (
+                    <div key={index} className="text-center">
+                      <div className="text-2xl font-bold text-white mb-1">{stat.number}</div>
+                      <div className="text-xs text-gray-400 uppercase tracking-wide">{stat.label}</div>
+                    </div>
+                  ))}
+                </motion.div>
+              </div>
             </motion.div>
           </div>
 
-          <motion.div 
-            className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20"
+          {/* Scroll indicator */}
+          <motion.div
+            className="absolute bottom-10 left-1/2 -translate-x-1/2 z-30"
             initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 1, duration: 0.8 }}
+            animate={{ opacity: 0.7, y: [0, 8, 0] }}
+            transition={{
+              opacity: { delay: 2, duration: 1 },
+              y: { delay: 2, duration: 1.5, repeat: Infinity, repeatType: "loop" }
+            }}
           >
-            <ChevronDown className="h-6 w-6 animate-bounce text-white/80" />
+            <div className="flex flex-col items-center gap-2">
+              <span className="text-xs uppercase tracking-widest text-gray-500">Découvrir</span>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="text-gray-500"
+              >
+                <path d="M12 5v14M5 12l7 7 7-7" />
+              </svg>
+            </div>
           </motion.div>
         </section>
 
@@ -377,8 +531,8 @@ export default function ReparationPage() {
                 Nos experts sont à votre disposition pour un diagnostic précis
               </p>
               <Link href="/contact">
-                <Button 
-                  size="lg" 
+                <Button
+                  size="lg"
                   className="min-w-[200px] h-12 rounded-full bg-white text-black hover:bg-white/90"
                 >
                   Contacter un expert

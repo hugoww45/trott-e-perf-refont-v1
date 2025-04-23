@@ -9,7 +9,7 @@ import { ScrollArea } from '@/components/ui/scroll-area'
 import { useCartStore } from '@/stores/cart'
 import { useAuthStore } from '@/stores/auth'
 import { formatPrice } from '@/lib/utils'
-import { ShoppingCart, Plus, Minus, Trash2, Loader2, X, ArrowRight, LogIn } from 'lucide-react'
+import { ShoppingCart, Plus, Minus, Trash2, Loader2, X, ArrowRight, LogIn, User } from 'lucide-react'
 import { toast } from 'sonner'
 import { getStorefrontApiUrl, getPublicTokenHeaders } from '@/lib/shopify/client'
 import { CUSTOMER_QUERY } from '@/lib/shopify/queries'
@@ -138,10 +138,21 @@ export function Cart() {
                 ? `Bonjour ${customerFirstName}, votre panier`
                 : 'Votre panier'}
             </SheetTitle>
-            <SheetClose className="rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-secondary">
-              <X className="h-5 w-5" />
-              <span className="sr-only">Fermer</span>
-            </SheetClose>
+            <div className="flex items-center gap-2">
+              {isAuthenticated && (
+                <SheetClose asChild>
+                  <Link href="/compte">
+                    <Button variant="outline" size="icon" className="h-8 w-8" title="Mon compte">
+                      <User className="h-4 w-4" />
+                    </Button>
+                  </Link>
+                </SheetClose>
+              )}
+              <SheetClose className="rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-secondary">
+                <X className="h-5 w-5" />
+                <span className="sr-only">Fermer</span>
+              </SheetClose>
+            </div>
           </div>
           {isAuthenticated && totalQuantity > 0 && (
             <p className="text-sm text-muted-foreground">
