@@ -144,44 +144,46 @@ export default function OrdersPage() {
                         key={order.id}
                         className="border rounded-lg p-4 hover:bg-accent/50 transition-colors"
                       >
-                        <div className="flex items-center justify-between mb-4">
-                          <div>
-                            <p className="font-medium">Commande #{order.orderNumber}</p>
-                            <p className="text-sm text-gray-400">
-                              {new Date(order.processedAt).toLocaleDateString('fr-FR', {
-                                year: 'numeric',
-                                month: 'long',
-                                day: 'numeric',
-                              })}
-                            </p>
-                          </div>
-                          <div className="text-right">
-                            <p className="font-medium">
-                              {parseFloat(order.currentTotalPrice.amount).toFixed(2)} €
-                            </p>
-                            <p className="text-sm text-gray-400">
-                              {order.fulfillmentStatus === 'SUCCESS'
-                                ? 'Livré'
-                                : order.fulfillmentStatus === 'IN_PROGRESS'
-                                ? 'En cours'
-                                : 'En attente'}
-                            </p>
-                          </div>
-                        </div>
-                        <div className="space-y-2">
-                          {order.lineItems.edges.map((item, index) => (
-                            <div key={index} className="flex justify-between text-sm">
-                              <span>
-                                {item.node.title} x {item.node.quantity}
-                              </span>
-                              <span>
-                                {item.node.variant
-                                  ? `${parseFloat(item.node.variant.price.amount).toFixed(2)} €`
-                                  : 'Prix indisponible'}
-                              </span>
+                        <Link href={`/compte/commandes/${encodeURIComponent(order.id)}`} className="block">
+                          <div className="flex items-center justify-between mb-4">
+                            <div>
+                              <p className="font-medium">Commande #{order.orderNumber}</p>
+                              <p className="text-sm text-gray-400">
+                                {new Date(order.processedAt).toLocaleDateString('fr-FR', {
+                                  year: 'numeric',
+                                  month: 'long',
+                                  day: 'numeric',
+                                })}
+                              </p>
                             </div>
-                          ))}
-                        </div>
+                            <div className="text-right">
+                              <p className="font-medium">
+                                {parseFloat(order.currentTotalPrice.amount).toFixed(2)} €
+                              </p>
+                              <p className="text-sm text-gray-400">
+                                {order.fulfillmentStatus === 'SUCCESS'
+                                  ? 'Livré'
+                                  : order.fulfillmentStatus === 'IN_PROGRESS'
+                                  ? 'En cours'
+                                  : 'En attente'}
+                              </p>
+                            </div>
+                          </div>
+                          <div className="space-y-2">
+                            {order.lineItems.edges.map((item, index) => (
+                              <div key={index} className="flex justify-between text-sm">
+                                <span>
+                                  {item.node.title} x {item.node.quantity}
+                                </span>
+                                <span>
+                                  {item.node.variant
+                                    ? `${parseFloat(item.node.variant.price.amount).toFixed(2)} €`
+                                    : 'Prix indisponible'}
+                                </span>
+                              </div>
+                            ))}
+                          </div>
+                        </Link>
                       </div>
                     ))}
                   </div>

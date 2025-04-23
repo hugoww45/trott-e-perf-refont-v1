@@ -227,6 +227,113 @@ export const CUSTOMER_ADDRESSES_QUERY = `#graphql
   }
 `;
 
+export const ORDER_DETAILS_QUERY = `#graphql
+  query GetOrderDetails($orderId: ID!, $customerAccessToken: String!) {
+    node(id: $orderId) {
+      ... on Order {
+        id
+        name
+        orderNumber
+        processedAt
+        fulfillmentStatus
+        financialStatus
+        canceledAt
+        edited
+        statusUrl
+        currentTotalPrice {
+          amount
+          currencyCode
+        }
+        subtotalPrice {
+          amount
+          currencyCode
+        }
+        totalShippingPrice {
+          amount
+          currencyCode
+        }
+        totalTax {
+          amount
+          currencyCode
+        }
+        statusUrl
+        lineItems(first: 50) {
+          edges {
+            node {
+              title
+              quantity
+              variant {
+                image {
+                  url
+                  altText
+                }
+                title
+                price {
+                  amount
+                  currencyCode
+                }
+                product {
+                  handle
+                }
+              }
+              originalTotalPrice {
+                amount
+                currencyCode
+              }
+            }
+          }
+        }
+        shippingAddress {
+          firstName
+          lastName
+          address1
+          address2
+          city
+          province
+          country
+          zip
+          phone
+        }
+        billingAddress {
+          firstName
+          lastName
+          address1
+          address2
+          city
+          province
+          country
+          zip
+          phone
+        }
+        discountApplications(first: 10) {
+          edges {
+            node {
+              value {
+                ... on MoneyV2 {
+                  amount
+                  currencyCode
+                }
+                ... on PricingPercentageValue {
+                  percentage
+                }
+              }
+            }
+          }
+        }
+        successfulFulfillments {
+          trackingInfo {
+            number
+            url
+          }
+        }
+      }
+    }
+    customer(customerAccessToken: $customerAccessToken) {
+      id
+    }
+  }
+`;
+
 export const CUSTOMER_ADDRESS_CREATE_MUTATION = `#graphql
   mutation customerAddressCreate($customerAccessToken: String!, $address: MailingAddressInput!) {
     customerAddressCreate(customerAccessToken: $customerAccessToken, address: $address) {
