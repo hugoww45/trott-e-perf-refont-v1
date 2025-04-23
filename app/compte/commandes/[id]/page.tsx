@@ -336,11 +336,13 @@ export default function OrderDetailsPage({ params }: { params: { id: string } })
         // Rediriger vers la page de statut de la commande qui contient généralement l'option de téléchargement
         window.open(order.statusUrl, '_blank');
         toast.success('Redirection vers la page de votre commande');
-      } else {
+      } else if (order) {
         // Si pas d'URL de statut, utiliser notre construction d'URL de fallback
         const url = generateInvoiceUrl(order.id);
         window.open(url, '_blank');
         toast.success('Redirection vers la page de votre commande');
+      } else {
+        toast.error('Impossible d\'accéder aux détails de la commande');
       }
     } catch (error) {
       console.error('Erreur lors de la génération de la facture:', error);
@@ -453,7 +455,10 @@ export default function OrderDetailsPage({ params }: { params: { id: string } })
                   </div>
                 </div>
 
-                {order.successfulFulfillments?.length > 0 && order.successfulFulfillments[0].trackingInfo?.length > 0 && (
+                {order.successfulFulfillments &&
+                 order.successfulFulfillments.length > 0 &&
+                 order.successfulFulfillments[0]?.trackingInfo &&
+                 order.successfulFulfillments[0].trackingInfo.length > 0 && (
                   <div className="bg-blue-50 dark:bg-blue-900/20 rounded-lg p-4 border border-blue-100 dark:border-blue-900/30 flex items-start">
                     <Truck className="w-5 h-5 text-blue-500 dark:text-blue-400 shrink-0 mt-0.5 mr-3" />
                     <div>

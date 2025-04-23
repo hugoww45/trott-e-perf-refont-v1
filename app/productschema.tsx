@@ -38,7 +38,32 @@ export default function ProductSchema({ product }: ProductSchemaProps) {
                     firstVariant?.price.amount ||
                     '0'
 
-    const productSchema = {
+    // Définir le type avec un index signature pour permettre l'ajout de propriétés dynamiques
+    interface ProductSchemaType {
+      '@context': string;
+      '@type': string;
+      name: string;
+      description: string;
+      image: string;
+      sku: string;
+      mpn: string;
+      brand: {
+        '@type': string;
+        name: string;
+      };
+      offers: {
+        '@type': string;
+        lowPrice: string;
+        priceCurrency: string;
+        availability: string;
+        offerCount: number;
+        offers: Array<any>;
+      };
+      url: string;
+      [key: string]: any; // Permet d'ajouter des propriétés supplémentaires dynamiquement
+    }
+
+    const productSchema: ProductSchemaType = {
       '@context': 'https://schema.org',
       '@type': 'Product',
       name: product.title,
