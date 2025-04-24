@@ -33,9 +33,7 @@ const navItems = [
         title: "Collections",
         links: [
           { name: "Nouveautés", href: "/boutique/nouveautes" },
-          { name: "Meilleures ventes", href: "/boutique/meilleures-ventes" },
           { name: "Offres spéciales", href: "/boutique/offres" },
-          { name: "Éditions limitées", href: "/boutique/editions-limitees" }
         ]
       }
     ]

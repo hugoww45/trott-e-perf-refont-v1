@@ -311,7 +311,7 @@ export default function OrderDetailsPage({ params }: { params: { id: string } })
   }
 
   const handleContactSupport = () => {
-    toast.success('Votre demande a été envoyée au support client')
+    router.push('/contact')
   }
 
   const generateInvoiceUrl = (orderId: string) => {

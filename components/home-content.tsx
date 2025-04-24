@@ -26,16 +26,16 @@ const headerSlides = [
   },
   {
     id: 2,
-    video: "/video-back-landing.mp4", // Utiliser la même vidéo en attendant d'avoir les autres
+    video: "/video-back-landing-1.mp4", // Utiliser la même vidéo en attendant d'avoir les autres
     title: "PERFORMANCE",
     subtitle: "UNPRECEDENTED",
     description: "Puissance inégalée et autonomie exceptionnelle pour vos trajets urbains.",
     buttonText: "Explorer",
-    buttonLink: "/services"
+    buttonLink: "/services/reparation"
   },
   {
     id: 3,
-    video: "/video-back-landing.mp4", // Utiliser la même vidéo en attendant d'avoir les autres
+    video: "/video-back-landing-2.mp4", // Utiliser la même vidéo en attendant d'avoir les autres
     title: "DESIGN",
     subtitle: "BEYOND INNOVATION",
     description: "Un design qui repousse les limites de l'esthétique et de la fonctionnalité.",
@@ -152,7 +152,7 @@ export function HomeContent() {
   const [videoErrors, setVideoErrors] = useState<boolean[]>([])
 
   // Configuration du carousel
-  const slideDuration = 8000; // Durée de chaque slide en ms
+  const slideDuration = 12000; // Durée de chaque slide en ms
 
   // Gestion de la transition automatique entre les slides
   useEffect(() => {

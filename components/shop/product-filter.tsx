@@ -12,7 +12,7 @@ interface ProductFilterProps {
 }
 
 export function ProductFilter({ onFilterChange }: ProductFilterProps) {
-  const [priceRange, setPriceRange] = useState([0, 2000])
+  const [priceRange, setPriceRange] = useState([0, 20000])
   const [selectedCategories, setSelectedCategories] = useState<string[]>([])
   const [inStock, setInStock] = useState(false)
 
@@ -33,11 +33,11 @@ export function ProductFilter({ onFilterChange }: ProductFilterProps) {
   }
 
   const handleReset = () => {
-    setPriceRange([0, 2000])
+    setPriceRange([0, 20000])
     setSelectedCategories([])
     setInStock(false)
     if (onFilterChange) {
-      onFilterChange([0, 2000], [], false)
+      onFilterChange([0, 20000], [], false)
     }
   }
 
@@ -47,7 +47,7 @@ export function ProductFilter({ onFilterChange }: ProductFilterProps) {
         <h3 className="text-lg font-medium mb-4">Prix</h3>
         <Slider
           value={priceRange}
-          max={2000}
+          max={20000}
           step={100}
           onValueChange={setPriceRange}
         />
