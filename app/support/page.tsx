@@ -131,7 +131,7 @@ export default function SupportPage() {
                 Comment pouvons-nous vous aider ?
               </h1>
               <p className="text-xl text-neutral-600 dark:text-neutral-400 mb-8">
-                Explorez nos ressources ou contactez-nous pour toute assistance avec vos produits Trott'e Perf.
+                Explorez nos ressources ou contactez-nous pour toute assistance avec vos produits Trott e Perf.
               </p>
 
               <form onSubmit={handleSearch} className="relative max-w-2xl mx-auto">
@@ -313,7 +313,7 @@ export default function SupportPage() {
                 <div className="relative h-96 lg:h-[500px] w-full rounded-2xl overflow-hidden">
                   <Image
                     src="/p-1.jpg"
-                    alt="Support technique Trott'e Perf"
+                    alt="Support technique Trott e Perf"
                     fill
                     className="object-cover"
                   />
@@ -379,7 +379,7 @@ export default function SupportPage() {
                 transition={{ duration: 0.5 }}
               >
                 <h2 className="text-3xl md:text-4xl font-medium mb-6">
-                  Centre de réparation Trott'e Perf
+                  Centre de réparation Trott e Perf
                 </h2>
                 <p className="text-lg text-neutral-600 dark:text-neutral-400 mb-10">
                   Nos techniciens certifiés s'occupent de votre trottinette avec le plus grand soin.

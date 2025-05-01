@@ -115,7 +115,7 @@ export function PartnersSection() {
                 <p className="text-sm text-neutral-400">Magazine spécialisé</p>
               </div>
             </div>
-            <p className="text-neutral-300">« TROTT'e Perf propose des trottinettes d'exception avec un service client irréprochable. Une référence incontournable pour les passionnés de mobilité électrique. »</p>
+            <p className="text-neutral-300">« Trott e Perf propose des trottinettes d'exception avec un service client irréprochable. Une référence incontournable pour les passionnés de mobilité électrique. »</p>
           </div>
 
           <div className="bg-neutral-900 rounded-xl p-6 shadow-lg border border-neutral-800">
@@ -128,7 +128,7 @@ export function PartnersSection() {
                 <p className="text-sm text-neutral-400">Blog spécialisé</p>
               </div>
             </div>
-            <p className="text-neutral-300">« Les modifications proposées par TROTT'e Perf transforment radicalement les performances des trottinettes électriques, avec un réel savoir-faire technique. »</p>
+            <p className="text-neutral-300">« Les modifications proposées par Trott e Perf transforment radicalement les performances des trottinettes électriques, avec un réel savoir-faire technique. »</p>
           </div>
 
           <div className="bg-neutral-900 rounded-xl p-6 shadow-lg border border-neutral-800">
@@ -141,7 +141,7 @@ export function PartnersSection() {
                 <p className="text-sm text-neutral-400">Forum communautaire</p>
               </div>
             </div>
-            <p className="text-neutral-300">« La qualité du service après-vente de TROTT'e Perf est exceptionnelle. Une équipe passionnée et réactive, toujours prête à aider avec expertise. »</p>
+            <p className="text-neutral-300">« La qualité du service après-vente de Trott e Perf est exceptionnelle. Une équipe passionnée et réactive, toujours prête à aider avec expertise. »</p>
           </div>
         </motion.div>
       </div>

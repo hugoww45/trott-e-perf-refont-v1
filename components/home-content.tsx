@@ -18,27 +18,27 @@ const headerSlides = [
   {
     id: 1,
     video: "/video-back-landing.mp4", // Vidéo existante
-    title: "REDEFINING",
-    subtitle: "THE LIMITS",
-    description: "Une nouvelle génération de trottinettes électriques alliant performance et élégance.",
+    title: "LE FUTUR",
+    subtitle: "COMMENCE ICI",
+    description: "Une nouvelle génération de trottinettes électriques alliant performance et élégance sélectionnées par Trott e Perf.",
     buttonText: "Découvrir",
     buttonLink: "/boutique"
   },
   {
     id: 2,
     video: "/video-back-landing-1.mp4", // Utiliser la même vidéo en attendant d'avoir les autres
-    title: "PERFORMANCE",
-    subtitle: "UNPRECEDENTED",
-    description: "Puissance inégalée et autonomie exceptionnelle pour vos trajets urbains.",
+    title: "L'EXCELLENCE",
+    subtitle: "OU RIEN",
+    description: "Notre gamme de véhicules électriques ont étés sélectionnées pour les riders les plus exigeants afin que la seule limite existante soit la vôtre.",
     buttonText: "Explorer",
     buttonLink: "/services/reparation"
   },
   {
     id: 3,
     video: "/video-back-landing-2.mp4", // Utiliser la même vidéo en attendant d'avoir les autres
-    title: "DESIGN",
-    subtitle: "BEYOND INNOVATION",
-    description: "Un design qui repousse les limites de l'esthétique et de la fonctionnalité.",
+    title: "UNE LIBERTE",
+    subtitle: "SANS LIMITES",
+    description: "Allez où vous voulez, quand vous voulez. Chaque trajet devient un plaisir, chaque arrêt une simple pause.",
     buttonText: "En savoir plus",
     buttonLink: "/a-propos"
   }
@@ -407,14 +407,14 @@ export function HomeContent() {
           <div className="flex items-center space-x-4">
             <button
               onClick={goToPrevSlide}
-              className="p-2 border border-white/20 hover:border-white/60 transition-colors duration-300"
+              className="p-2 transition-colors duration-300"
               aria-label="Slide précédent"
             >
               <ArrowLeft className="h-4 w-4" />
             </button>
             <button
               onClick={goToNextSlide}
-              className="p-2 border border-white/20 hover:border-white/60 transition-colors duration-300"
+              className="p-2 transition-colors duration-300"
               aria-label="Slide suivant"
             >
               <ArrowRight className="h-4 w-4" />
@@ -473,7 +473,7 @@ export function HomeContent() {
             >
               <h2 className="text-3xl md:text-4xl font-bold mb-4">Nos Services</h2>
               <p className="text-neutral-400">
-                TROTT'e Perf vous propose une gamme complète de services premium pour répondre à tous vos besoins en matière de mobilité électrique.
+                Trott e Perf vous propose une gamme complète de services premium pour répondre à tous vos besoins en matière de mobilité électrique.
               </p>
             </motion.div>
           </div>

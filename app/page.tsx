@@ -4,23 +4,23 @@ import { Footer } from "@/components/footer"
 import { Metadata } from "next"
 
 export const metadata: Metadata = {
-  title: "Trott E Perf | Spécialiste Trottinettes Électriques Haut de Gamme",
+  title: "Trott e Perf | Spécialiste Trottinettes Électriques Haut de Gamme",
   description: "Vente, réparation et personnalisation de trottinettes électriques premium. Découvrez notre sélection de modèles haut de gamme et nos services d'experts.",
   keywords: ["trottinette électrique", "trottinette haut de gamme", "vente trottinette", "réparation trottinette", "customisation trottinette"],
   alternates: {
-    canonical: "https://trotteperf.com"
+    canonical: "https://trott-e-perf.fr"
   },
   openGraph: {
-    title: "Trott E Perf | Spécialiste Trottinettes Électriques Premium",
+    title: "Trott e Perf | Spécialiste Trottinettes Électriques Premium",
     description: "Vente, réparation et personnalisation de trottinettes électriques haut de gamme. Expertise et conseils personnalisés.",
-    url: "https://trotteperf.com",
+    url: "https://trott-e-perf.fr",
     type: "website",
     images: [
       {
-        url: "https://trotteperf.com/og-image.jpg",
+        url: "https://trott-e-perf.fr/og-image.jpg",
         width: 1200,
         height: 630,
-        alt: "Trott E Perf - Trottinettes électriques premium"
+        alt: "Trott e Perf - Trottinettes électriques premium"
       }
     ]
   }

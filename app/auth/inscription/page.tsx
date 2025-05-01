@@ -136,7 +136,7 @@ export default function RegisterPage() {
                 <div className="relative w-12 h-12">
                   <Image
                     src="/logo.png"
-                    alt="Trott E Perf"
+                    alt="Trott e Perf"
                     fill
                     className="object-contain"
                   />

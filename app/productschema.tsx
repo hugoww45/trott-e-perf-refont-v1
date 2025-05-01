@@ -5,6 +5,7 @@ import { useEffect } from 'react'
 
 interface ProductSchemaProps {
   product: Product
+  variants?: any
 }
 
 export default function ProductSchema({ product }: ProductSchemaProps) {
@@ -30,7 +31,7 @@ export default function ProductSchema({ product }: ProductSchemaProps) {
       availability: edge.node.availableForSale
         ? 'https://schema.org/InStock'
         : 'https://schema.org/OutOfStock',
-      url: `https://trotte-perf.fr/boutique/${product.handle}?variant=${edge.node.id}`
+      url: `https://trott-e-perf.fr/boutique/${product.handle}?variant=${edge.node.id}`
     }))
 
     // Calculer le prix minimum en vérifiant si priceRange existe
@@ -85,7 +86,7 @@ export default function ProductSchema({ product }: ProductSchemaProps) {
         offerCount: product.variants.edges.length,
         offers: variants
       },
-      url: `https://trotte-perf.fr/boutique/${product.handle}`
+      url: `https://trott-e-perf.fr/boutique/${product.handle}`
     }
 
     // Ajout de catégories si disponibles

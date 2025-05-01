@@ -12,6 +12,6 @@ export default function robots(): MetadataRoute.Robots {
         '/_next/'
       ],
     },
-    sitemap: 'https://trotte-perf.fr/sitemap.xml',
+    sitemap: 'https://trott-e-perf.fr/sitemap.xml',
   }
 }

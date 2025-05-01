@@ -134,7 +134,7 @@ export async function GET() {
     // Ajouter les pages statiques
     staticPages.forEach(page => {
       xml += '  <url>\n'
-      xml += `    <loc>https://trotte-perf.fr${page.url}</loc>\n`
+      xml += `    <loc>https://trott-e-perf.fr${page.url}</loc>\n`
       xml += `    <lastmod>${page.lastmod}</lastmod>\n`
       xml += `    <changefreq>${page.changefreq}</changefreq>\n`
       xml += `    <priority>${page.priority}</priority>\n`
@@ -144,7 +144,7 @@ export async function GET() {
     // Ajouter les catégories
     categories.forEach(category => {
       xml += '  <url>\n'
-      xml += `    <loc>https://trotte-perf.fr${category.url}</loc>\n`
+      xml += `    <loc>https://trott-e-perf.fr${category.url}</loc>\n`
       xml += `    <lastmod>${category.lastmod}</lastmod>\n`
       xml += `    <changefreq>${category.changefreq}</changefreq>\n`
       xml += `    <priority>${category.priority}</priority>\n`
@@ -159,7 +159,7 @@ export async function GET() {
         : new Date().toISOString().split('T')[0]
 
       xml += '  <url>\n'
-      xml += `    <loc>https://trotte-perf.fr/boutique/${product.handle}</loc>\n`
+      xml += `    <loc>https://trott-e-perf.fr/boutique/${product.handle}</loc>\n`
       xml += `    <lastmod>${lastmod}</lastmod>\n`
       xml += '    <changefreq>weekly</changefreq>\n'
       xml += '    <priority>0.7</priority>\n'

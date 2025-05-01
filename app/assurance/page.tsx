@@ -185,7 +185,7 @@ export default function AssurancePage() {
 
                 <div className="relative z-10 flex flex-col md:flex-row items-center justify-between w-full gap-6">
                   <div className="text-left">
-                    <div className="text-sm text-gray-400 mb-1">ASSURANCE TROTT E PERF</div>
+                    <div className="text-sm text-gray-400 mb-1">ASSURANCE Trott e Perf</div>
                     <h3 className="text-2xl font-medium text-white mb-4">Protection Intégrale</h3>
                     <div className="flex items-center gap-4">
                       <span className="inline-flex items-center text-sm text-white">

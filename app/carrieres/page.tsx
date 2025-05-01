@@ -43,7 +43,7 @@ const testimonials = [
   {
     name: "Sophie Laurent",
     role: "Ingénieure en électronique",
-    quote: "Chez Trott E Perf, j'ai trouvé un environnement où mes idées sont valorisées et où je peux vraiment pousser l'innovation au quotidien.",
+    quote: "Chez Trott e Perf, j'ai trouvé un environnement où mes idées sont valorisées et où je peux vraiment pousser l'innovation au quotidien.",
     image: "/team-member-1.jpg" // À remplacer par des images réelles
   },
   {
@@ -55,7 +55,7 @@ const testimonials = [
   {
     name: "Léa Martin",
     role: "Spécialiste en marketing",
-    quote: "L'équilibre entre l'ambition collective et le bien-être individuel fait de Trott E Perf un endroit vraiment unique pour travailler.",
+    quote: "L'équilibre entre l'ambition collective et le bien-être individuel fait de Trott e Perf un endroit vraiment unique pour travailler.",
     image: "/team-member-3.jpg" // À remplacer par des images réelles
   }
 ]
@@ -201,7 +201,7 @@ export default function CarriersPage() {
             >
               <Image
                 src="/header-p1.jpg"
-                alt="Carrières chez Trott E Perf"
+                alt="Carrières chez Trott e Perf"
                 fill
                 className="object-cover brightness-[0.4]"
                 priority
@@ -252,7 +252,7 @@ export default function CarriersPage() {
                   animate={{ y: 0, opacity: 1 }}
                   transition={{ duration: 0.8, delay: 0.7 }}
                 >
-                  Chez Trott E Perf, nous créons les solutions qui transforment la mobilité urbaine de demain.
+                  Chez Trott e Perf, nous créons les solutions qui transforment la mobilité urbaine de demain.
                 </motion.p>
 
                 <motion.div

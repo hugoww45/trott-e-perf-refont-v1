@@ -71,7 +71,7 @@ const deliveryInfo = [
     title: "Retrait en magasin",
     delay: "Sous 2h",
     price: "Gratuit",
-    description: "Disponible dans nos 3 boutiques Trott'e Perf",
+    description: "Disponible dans nos 3 boutiques Trott e Perf",
     icon: <Clock className="h-5 w-5" />
   }
 ]

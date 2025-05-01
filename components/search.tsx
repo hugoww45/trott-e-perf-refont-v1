@@ -1,11 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Search as SearchIcon, X } from 'lucide-react';
+import { Search as SearchIcon, X, Info } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
 import { cn } from '@/lib/utils';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useOnClickOutside } from '@/lib/hooks/use-click-outside';
+import { motion, AnimatePresence } from 'framer-motion';
 
 // Définition du type de résultat de recherche
 interface SearchResult {
@@ -112,6 +113,8 @@ export function Search({ className }: SearchProps) {
   const [results, setResults] = useState<SearchResult[]>([]);
   const [isOpen, setIsOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [showSearchInfo, setShowSearchInfo] = useState(false);
+  const [recentSearches, setRecentSearches] = useState<string[]>([]);
   const searchRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -120,6 +123,20 @@ export function Search({ className }: SearchProps) {
   // Fermer le panneau de recherche quand on clique en dehors
   useOnClickOutside(searchRef, () => setIsOpen(false));
 
+  // Charger les recherches récentes depuis localStorage
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const savedSearches = localStorage.getItem('recentSearches');
+      if (savedSearches) {
+        try {
+          setRecentSearches(JSON.parse(savedSearches).slice(0, 3));
+        } catch (e) {
+          console.error('Erreur lors du chargement des recherches récentes:', e);
+        }
+      }
+    }
+  }, []);
+
   // Initialiser la recherche avec le paramètre d'URL si présent
   useEffect(() => {
     const urlQuery = searchParams.get('q');
@@ -127,6 +144,20 @@ export function Search({ className }: SearchProps) {
       setQuery(urlQuery);
     }
   }, [searchParams]);
+
+  // Sauvegarder la recherche récente
+  const saveRecentSearch = (query: string) => {
+    if (!query.trim()) return;
+
+    const updatedSearches = [query, ...recentSearches.filter(s => s !== query)].slice(0, 3);
+    setRecentSearches(updatedSearches);
+
+    try {
+      localStorage.setItem('recentSearches', JSON.stringify(updatedSearches));
+    } catch (e) {
+      console.error('Erreur lors de la sauvegarde des recherches récentes:', e);
+    }
+  };
 
   // Rechercher quand la requête change avec debounce
   useEffect(() => {
@@ -174,6 +205,16 @@ export function Search({ className }: SearchProps) {
   const handleSelect = (url: string) => {
     console.log("Redirection vers:", url);
     setIsOpen(false);
+
+    // Sauvegarder la recherche si elle contient un paramètre q
+    if (url.includes('?q=')) {
+      const searchTerm = new URLSearchParams(url.split('?')[1]).get('q');
+      if (searchTerm) {
+        saveRecentSearch(searchTerm);
+      }
+    }
+
+    // Vider la requête après la sélection
     setQuery('');
 
     // Utiliser setTimeout pour s'assurer que la redirection se produit après la fermeture du menu
@@ -186,24 +227,34 @@ export function Search({ className }: SearchProps) {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (query.trim()) {
-      const url = `/boutique?q=${encodeURIComponent(query.trim())}`;
+      const searchTerm = query.trim();
+
+      // Sauvegarder dans les recherches récentes
+      saveRecentSearch(searchTerm);
+
+      // Créer l'URL de recherche avec le timestamp pour éviter la mise en cache et forcer le chargement des produits
+      const timestamp = Date.now();
+      const url = `/boutique?q=${encodeURIComponent(searchTerm)}&t=${timestamp}`;
+
       console.log("Soumission du formulaire vers:", url);
 
       setIsOpen(false);
 
       // Utiliser setTimeout pour s'assurer que la redirection se produit après la fermeture du menu
       setTimeout(() => {
+        // Déclencher la recherche en utilisant la méthode push du router
         router.push(url);
       }, 10);
     }
   };
 
-  // Afficher les suggestions populaires si pas de recherche
+  // Recherches populaires
   const popularSearches = [
     'Xiaomi',
     'Trottinette électrique',
     'Accessoires',
-    'Pièces détachées'
+    'Pièces détachées',
+    'Accélérateur'
   ];
 
   return (
@@ -253,15 +304,44 @@ export function Search({ className }: SearchProps) {
               >
                 Rechercher
               </Button>
-              <Button
-                type="button"
-                variant="ghost"
-                size="sm"
-                className="ml-2"
-                onClick={() => setIsOpen(false)}
-              >
-                Fermer
-              </Button>
+              <div className="relative ml-2">
+                <Button
+                  type="button"
+                  variant="ghost"
+                  size="sm"
+                  className="ml-1"
+                  onClick={() => setIsOpen(false)}
+                >
+                  Fermer
+                </Button>
+                <button
+                  className="absolute -right-8 top-1/2 -translate-y-1/2 p-1.5 text-muted-foreground hover:text-foreground transition-colors"
+                  onClick={() => setShowSearchInfo(!showSearchInfo)}
+                  onMouseEnter={() => setShowSearchInfo(true)}
+                  onMouseLeave={() => setShowSearchInfo(false)}
+                >
+                  <Info className="h-4 w-4" />
+                </button>
+                <AnimatePresence>
+                  {showSearchInfo && (
+                    <motion.div
+                      initial={{ opacity: 0, y: 10, scale: 0.95 }}
+                      animate={{ opacity: 1, y: 0, scale: 1 }}
+                      exit={{ opacity: 0, scale: 0.95 }}
+                      className="absolute top-full right-0 mt-2 p-3 rounded-lg shadow-xl border bg-background text-xs text-muted-foreground w-64 z-50"
+                    >
+                      <p className="mb-1.5 font-medium">Astuce de recherche</p>
+                      <p className="mb-2">Notre moteur de recherche prend en charge plusieurs formats :</p>
+                      <ul className="list-disc pl-4 space-y-1">
+                        <li>Recherche avec tirets (burn-e)</li>
+                        <li>Recherche avec espaces (burn e)</li>
+                        <li>Recherche sans séparateurs (burne)</li>
+                      </ul>
+                      <p className="mt-2">Toutes les combinaisons sont testées pour trouver votre produit !</p>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
             </form>
 
             <SearchResults
@@ -270,6 +350,7 @@ export function Search({ className }: SearchProps) {
               onSelect={handleSelect}
               query={query}
               popularSearches={popularSearches}
+              recentSearches={recentSearches}
             />
           </div>
           <div
@@ -288,23 +369,52 @@ interface SearchResultsProps {
   isLoading: boolean;
   onSelect: (url: string) => void;
   popularSearches: string[];
+  recentSearches: string[];
 }
 
-export function SearchResults({ query, results, isLoading, onSelect, popularSearches }: SearchResultsProps) {
+export function SearchResults({ query, results, isLoading, onSelect, popularSearches, recentSearches }: SearchResultsProps) {
   console.log("SearchResults - Query:", query, "Results:", results.length);
 
   // Si aucune requête ou requête trop courte
   if (query.length < 2) {
     return (
       <div className="p-4">
-        <h3 className="mb-3 text-xs font-medium text-muted-foreground">Recherches populaires</h3>
+        {/* Recherches récentes si disponibles */}
+        {recentSearches.length > 0 && (
+          <div className="mb-4">
+            <h3 className="mb-2 text-xs font-medium text-muted-foreground">Recherches récentes</h3>
+            <div className="flex flex-wrap gap-2">
+              {recentSearches.map((term, i) => (
+                <Button
+                  key={`recent-${i}`}
+                  variant="outline"
+                  size="sm"
+                  className="h-8 text-xs hover:bg-muted"
+                  onClick={() => {
+                    // Ajouter le timestamp pour forcer le rafraîchissement des résultats
+                    const timestamp = Date.now();
+                    onSelect(`/boutique?q=${encodeURIComponent(term)}&t=${timestamp}`);
+                  }}
+                >
+                  {term}
+                </Button>
+              ))}
+            </div>
+          </div>
+        )}
+
+        <h3 className="mb-2 text-xs font-medium text-muted-foreground">Recherches populaires</h3>
         <div className="flex flex-wrap gap-2">
-          {popularSearches.map((tag) => (
+          {popularSearches.map((tag, i) => (
             <Badge
-              key={tag}
+              key={`popular-${i}`}
               variant="outline"
               className="cursor-pointer hover:bg-muted"
-              onClick={() => onSelect(`/boutique?q=${encodeURIComponent(tag)}`)}
+              onClick={() => {
+                // Ajouter le timestamp pour forcer le rafraîchissement des résultats
+                const timestamp = Date.now();
+                onSelect(`/boutique?q=${encodeURIComponent(tag)}&t=${timestamp}`);
+              }}
             >
               {tag}
             </Badge>
@@ -336,7 +446,11 @@ export function SearchResults({ query, results, isLoading, onSelect, popularSear
       <div className="p-4 text-center">
         <p className="text-sm text-muted-foreground">Aucun résultat pour "{query}"</p>
         <Button
-          onClick={() => onSelect(`/boutique?q=${encodeURIComponent(query)}`)}
+          onClick={() => {
+            // Ajouter le timestamp pour forcer le rafraîchissement des résultats
+            const timestamp = Date.now();
+            onSelect(`/boutique?q=${encodeURIComponent(query)}&t=${timestamp}`);
+          }}
           variant="outline"
           className="mt-2"
         >
@@ -442,7 +556,11 @@ export function SearchResults({ query, results, isLoading, onSelect, popularSear
         <Button
           variant="ghost"
           className="w-full justify-start text-muted-foreground"
-          onClick={() => onSelect(`/boutique?q=${encodeURIComponent(query)}`)}
+          onClick={() => {
+            // Ajouter le timestamp pour forcer le rafraîchissement des résultats
+            const timestamp = Date.now();
+            onSelect(`/boutique?q=${encodeURIComponent(query)}&t=${timestamp}`);
+          }}
         >
           <SearchIcon className="mr-2 h-4 w-4" />
           Voir tous les résultats pour "{query}"

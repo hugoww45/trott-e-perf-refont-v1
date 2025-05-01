@@ -10,10 +10,10 @@ const inter = Inter({ subsets: ['latin'] })
 // Métadonnées SEO optimisées
 export const metadata: Metadata = {
   title: {
-    default: "TROTT'e Perf | Vente et réparation de trottinettes électriques",
-    template: "%s | TROTT'e Perf"
+    default: "Trott e Perf | Vente et réparation de trottinettes électriques",
+    template: "%s | Trott e Perf"
   },
-  description: "TROTT'e Perf, votre spécialiste en vente, réparation et personnalisation de trottinettes électriques. Pièces détachées, accessoires et service de qualité.",
+  description: "Trott e Perf, votre spécialiste en vente, réparation et personnalisation de trottinettes électriques. Pièces détachées, accessoires et service de qualité.",
   keywords: [
     "trottinette électrique",
     "réparation trottinette",
@@ -24,15 +24,15 @@ export const metadata: Metadata = {
     "accessoires trottinette",
     "entretien trottinette"
   ],
-  authors: [{ name: "TROTT'e Perf", url: "https://trotte-perf.fr" }],
-  creator: "TROTT'e Perf",
-  publisher: "TROTT'e Perf",
+  authors: [{ name: "Trott e Perf", url: "https://trott-e-perf.fr" }],
+  creator: "Trott e Perf",
+  publisher: "Trott e Perf",
   formatDetection: {
     email: true,
     address: true,
     telephone: true,
   },
-  metadataBase: new URL("https://trotte-perf.fr"),
+  metadataBase: new URL("https://trott-e-perf.fr"),
   alternates: {
     canonical: "/",
   },
@@ -50,24 +50,24 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "fr_FR",
-    url: "https://trotte-perf.fr",
-    title: "TROTT'e Perf | Vente et réparation de trottinettes électriques",
-    description: "TROTT'e Perf, votre spécialiste en vente, réparation et personnalisation de trottinettes électriques. Pièces détachées, accessoires et service de qualité.",
-    siteName: "TROTT'e Perf",
+    url: "https://trott-e-perf.fr",
+    title: "Trott e Perf | Vente et réparation de trottinettes électriques",
+    description: "Trott e Perf, votre spécialiste en vente, réparation et personnalisation de trottinettes électriques. Pièces détachées, accessoires et service de qualité.",
+    siteName: "Trott e Perf",
     images: [
       {
-        url: "https://trotte-perf.fr/logo.png",
+        url: "https://trott-e-perf.fr/logo.png",
         width: 1200,
         height: 630,
-        alt: "TROTT'e Perf - Logo",
+        alt: "Trott e Perf - Logo",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "TROTT'e Perf | Vente et réparation de trottinettes électriques",
-    description: "TROTT'e Perf, votre spécialiste en vente, réparation et personnalisation de trottinettes électriques. Pièces détachées, accessoires et service de qualité.",
-    images: ["https://trotte-perf.fr/logo.png"],
+    title: "Trott e Perf | Vente et réparation de trottinettes électriques",
+    description: "Trott e Perf, votre spécialiste en vente, réparation et personnalisation de trottinettes électriques. Pièces détachées, accessoires et service de qualité.",
+    images: ["https://trott-e-perf.fr/logo.png"],
     creator: "@trotteperf",
   },
   verification: {
@@ -98,9 +98,9 @@ export default function RootLayout({
             __html: JSON.stringify({
               "@context": "https://schema.org",
               "@type": "Organization",
-              "name": "TROTT'e Perf",
-              "url": "https://trotte-perf.fr",
-              "logo": "https://trotte-perf.fr/logo.png",
+              "name": "Trott e Perf",
+              "url": "https://trott-e-perf.fr",
+              "logo": "https://trott-e-perf.fr/logo.png",
               "contactPoint": {
                 "@type": "ContactPoint",
                 "telephone": "+33123456789",

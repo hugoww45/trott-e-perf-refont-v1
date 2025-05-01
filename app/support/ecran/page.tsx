@@ -111,11 +111,11 @@ const displayPosts = [
     link: '/support/ecran/reinitialisation'
   },
   {
-    title: 'Guide de dépannage de l'écran LCD',
-    date: '18 janvier 2023',
-    excerpt: 'Solutions pas à pas pour résoudre les problèmes d'écran noir ou d'affichage incorrect.',
-    readTime: '5 min',
-    link: '/support/ecran/depannage-lcd'
+    title: "Guide de dépannage de l'écran LCD",
+    date: "18 janvier 2023",
+    excerpt: "Solutions pas à pas pour résoudre les problèmes d'écran noir ou d'affichage incorrect.",
+    readTime: "5 min",
+    link: "/support/ecran/depannage-lcd",
   },
   {
     title: 'Décryptage des codes d\'erreur',
@@ -127,7 +127,7 @@ const displayPosts = [
   {
     title: 'Protéger et entretenir votre écran',
     date: '27 avril 2023',
-    excerpt: 'Conseils pratiques pour prolonger la durée de vie de l'écran et le protéger des éléments.',
+    excerpt: "Conseils pratiques pour prolonger la durée de vie de l'écran et le protéger des éléments.",
     readTime: '6 min',
     link: '/support/ecran/protection'
   }

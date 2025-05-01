@@ -34,9 +34,10 @@ export default function BoutiquePage() {
   const [isMobileFilterOpen, setIsMobileFilterOpen] = useState(false)
   const [tagFilter, setTagFilter] = useState<string | null>(null)
 
-  // Pagination
+  // Pagination avec nombre d'articles par page paramétrable
   const [currentPage, setCurrentPage] = useState(1)
-  const productsPerPage = 9
+  const [productsPerPage, setProductsPerPage] = useState(9)
+  const [showLoadMore, setShowLoadMore] = useState(false)
 
   // Récupérer le tag à partir de l'URL si présent
   useEffect(() => {
@@ -66,10 +67,13 @@ export default function BoutiquePage() {
     const endIndex = startIndex + productsPerPage
     setDisplayedProducts(filteredProducts.slice(startIndex, endIndex))
 
+    // Vérifier s'il y a plus de produits à charger
+    setShowLoadMore(endIndex < filteredProducts.length)
+
     if (currentPage > 1) {
       window.scrollTo({ top: 0, behavior: 'smooth' })
     }
-  }, [currentPage, filteredProducts])
+  }, [currentPage, filteredProducts, productsPerPage])
 
   const fetchInitialProducts = async (searchTerm = '', reset = false) => {
     try {
@@ -519,23 +523,57 @@ export default function BoutiquePage() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
+  // Modification pour charger plus d'articles
+  const handleLoadMore = () => {
+    const nextProducts = filteredProducts.slice(
+      displayedProducts.length,
+      displayedProducts.length + productsPerPage
+    )
+
+    setDisplayedProducts([...displayedProducts, ...nextProducts])
+    setShowLoadMore(displayedProducts.length + nextProducts.length < filteredProducts.length)
+  }
+
+  // Changer le nombre d'articles par page
+  const handleChangeProductsPerPage = (value: number) => {
+    setProductsPerPage(value)
+    setCurrentPage(1) // Réinitialiser à la première page lors du changement
+  }
+
+  const renderPageSizeSelector = () => {
+    return (
+      <div className="flex items-center space-x-2 mb-4">
+        <span className="text-xs text-gray-500">Articles par page:</span>
+        <div className="flex bg-black/20 p-0.5 rounded-md">
+          {[9, 18, 27, 36].map((size) => (
+            <button
+              key={size}
+              onClick={() => handleChangeProductsPerPage(size)}
+              className={`px-2.5 py-1 text-xs rounded ${
+                productsPerPage === size
+                  ? 'bg-primary text-white font-medium'
+                  : 'text-gray-400 hover:text-gray-200'
+              }`}
+            >
+              {size}
+            </button>
+          ))}
+        </div>
+      </div>
+    )
+  }
+
   const renderPagination = () => {
-    const totalPageCount = Math.max(1, Math.ceil(filteredProducts.length / productsPerPage));
+    if (filteredProducts.length <= productsPerPage) return null;
 
-    if (totalPageCount <= 1) {
-      return null;
-    }
+    const maxPage = Math.max(1, Math.ceil(filteredProducts.length / productsPerPage));
 
-    console.log(`Rendu pagination: Page actuelle ${currentPage}/${totalPageCount}`);
+    // Pour afficher un nombre raisonnable de boutons de page
+    let startPage = Math.max(1, currentPage - 2);
+    let endPage = Math.min(maxPage, startPage + 4);
 
-    const isMobile = typeof window !== 'undefined' && window.innerWidth < 640;
-    const visiblePages = isMobile ? 3 : 5;
-
-    let startPage = Math.max(1, currentPage - Math.floor(visiblePages / 2));
-    const endPage = Math.min(totalPageCount, startPage + visiblePages - 1);
-
-    if (endPage - startPage + 1 < visiblePages) {
-      startPage = Math.max(1, endPage - visiblePages + 1);
+    if (endPage - startPage < 4) {
+      startPage = Math.max(1, endPage - 4);
     }
 
     const pages = [];
@@ -544,73 +582,87 @@ export default function BoutiquePage() {
     }
 
     return (
-      <div className="flex justify-center items-center flex-wrap gap-2 mt-8">
-        <Button
-          variant="outline"
-          size="icon"
-          disabled={currentPage === 1}
-          onClick={() => handlePageChange(currentPage - 1)}
-          className="h-8 w-8 sm:h-10 sm:w-10"
-        >
-          <ChevronLeft className="h-4 w-4" />
-        </Button>
+      <div className="mt-10 flex flex-col">
+        {renderPageSizeSelector()}
 
-        {!isMobile && startPage > 1 && (
-          <>
-            <Button
-              variant={currentPage === 1 ? "default" : "outline"}
-              size="sm"
-              onClick={() => handlePageChange(1)}
-              className="h-8 w-8 sm:h-10 sm:w-10 p-0"
-            >
-              1
-            </Button>
-            {startPage > 2 && (
-              <span className="px-1">...</span>
-            )}
-          </>
-        )}
-
-        {pages.map(page => (
+        <div className="flex justify-between items-center">
           <Button
-            key={page}
-            variant={currentPage === page ? "default" : "outline"}
+            variant="outline"
             size="sm"
-            onClick={() => handlePageChange(page)}
-            className="h-8 w-8 sm:h-10 sm:w-10 p-0"
+            onClick={() => handlePageChange(currentPage - 1)}
+            disabled={currentPage === 1}
           >
-            {page}
+            <ChevronLeft className="h-4 w-4 mr-1" />
+            <span className="sm:inline">Précédent</span>
           </Button>
-        ))}
 
-        {!isMobile && endPage < totalPageCount && (
-          <>
-            {endPage < totalPageCount - 1 && (
-              <span className="px-1">...</span>
+          <div className="hidden sm:flex space-x-1">
+            {startPage > 1 && (
+              <>
+                <Button
+                  variant={currentPage === 1 ? "default" : "outline"}
+                  size="sm"
+                  onClick={() => handlePageChange(1)}
+                  className="w-9 p-0"
+                >
+                  1
+                </Button>
+                {startPage > 2 && <span className="mx-1 self-center">...</span>}
+              </>
             )}
-            <Button
-              variant={currentPage === totalPageCount ? "default" : "outline"}
-              size="sm"
-              onClick={() => handlePageChange(totalPageCount)}
-              className="h-8 w-8 sm:h-10 sm:w-10 p-0"
-            >
-              {totalPageCount}
-            </Button>
-          </>
-        )}
 
-        <Button
-          variant="outline"
-          size="icon"
-          disabled={currentPage === totalPageCount}
-          onClick={() => handlePageChange(currentPage + 1)}
-          className="h-8 w-8 sm:h-10 sm:w-10"
-        >
-          <ChevronRight className="h-4 w-4" />
-        </Button>
+            {pages.map(page => (
+              <Button
+                key={page}
+                variant={currentPage === page ? "default" : "outline"}
+                size="sm"
+                onClick={() => handlePageChange(page)}
+                className="w-9 p-0"
+              >
+                {page}
+              </Button>
+            ))}
+
+            {endPage < maxPage && (
+              <>
+                {endPage < maxPage - 1 && <span className="mx-1 self-center">...</span>}
+                <Button
+                  variant={currentPage === maxPage ? "default" : "outline"}
+                  size="sm"
+                  onClick={() => handlePageChange(maxPage)}
+                  className="w-9 p-0"
+                >
+                  {maxPage}
+                </Button>
+              </>
+            )}
+          </div>
+
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => handlePageChange(currentPage + 1)}
+            disabled={currentPage === maxPage}
+          >
+            <span className="sm:inline">Suivant</span>
+            <ChevronRight className="h-4 w-4 ml-1" />
+          </Button>
+        </div>
+
+        {showLoadMore && (
+          <div className="mt-8 text-center">
+            <Button
+              variant="outline"
+              onClick={handleLoadMore}
+              className="mx-auto"
+            >
+              Afficher plus d'articles
+            </Button>
+          </div>
+        )}
       </div>
     );
-  }
+  };
 
   const fetchAllChannelsProducts = async () => {
     setIsLoadingAllChannels(true);

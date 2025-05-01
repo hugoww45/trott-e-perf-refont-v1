@@ -235,7 +235,7 @@ export default function CulturePage() {
                   transition={{ duration: 0.8, delay: 0.5 }}
                 >
                   <span className="block">L'esprit</span>
-                  <span className="block bg-gradient-to-r from-primary to-blue-400 bg-clip-text text-transparent">Trott E Perf</span>
+                  <span className="block bg-gradient-to-r from-primary to-blue-400 bg-clip-text text-transparent">Trott e Perf</span>
                 </motion.h1>
 
                 <motion.p

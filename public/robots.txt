@@ -1,4 +1,4 @@
-# robots.txt for TROTT'e Perf
+# robots.txt for Trott e Perf
 User-agent: *
 Allow: /
 Disallow: /api/
@@ -45,4 +45,4 @@ Disallow: /debug/
 Disallow: /_next/
 
 # Sitemap
-Sitemap: https://trotte-perf.fr/sitemap.xml
+Sitemap: https://trott-e-perf.fr/sitemap.xml

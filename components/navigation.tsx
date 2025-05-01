@@ -405,7 +405,7 @@ export function Navigation() {
                 height={20}
                 className="object-contain"
               />
-              <span className={cn("text-xl font-bold text-white", textColor)}>Trott E-Perf</span>
+              <span className={cn("text-xl font-bold text-white", textColor)}>Trott e Perf</span>
             </Link>
 
             {/* Menu principal desktop */}

@@ -117,7 +117,7 @@ export function Footer() {
                 className="flex items-center text-sm font-medium text-gray-300 hover:text-white transition-colors"
               >
                 <Zap className="h-4 w-4 mr-2" />
-                <span>Trott E Perf</span>
+                <span>Trott e Perf</span>
               </Link>
             </div>
 
@@ -139,7 +139,7 @@ export function Footer() {
 
             {/* Copyright à droite en plus petit */}
             <div className="text-xs text-gray-500 md:w-1/4 md:text-right">
-              Copyright © {new Date().getFullYear()} Trott E Perf. Tous droits réservés.
+              Copyright © {new Date().getFullYear()} Trott e Perf. Tous droits réservés.
             </div>
           </div>
         </div>

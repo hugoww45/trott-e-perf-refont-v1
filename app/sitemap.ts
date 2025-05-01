@@ -34,7 +34,7 @@ async function getProducts() {
 }
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const baseUrl = 'https://trotte-perf.fr'
+  const baseUrl = 'https://trott-e-perf.fr'
   const currentDate = new Date().toISOString()
 
   // Pages statiques

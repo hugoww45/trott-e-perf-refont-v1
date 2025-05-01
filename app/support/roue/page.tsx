@@ -15,7 +15,7 @@ import {
   PanelBottomClose,
   Wrench,
   GaugeCircle,
-  HandBrake,
+  Hand,
   Play,
   ChevronRight,
   AlertTriangle,
@@ -51,7 +51,7 @@ const wheelSolutions = [
   {
     id: 'brake-issues',
     title: 'Dysfonctionnement des freins',
-    icon: HandBrake,
+    icon: Hand,
     steps: [
       "Vérifiez l'usure des plaquettes de frein et remplacez-les si nécessaire",
       "Ajustez la tension du câble de frein pour une réponse optimale",
@@ -114,7 +114,7 @@ const wheelPosts = [
   {
     title: 'Optimiser la durée de vie de vos freins',
     date: '3 mars 2023',
-    excerpt: 'Conseils d'entretien et techniques de freinage pour maximiser la longévité de votre système de freinage.',
+    excerpt: "Conseils d\'entretien et techniques de freinage pour maximiser la longévité de votre système de freinage.",
     readTime: '5 min',
     link: '/support/roue/entretien-freins'
   },

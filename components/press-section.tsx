@@ -37,7 +37,7 @@ export function PressSection() {
               <h3 className="font-semibold text-lg">TechMobilité Magazine</h3>
             </div>
             <blockquote className="text-neutral-300 italic mb-4">
-              "TROTT'e Perf se distingue par son expertise et la qualité de ses produits dans le secteur des trottinettes électriques haut de gamme."
+              "Trott e Perf se distingue par son expertise et la qualité de ses produits dans le secteur des trottinettes électriques haut de gamme."
             </blockquote>
             <p className="text-sm text-neutral-400">Juin 2023</p>
           </motion.div>
@@ -83,7 +83,7 @@ export function PressSection() {
               <h3 className="font-semibold text-lg">UrbanMob Journal</h3>
             </div>
             <blockquote className="text-neutral-300 italic mb-4">
-              "TROTT'e Perf représente l'excellence dans le domaine des trottinettes électriques avec un service de personnalisation unique."
+              "Trott e Perf représente l'excellence dans le domaine des trottinettes électriques avec un service de personnalisation unique."
             </blockquote>
             <p className="text-sm text-neutral-400">Décembre 2023</p>
           </motion.div>

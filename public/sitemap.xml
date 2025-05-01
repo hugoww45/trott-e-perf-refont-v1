@@ -2,31 +2,31 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <!-- Pages principales -->
   <url>
-    <loc>https://trotte-perf.fr/</loc>
+    <loc>https://trott-e-perf.fr/</loc>
     <lastmod>2023-08-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://trotte-perf.fr/boutique</loc>
+    <loc>https://trott-e-perf.fr/boutique</loc>
     <lastmod>2023-08-01</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://trotte-perf.fr/a-propos</loc>
+    <loc>https://trott-e-perf.fr/a-propos</loc>
     <lastmod>2023-08-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://trotte-perf.fr/contact</loc>
+    <loc>https://trott-e-perf.fr/contact</loc>
     <lastmod>2023-08-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://trotte-perf.fr/services</loc>
+    <loc>https://trott-e-perf.fr/services</loc>
     <lastmod>2023-08-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
@@ -34,25 +34,25 @@
 
   <!-- Catégories produits -->
   <url>
-    <loc>https://trotte-perf.fr/boutique?category=trottinettes-electriques</loc>
+    <loc>https://trott-e-perf.fr/boutique?category=trottinettes-electriques</loc>
     <lastmod>2023-08-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://trotte-perf.fr/boutique?category=pieces-detachees</loc>
+    <loc>https://trott-e-perf.fr/boutique?category=pieces-detachees</loc>
     <lastmod>2023-08-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://trotte-perf.fr/boutique?category=batteries</loc>
+    <loc>https://trott-e-perf.fr/boutique?category=batteries</loc>
     <lastmod>2023-08-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://trotte-perf.fr/boutique?category=accessoires</loc>
+    <loc>https://trott-e-perf.fr/boutique?category=accessoires</loc>
     <lastmod>2023-08-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
@@ -60,37 +60,37 @@
 
   <!-- Pages produits populaires -->
   <url>
-    <loc>https://trotte-perf.fr/boutique/xiaomi-mi-pro-2</loc>
+    <loc>https://trott-e-perf.fr/boutique/xiaomi-mi-pro-2</loc>
     <lastmod>2023-08-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://trotte-perf.fr/boutique/ninebot-max-g30</loc>
+    <loc>https://trott-e-perf.fr/boutique/ninebot-max-g30</loc>
     <lastmod>2023-08-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://trotte-perf.fr/boutique/dualtron-thunder</loc>
+    <loc>https://trott-e-perf.fr/boutique/dualtron-thunder</loc>
     <lastmod>2023-08-01</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://trotte-perf.fr/boutique/casque-protection</loc>
+    <loc>https://trott-e-perf.fr/boutique/casque-protection</loc>
     <lastmod>2023-08-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://trotte-perf.fr/boutique/batterie-xiaomi-m365</loc>
+    <loc>https://trott-e-perf.fr/boutique/batterie-xiaomi-m365</loc>
     <lastmod>2023-08-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://trotte-perf.fr/boutique/accelerateur-xiaomi</loc>
+    <loc>https://trott-e-perf.fr/boutique/accelerateur-xiaomi</loc>
     <lastmod>2023-08-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -98,25 +98,25 @@
 
   <!-- Pages FAQ et informations -->
   <url>
-    <loc>https://trotte-perf.fr/faq</loc>
+    <loc>https://trott-e-perf.fr/faq</loc>
     <lastmod>2023-08-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://trotte-perf.fr/mentions-legales</loc>
+    <loc>https://trott-e-perf.fr/mentions-legales</loc>
     <lastmod>2023-08-01</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
-    <loc>https://trotte-perf.fr/politique-de-confidentialite</loc>
+    <loc>https://trott-e-perf.fr/politique-de-confidentialite</loc>
     <lastmod>2023-08-01</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
-    <loc>https://trotte-perf.fr/conditions-generales-de-vente</loc>
+    <loc>https://trott-e-perf.fr/conditions-generales-de-vente</loc>
     <lastmod>2023-08-01</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>

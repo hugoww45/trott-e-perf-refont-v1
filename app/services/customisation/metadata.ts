@@ -5,14 +5,14 @@ export const metadata: Metadata = {
   description: "Transformez votre trottinette électrique avec nos services de customisation premium. Performance, design et innovation sur mesure pour une expérience de conduite unique.",
   keywords: ["customisation trottinette", "personnalisation trottinette électrique", "tuning trottinette", "performance trottinette", "design trottinette"],
   openGraph: {
-    title: "Services de Customisation Premium | Trott E Perf",
+    title: "Services de Customisation Premium | Trott e Perf",
     description: "Personnalisez votre trottinette électrique selon vos besoins. Optimisation de performance, design unique et innovations technologiques pour une expérience exceptionnelle.",
     images: [
       {
-        url: "https://trotteperf.com/customisation-og.jpg",
+        url: "https://trott-e-perf.fr/customisation-og.jpg",
         width: 1200,
         height: 630,
-        alt: "Services de customisation Trott E Perf"
+        alt: "Services de customisation Trott e Perf"
       }
     ]
   }
