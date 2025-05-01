@@ -51,17 +51,6 @@ const paymentOptions: PaymentOption[] = [
     maxMonths: 36,
     minAmount: 500,
     maxAmount: 10000
-  },
-  {
-    id: "leasing",
-    name: "Location avec option d'achat",
-    description: "Profitez maintenant, décidez plus tard",
-    icon: <PiggyBank className="h-5 w-5" />,
-    interestRate: 3.9,
-    minMonths: 12,
-    maxMonths: 48,
-    minAmount: 1000,
-    maxAmount: 15000
   }
 ];
 

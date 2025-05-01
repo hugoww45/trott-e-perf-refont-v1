@@ -323,11 +323,11 @@ export default function LoginPage() {
               >
                 <p className="text-xs text-neutral-500 dark:text-neutral-400">
                   En vous connectant, vous acceptez nos{' '}
-                  <Link href="/conditions-generales" className="text-black dark:text-white underline underline-offset-2">
+                  <Link href="/conditions-generales-vente" className="text-black dark:text-white underline underline-offset-2">
                     Conditions d'utilisation
                   </Link>{' '}
                   et notre{' '}
-                  <Link href="/politique-confidentialite" className="text-black dark:text-white underline underline-offset-2">
+                  <Link href="/politique-de-confidentialite" className="text-black dark:text-white underline underline-offset-2">
                     Politique de confidentialité
                   </Link>
                 </p>

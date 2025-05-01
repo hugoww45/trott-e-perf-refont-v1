@@ -23,17 +23,17 @@ const navItems = [
       {
         title: "Catégories",
         links: [
-          { name: "Trottinettes électriques", href: "/boutique/trottinettes" },
-          { name: "Accessoires", href: "/boutique/accessoires" },
-          { name: "Pièces détachées", href: "/boutique/pieces" },
-          { name: "Équipements de sécurité", href: "/boutique/securite" }
+          { name: "Trottinettes électriques", href: "/boutique?tag=Trottinette" },
+          { name: "Accessoires", href: "/boutique?tag=Accessoire" },
+          { name: "Pièces détachées", href: "/boutique?tag=Piece+detachee" },
+          { name: "Équipements de sécurité", href: "/boutique?tag=Securite" }
         ]
       },
       {
         title: "Collections",
         links: [
-          { name: "Nouveautés", href: "/boutique/nouveautes" },
-          { name: "Offres spéciales", href: "/boutique/offres" },
+          { name: "Nouveautés", href: "/boutique?tag=Nouveaute" },
+          { name: "Offres spéciales", href: "/boutique?tag=Promotion" },
         ]
       }
     ]
@@ -55,8 +55,8 @@ const navItems = [
       {
         title: "Assistance",
         links: [
-          { name: "FAQ", href: "/services/faq" },
-          { name: "Garantie", href: "/services/garantie" },
+          { name: "Support", href: "/support" },
+          { name: "Contact", href: "/contact" },
         ]
       }
     ]

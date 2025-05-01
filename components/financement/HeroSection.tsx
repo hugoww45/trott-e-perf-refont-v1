@@ -28,9 +28,9 @@ export default function HeroSection() {
   }));
 
   return (
-    <div ref={containerRef} className="relative min-h-[100vh] overflow-hidden">
+    <div ref={containerRef} className="relative min-h-screen w-full overflow-hidden flex items-center justify-center">
       {/* Arrière-plan avec effet parallax */}
-      <div className="absolute inset-0 z-0">
+      <div className="absolute inset-0 z-0 w-full">
         <motion.div
           style={{ scale, y: textY }}
           className="absolute inset-0 w-full h-full"
@@ -75,8 +75,8 @@ export default function HeroSection() {
       </div>
 
       {/* Conteneur principal */}
-      <div className="relative z-10 h-full flex flex-col items-center justify-center pt-32 pb-16 px-4">
-        <div className="container mx-auto max-w-screen-xl">
+      <div className="relative z-10 w-full h-full flex flex-col items-center justify-center py-16 px-4">
+        <div className="container mx-auto w-full max-w-screen-xl">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-24 items-center">
             {/* Contenu texte */}
             <div className="order-2 lg:order-1 text-left">

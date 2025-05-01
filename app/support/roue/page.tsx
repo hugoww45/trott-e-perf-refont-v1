@@ -114,7 +114,7 @@ const wheelPosts = [
   {
     title: 'Optimiser la durée de vie de vos freins',
     date: '3 mars 2023',
-    excerpt: 'Conseils d\'entretien et techniques de freinage pour maximiser la longévité de votre système de freinage.',
+    excerpt: 'Conseils d'entretien et techniques de freinage pour maximiser la longévité de votre système de freinage.',
     readTime: '5 min',
     link: '/support/roue/entretien-freins'
   },

@@ -220,27 +220,29 @@ export default function CustomisationPage() {
               </motion.div>
 
               {/* Titre avec animation séquentielle */}
-              <div className="relative">
-                <motion.h1
-                  className="text-7xl md:text-8xl lg:text-9xl font-bold tracking-tight text-center mb-6 text-white"
-                  initial={{ opacity: 0, y: 40 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.8, delay: 0.3 }}
-                >
-                  <span className="inline-block">L'excellence</span>{" "}
-                  <span className="inline-block relative">
-                    <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-purple-500 to-amber-500">
-                      personnalisée
-                    </span>
-                    <motion.span
-                      className="absolute bottom-0 left-0 h-1 bg-gradient-to-r from-purple-400 to-amber-500 w-full opacity-70"
-                      initial={{ scaleX: 0 }}
-                      animate={{ scaleX: 1 }}
-                      transition={{ duration: 1.2, delay: 1.1 }}
-                    />
-                  </span>
-                </motion.h1>
-              </div>
+<div className="relative">
+  <motion.h1
+    className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold tracking-tight text-center mb-6 text-white"
+    initial={{ opacity: 0, y: 40 }}
+    animate={{ opacity: 1, y: 0 }}
+    transition={{ duration: 0.8, delay: 0.3 }}
+  >
+    <span className="inline-block">L'excellence</span>{" "}
+    <span className="inline-block relative">
+      <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 via-purple-500 to-amber-500">
+        personnalisée
+      </span>
+      <motion.span
+        className="absolute bottom-0 left-0 h-1 bg-gradient-to-r from-purple-400 to-amber-500 w-full opacity-70"
+        initial={{ scaleX: 0 }}
+        animate={{ scaleX: 1 }}
+        transition={{ duration: 1.2, delay: 1.1 }}
+        style={{ transformOrigin: "left" }}
+      />
+    </span>
+  </motion.h1>
+</div>
+
 
               {/* Sous-titre */}
               <motion.p
@@ -432,10 +434,6 @@ export default function CustomisationPage() {
                       </div>
                     ))}
                   </div>
-
-                  <Button variant="outline" className="w-full rounded-lg border-white/20">
-                    Configurer
-                  </Button>
                 </motion.div>
               ))}
             </div>

@@ -21,16 +21,17 @@ const footerLinks = {
     { name: "Carrières", href: "/carrieres" },
   ],
   legal: [
-    { name: "Confidentialité", href: "/confidentialite" },
-    { name: "CGV", href: "/cgv" },
+    { name: "Confidentialité", href: "/politique-de-confidentialite" },
+    { name: "CGV", href: "/conditions-generales-vente" },
     { name: "Mentions légales", href: "/mentions-legales" },
+    { name: "Cookies", href: "/politique-cookies" },
   ],
 }
 
 const socialLinks = [
   { name: "Twitter", href: "https://twitter.com", icon: Twitter },
-  { name: "Instagram", href: "https://instagram.com", icon: Instagram },
-  { name: "LinkedIn", href: "https://linkedin.com", icon: Linkedin },
+  { name: "Instagram", href: "https://instagram.com/trott-e-perf", icon: Instagram },
+  { name: "LinkedIn", href: "https://linkedin.com/trott-e-perf", icon: Linkedin },
 ]
 
 export function Footer() {

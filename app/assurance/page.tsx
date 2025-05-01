@@ -95,10 +95,6 @@ export default function AssurancePage() {
               transition={{ duration: 0.6 }}
               className="mb-8"
             >
-              <span className="inline-flex items-center px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-xl border border-white/20 text-sm font-medium text-white">
-                <Shield className="h-3.5 w-3.5 mr-2 text-primary" />
-                Protection Premium
-              </span>
             </motion.div>
 
             {/* Titre avec animation séquentielle */}
@@ -145,14 +141,16 @@ export default function AssurancePage() {
               <Button
                 size="lg"
                 className="rounded-full bg-primary hover:bg-primary/90 min-w-[200px] transition-all duration-300 h-14 text-base font-medium"
+
                 onClick={() => {
                   if (experienceRef.current) {
                     experienceRef.current.scrollIntoView({ behavior: "smooth" });
                   }
                 }}
               >
-                Obtenir un devis
-                <ArrowRight className="ml-2 h-4 w-4" />
+                <Link href="/contact">
+                  Obtenir un devis
+                </Link>
               </Button>
 
               <Button
@@ -246,7 +244,7 @@ export default function AssurancePage() {
             y: { delay: 2, duration: 1.5, repeat: Infinity, repeatType: "loop" }
           }}
         >
-          <div className="flex flex-col items-center gap-2">
+          <div className="hidden md:block sm:block flex-col items-center gap-2">
             <span className="text-xs uppercase tracking-widest text-gray-500">Découvrir</span>
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -564,10 +562,12 @@ export default function AssurancePage() {
                     <div>
                       <h3 className="text-white font-bold text-xl mb-2">Assistance 24/7</h3>
                       <p className="text-gray-300 mb-4">Notre équipe est à votre écoute à tout moment pour répondre à vos questions et résoudre vos problèmes.</p>
+                      <Link href="/contact">
                       <Button variant="default" size="sm" className="rounded-full bg-white text-black hover:bg-white/90">
                         Nous contacter
-                        <ArrowRight className="ml-2 h-4 w-4" />
+                          <ArrowRight className="ml-2 h-4 w-4" />
                       </Button>
+                      </Link>
                     </div>
                   </div>
                 </div>

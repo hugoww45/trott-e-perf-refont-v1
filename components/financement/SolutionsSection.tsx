@@ -201,7 +201,7 @@ export default function SolutionsSection() {
       subtitle: "Jusqu'à 4× sans frais",
       description: "Réglez votre achat en 4 paiements échelonnés sur 3 mois, sans aucun frais supplémentaire.",
       icon: <CreditCard className="h-6 w-6 text-primary" />,
-      color: "bg-blue-500",
+      color: "bg-gray-500",
       benefits: [
         "Paiements automatiques",
         "Aucun coût supplémentaire",
@@ -213,7 +213,7 @@ export default function SolutionsSection() {
       subtitle: "12 à 36 mois",
       description: "Financez votre trottinette sur une durée plus longue grâce à notre partenaire financier.",
       icon: <CalendarRange className="h-6 w-6 text-primary" />,
-      color: "bg-purple-500",
+      color: "bg-gray-500",
       benefits: [
         "Taux avantageux",
         "Mensualités réduites",
@@ -225,7 +225,7 @@ export default function SolutionsSection() {
       subtitle: "Sur mesure",
       description: "Des solutions adaptées à votre profil et vos besoins spécifiques pour un financement optimal.",
       icon: <Search className="h-6 w-6 text-primary" />,
-      color: "bg-green-500",
+      color: "bg-gray-500",
       benefits: [
         "Conseil personnalisé",
         "Étude gratuite",
@@ -239,7 +239,7 @@ export default function SolutionsSection() {
     subtitle: "Solutions flexibles pour tous",
     description: "Nos conseillers vous accompagnent pour trouver la solution de financement idéale qui s'adapte parfaitement à votre budget et à vos besoins de mobilité urbaine.",
     icon: <Sparkles className="h-6 w-6 text-primary" />,
-    color: "bg-amber-500",
+    color: "bg-gray-500",
     highlight: true,
     benefits: [
       "Réponse en 24h maximum",
@@ -310,7 +310,7 @@ export default function SolutionsSection() {
 
           <h2 className="text-3xl md:text-5xl font-bold tracking-tight mb-6">
             <span className="text-white">Nos Solutions de</span>{" "}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-primary to-blue-400">Financement</span>
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-gray-200 to-gray-400">Financement</span>
           </h2>
           <p className="text-xl text-gray-400 max-w-2xl mx-auto">
             Des options flexibles pour acquérir votre trottinette en toute sérénité

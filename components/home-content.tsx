@@ -430,7 +430,7 @@ export function HomeContent() {
           transition={{ delay: 1.2, duration: 0.8 }}
         >
           <div className="flex flex-col items-center">
-            <span className="text-white/60 text-xs mb-2 uppercase tracking-widest">Scroll</span>
+            <span className="text-white/60 text-xs mb-2 uppercase tracking-widest hidden sm:block">Scroll</span>
             <ArrowDown className="h-4 w-4 text-white animate-bounce" />
           </div>
         </motion.div>

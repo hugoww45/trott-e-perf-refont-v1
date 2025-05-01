@@ -46,7 +46,7 @@ const batterySolutions = [
       "Inspectez le câble et le connecteur du chargeur pour tout dommage",
       "Assurez-vous que le port de charge de la trottinette est propre et sans débris",
       "Pendant la charge, l'indicateur du chargeur doit être rouge, puis passer au vert lorsque terminé",
-      "Si le chargeur chauffe excessivement ou ne s'allume pas, il peut être défectueux"
+      "Si le chargeur chauffe excessivement ou ne s\'allume pas, il peut être défectueux"
     ]
   },
   {

@@ -1,141 +1,146 @@
 "use client"
 
-import { useState, useEffect } from 'react'
-import Image from 'next/image'
+import { useState } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
+import { motion } from 'framer-motion'
 import { Product } from '@/lib/shopify/types'
-import { formatPrice } from '@/lib/utils'
 import { Badge } from "@/components/ui/badge"
-import { Tag, CheckCircle, XCircle } from 'lucide-react'
+import { AspectRatio } from "@/components/ui/aspect-ratio"
+import { formatPrice } from '@/lib/utils'
+import { Button } from '@/components/ui/button'
+import { ShoppingCart, Eye } from 'lucide-react'
 
 interface ProductCardProps {
   product: Product
 }
 
 export function ProductCard({ product }: ProductCardProps) {
-  const [imageLoaded, setImageLoaded] = useState(false)
-  const [imageError, setImageError] = useState(false)
+  const [isHovered, setIsHovered] = useState(false)
 
-  // Utiliser la première image du produit
-  const firstImage = product.images.edges[0]?.node
-  const productImageUrl = firstImage ? firstImage.url : null
-
-  const minPrice = product.priceRange.minVariantPrice
-
-  // Vérifier si le produit a du stock (soit au niveau du produit, soit au niveau des variantes)
-  const isInStock = product.availableForSale ||
-                    product.variants.edges.some(edge => edge.node.availableForSale)
-
-  // Logo de l'entreprise comme image par défaut (fallback)
-  const defaultImageUrl = '/placeholder-product.png'
-
-  // Vérifiez si au moins une variante est en promotion
-  const hasPromotion = product.variants.edges.some(
+  // Détermine s'il y a un prix promotionnel
+  const hasDiscount = product.variants.edges.some(
     edge => edge.node.compareAtPrice &&
     parseFloat(edge.node.compareAtPrice.amount) > parseFloat(edge.node.price.amount)
   )
 
-  // Pour le debug
-  useEffect(() => {
-    if (!productImageUrl) {
-      console.log('Produit sans image:', product.title, product.id)
-    }
+  // Calcule la réduction la plus élevée parmi les variantes
+  const discountPercentage = hasDiscount ? Math.max(
+    ...product.variants.edges
+      .filter(edge => edge.node.compareAtPrice)
+      .map(edge => {
+        const originalPrice = parseFloat(edge.node.compareAtPrice!.amount)
+        const discountedPrice = parseFloat(edge.node.price.amount)
+        return Math.round(((originalPrice - discountedPrice) / originalPrice) * 100)
+      })
+  ) : 0
 
-    if (!isInStock) {
-      console.log('Produit hors stock:', product.title, product.id)
-    }
-  }, [product, productImageUrl, isInStock])
+  // Vérifie si le produit est nouveau (moins de 30 jours)
+  const isNew = new Date(product.createdAt || '').getTime() > Date.now() - 30 * 24 * 60 * 60 * 1000
 
-  const handleImageError = () => {
-    console.log('Erreur de chargement d\'image pour:', product.title)
-    setImageError(true)
-  }
+  const firstVariant = product.variants.edges[0]?.node
+  const price = firstVariant.price ? parseFloat(firstVariant.price.amount) : 0
+  const compareAtPrice = firstVariant.compareAtPrice ? parseFloat(firstVariant.compareAtPrice.amount) : null
+  const currency = firstVariant.price?.currencyCode || 'EUR'
+
+  // Vérifie si le produit est en stock
+  const isAvailable = product.availableForSale || product.variants.edges.some(edge => edge.node.availableForSale)
+
+  // Obtient l'URL de l'image principale ou une image par défaut
+  const imageUrl = product.images?.edges?.[0]?.node?.url || '/images/product-placeholder.jpg'
+  const imageAlt = product.images?.edges?.[0]?.node?.altText || product.title
 
   return (
-    <div className="group rounded-lg overflow-hidden border border-neutral-800 bg-neutral-950/50 hover:border-neutral-700 hover:shadow-md hover:shadow-primary/10 transition-all duration-300 cursor-pointer">
-      <Link href={`/boutique/${product.handle}`}>
-        <div className="relative pt-[100%] bg-neutral-900/20">
-          <div className="absolute inset-0 flex items-center justify-center overflow-hidden">
-            {(productImageUrl && !imageError) ? (
-              <div className="relative w-full h-full flex items-center justify-center">
-                <Image
-                  src={productImageUrl}
-                  alt={firstImage?.altText || product.title}
-                  fill
-                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                  className="object-contain transition-all duration-300 group-hover:scale-110"
-                  style={{
-                    padding: '5%',
-                    backgroundColor: 'transparent'
-                  }}
-                  onLoad={() => setImageLoaded(true)}
-                  onError={handleImageError}
-                />
-              </div>
-            ) : (
-              <div className="relative w-full h-full flex items-center justify-center">
-                <div className="absolute inset-0 flex items-center justify-center opacity-10">
-                  <Image
-                    src={defaultImageUrl}
-                    alt="TROTT'e Perf logo"
-                    fill
-                    className="object-contain p-4 opacity-30 transition-opacity duration-300 group-hover:opacity-40"
-                  />
-                </div>
-                <div className="absolute bottom-0 left-0 right-0 text-center text-sm text-neutral-500 py-2">
-                  {product.title}
-                </div>
-              </div>
-            )}
-          </div>
+    <motion.div
+      whileHover={{ y: -4 }}
+      transition={{ duration: 0.2 }}
+      className="group relative overflow-hidden rounded-lg bg-neutral-900/50 border border-neutral-800 hover:border-neutral-700 transition-all duration-300 h-full flex flex-col"
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
+      <div className="absolute top-2 left-2 z-10 flex flex-col gap-1">
+        {hasDiscount && (
+          <Badge variant="destructive" className="rounded-full px-2 py-1 text-xs sm:text-sm font-medium">
+            -{discountPercentage}%
+          </Badge>
+        )}
+        {isNew && (
+          <Badge variant="default" className="rounded-full px-2 py-1 text-xs sm:text-sm font-medium bg-blue-600">
+            Nouveau
+          </Badge>
+        )}
+        {!isAvailable && (
+          <Badge variant="outline" className="rounded-full px-2 py-1 text-xs sm:text-sm font-medium bg-black/60 border-yellow-500 text-yellow-500">
+            Rupture
+          </Badge>
+        )}
+      </div>
 
-          {/* Badges pour stock et promotions */}
-          <div className="absolute top-2 right-2 flex flex-col gap-2 z-10">
-            {hasPromotion && (
-              <Badge className="bg-red-500 hover:bg-red-600">
-                Promotion
-              </Badge>
-            )}
-
-            {isInStock ? (
-              <Badge variant="outline" className="bg-green-900/70 hover:bg-green-900">
-                <CheckCircle className="h-3.5 w-3.5 mr-1" />
-                En stock
-              </Badge>
-            ) : (
-              <Badge variant="outline" className="bg-red-900/70 hover:bg-red-900">
-                <XCircle className="h-3.5 w-3.5 mr-1" />
-                Épuisé
-              </Badge>
-            )}
-          </div>
-        </div>
-
-        <div className="p-4 border-t border-neutral-800 transition-colors group-hover:bg-neutral-900/20">
-          <div className="flex items-start justify-between">
-            <h3 className="text-lg font-medium line-clamp-1">{product.title}</h3>
-          </div>
-
-          <p className="mt-1 text-lg font-medium text-primary">
-            {formatPrice(minPrice.amount, minPrice.currencyCode)}
-          </p>
-
-          <div className="mt-2 flex flex-wrap gap-1">
-            {product.tags && product.tags.slice(0, 2).map(tag => (
-              <Badge key={tag} variant="secondary" className="text-xs">
-                <Tag className="h-3 w-3 mr-1" />
-                {tag}
-              </Badge>
-            ))}
-            {product.productType && (!product.tags || !product.tags.includes(product.productType)) && (
-              <Badge variant="secondary" className="text-xs">
-                <Tag className="h-3 w-3 mr-1" />
-                {product.productType}
-              </Badge>
-            )}
-          </div>
-        </div>
+      <Link href={`/boutique/${product.handle}`} passHref className="relative overflow-hidden">
+        <AspectRatio ratio={1} className="bg-neutral-950/50 relative">
+          {imageUrl && (
+            <Image
+              src={imageUrl}
+              alt={imageAlt}
+              fill
+              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+              className="object-cover transition-transform duration-500 group-hover:scale-105"
+            />
+          )}
+          <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+        </AspectRatio>
       </Link>
-    </div>
+
+      <div className="flex flex-col flex-grow p-4">
+        <div className="flex items-start justify-between mb-2">
+          <h3 className="font-medium text-base sm:text-lg line-clamp-2 leading-tight">
+            {product.title}
+          </h3>
+        </div>
+
+        <div className="mb-2 text-sm text-neutral-400 line-clamp-1">
+          {product.vendor || product.productType || "Trottinette électrique"}
+        </div>
+
+        <div className="mt-auto flex items-center justify-between">
+          <div className="flex flex-col">
+            <div className="flex items-center gap-1">
+              {compareAtPrice && (
+                <span className="text-sm text-neutral-500 line-through">
+                  {formatPrice(compareAtPrice.toString(), currency)}
+                </span>
+              )}
+              <span className="font-semibold text-base sm:text-lg">
+                {formatPrice(price.toString(), currency)}
+              </span>
+            </div>
+          </div>
+
+          <div className="flex gap-1">
+            <Button
+              asChild
+              variant="outline"
+              size="icon"
+              className="h-8 w-8 rounded-full"
+            >
+              <Link href={`/boutique/${product.handle}`}>
+                <Eye className="h-4 w-4" />
+                <span className="sr-only">Voir le produit</span>
+              </Link>
+            </Button>
+
+            <Button
+              variant="default"
+              size="icon"
+              disabled={!isAvailable}
+              className="h-8 w-8 rounded-full"
+            >
+              <ShoppingCart className="h-4 w-4" />
+              <span className="sr-only">Ajouter au panier</span>
+            </Button>
+          </div>
+        </div>
+      </div>
+    </motion.div>
   )
 }

@@ -15,7 +15,7 @@ import {
   Battery,
   RotateCcw,
   Cable,
-  ThermometerHot,
+  Thermometer,
   Zap,
   Play,
   ChevronRight,
@@ -376,7 +376,7 @@ export default function MotorIssuePage() {
                 >
                   <div className="flex gap-4">
                     <div className="p-3 bg-green-100 dark:bg-green-900/30 rounded-full h-fit">
-                      <ThermometerHot className="h-6 w-6 text-green-600 dark:text-green-400" />
+                      <Thermometer className="h-6 w-6 text-green-600 dark:text-green-400" />
                     </div>
                     <div>
                       <h3 className="text-lg font-medium mb-2">Éviter la surchauffe</h3>

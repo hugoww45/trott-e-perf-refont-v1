@@ -11,10 +11,12 @@ import { getStorefrontApiUrl, getPublicTokenHeaders } from '@/lib/shopify/client
 import { PRODUCTS_QUERY } from '@/lib/shopify/queries'
 import { Product } from '@/lib/shopify/types'
 import { Button } from "@/components/ui/button"
-import { ChevronLeft, ChevronRight, Loader2, RefreshCw } from 'lucide-react'
+import { ChevronLeft, ChevronRight, Loader2, RefreshCw, Filter, X } from 'lucide-react'
 import { Input } from "@/components/ui/input"
 import { Search } from "lucide-react"
 import { buttonVariants } from "@/components/ui/button"
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet"
+import { Badge } from "@/components/ui/badge"
 
 export default function BoutiquePage() {
   const [products, setProducts] = useState<Product[]>([])
@@ -29,34 +31,51 @@ export default function BoutiquePage() {
   const [inStockOnly, setInStockOnly] = useState(false)
   const [loadingMore, setLoadingMore] = useState(false)
   const [isLoadingAllChannels, setIsLoadingAllChannels] = useState(false)
+  const [isMobileFilterOpen, setIsMobileFilterOpen] = useState(false)
+  const [tagFilter, setTagFilter] = useState<string | null>(null)
 
   // Pagination
   const [currentPage, setCurrentPage] = useState(1)
   const productsPerPage = 9
 
+  // Récupérer le tag à partir de l'URL si présent
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const urlParams = new URLSearchParams(window.location.search);
+      const tagParam = urlParams.get('tag');
+      if (tagParam) {
+        setTagFilter(tagParam);
+        // Si on a un tag, on l'ajoute aux tags de recherche
+        setSearchTags(prev => {
+          // Éviter les doublons
+          if (!prev.includes(tagParam)) {
+            return [...prev, tagParam];
+          }
+          return prev;
+        });
+      }
+    }
+  }, []);
+
   useEffect(() => {
     fetchInitialProducts()
   }, [])
 
-  // Mettre à jour les produits affichés lorsque la page ou les produits filtrés changent
   useEffect(() => {
     const startIndex = (currentPage - 1) * productsPerPage
     const endIndex = startIndex + productsPerPage
     setDisplayedProducts(filteredProducts.slice(startIndex, endIndex))
 
-    // Faire défiler vers le haut si la page change
     if (currentPage > 1) {
       window.scrollTo({ top: 0, behavior: 'smooth' })
     }
   }, [currentPage, filteredProducts])
 
-  // Fonction pour récupérer les produits initiaux via l'API route
   const fetchInitialProducts = async (searchTerm = '', reset = false) => {
     try {
       setLoading(true);
       setError(null);
 
-      // Ajouter un timestamp pour éviter la mise en cache par le navigateur
       const timestamp = Date.now();
 
       console.log(`[Boutique] Chargement des produits avec searchTerm='${searchTerm}' et timestamp=${timestamp}`);
@@ -71,7 +90,6 @@ export default function BoutiquePage() {
       if (!response.ok) {
         console.error(`[Boutique] Erreur HTTP: ${response.status} - ${response.statusText}`);
 
-        // Essayer de lire le corps de la réponse même en cas d'erreur
         try {
           const errorText = await response.text();
           console.error(`[Boutique] Détails de l'erreur:`, errorText);
@@ -87,7 +105,6 @@ export default function BoutiquePage() {
 
       let products: Product[] = [];
 
-      // Vérifier si nous avons des produits réels
       if (responseData.data?.products?.edges?.length > 0) {
         products = responseData.data.products.edges.map((edge: any) => edge.node);
         console.log(`[Boutique] Nombre de produits récupérés de l'API: ${products.length}`);
@@ -97,10 +114,8 @@ export default function BoutiquePage() {
         console.log(`[Boutique] ${products.length} produits simulés créés`);
       }
 
-      // Liste tous les titres de produits pour le débogage
       console.log("[Boutique] Liste de tous les produits:", products.map((p: any) => p.title));
 
-      // Rechercher spécifiquement "Accélérateur Xiaomi"
       const xiaomiProducts = products.filter((p: any) =>
         p.title.toLowerCase().includes("xiaomi") ||
         p.title.toLowerCase().includes("accélérateur")
@@ -109,11 +124,8 @@ export default function BoutiquePage() {
         console.log("[Boutique] Produits Xiaomi trouvés:", xiaomiProducts.map((p: any) => p.title));
       }
 
-      // Si une recherche est spécifiée et qu'on n'a pas trouvé de résultats,
-      // on affiche un message d'erreur mais on garde les produits précédents
       if (searchTerm && products.length === 0) {
         setError(`Aucun produit trouvé pour "${searchTerm}"`);
-        // Ne pas modifier la liste des produits
       } else {
         setProducts(products);
         if (reset || searchTerm) {
@@ -125,8 +137,6 @@ export default function BoutiquePage() {
       console.error('[Boutique] Erreur lors du chargement des produits:', err);
       setError(`Erreur: ${err instanceof Error ? err.message : 'Erreur inconnue'}`);
 
-      // En cas d'erreur, utiliser des produits simulés
-      console.log("[Boutique] Génération de produits simulés suite à une erreur");
       const mockProducts = generateMockProducts();
       setProducts(mockProducts);
       setFilteredProducts(mockProducts);
@@ -136,10 +146,8 @@ export default function BoutiquePage() {
     }
   };
 
-  // Méthode alternative de récupération directe des produits
   const fetchProductsDirect = async () => {
     try {
-      // Utiliser la méthode directe avec les valeurs hardcodées
       const apiUrl = 'https://9ece60-13.myshopify.com/api/2024-01/graphql';
       const token = '06405a03cab3919e0390d72c922f85c0';
 
@@ -188,7 +196,6 @@ export default function BoutiquePage() {
       console.log(`Récupération directe: ${simpleProducts.length} produits`);
       console.log("Titres:", simpleProducts.map((p: any) => p.title));
 
-      // Adapter au format attendu
       const products = simpleProducts.map((p: any) => ({
         ...p,
         description: "",
@@ -213,15 +220,13 @@ export default function BoutiquePage() {
     }
   };
 
-  // Fonction pour récupérer tous les produits avec pagination et recherche améliorée
   const fetchAllProducts = async (): Promise<Product[]> => {
     let allProducts: Product[] = []
     let hasNextPage = true
     let endCursor = null
-    const maxPages = 20 // Augmentation de la limite pour récupérer plus de produits
+    const maxPages = 20
     let pageCount = 0
 
-    // Set pour vérifier les doublons
     const seenProductIds = new Set<string>()
 
     while (hasNextPage && pageCount < maxPages) {
@@ -235,7 +240,7 @@ export default function BoutiquePage() {
           body: JSON.stringify({
             query: PRODUCTS_QUERY,
             variables: {
-              first: 100, // Augmenter le nombre de produits par page pour en récupérer plus
+              first: 100,
               after: endCursor
             }
           })
@@ -259,7 +264,6 @@ export default function BoutiquePage() {
 
         const { data } = responseData
 
-        // Log pour débugger - trouver un produit spécifique
         const searchProduct = (title: string) => {
           const found = data.products.edges.find(
             (edge: any) => edge.node.title.toLowerCase().includes(title.toLowerCase())
@@ -269,13 +273,11 @@ export default function BoutiquePage() {
           }
         }
 
-        // Chercher spécifiquement le produit "Accélérateur Xiaomi"
         searchProduct('Accélérateur Xiaomi')
 
         const pageProducts = data.products.edges
           .map((edge: any) => edge.node)
           .filter((product: Product) => {
-            // Vérifier si on a déjà vu ce produit (éviter les doublons)
             if (seenProductIds.has(product.id)) {
               return false
             }
@@ -288,10 +290,8 @@ export default function BoutiquePage() {
         hasNextPage = data.products.pageInfo.hasNextPage
         endCursor = data.products.pageInfo.endCursor
 
-        // Afficher la progression dans la console
         console.log(`Chargement des produits: ${allProducts.length} produits récupérés (page ${pageCount})`)
 
-        // Inspecter les données brutes pour le débogage
         inspectRawApiData(responseData);
       } catch (error) {
         console.error('Erreur lors de la récupération des produits:', error)
@@ -301,45 +301,36 @@ export default function BoutiquePage() {
       }
     }
 
-    // Log final avec statistiques détaillées
     console.log(`Total des produits récupérés: ${allProducts.length} à partir de ${pageCount} pages`)
     console.log(`Produits uniques: ${seenProductIds.size}`)
 
-    // Obtenir les 5 premiers produits pour vérifier les données
     const sampleProducts = allProducts.slice(0, 5)
     console.log('Échantillon de produits:', sampleProducts.map(p => p.title))
 
     return allProducts
   }
 
-  // Une fonction de débogage pour inspecter les données brutes et chercher des motifs
   const inspectRawApiData = (rawData: any) => {
     if (!rawData) return
 
     console.log('=== Inspection des données brutes de l\'API ===');
 
-    // Rechercher des produits contenant "Xiaomi" ou "Accélérateur" dans les données brutes
     const searchInRawData = (data: any, searchTerm: string, path = ''): { path: string; value: string; object: any } | null => {
       if (!data) return null
 
-      // Si c'est un objet
       if (typeof data === 'object' && data !== null) {
-        // Si c'est un tableau
         if (Array.isArray(data)) {
           for (let i = 0; i < data.length; i++) {
             const result = searchInRawData(data[i], searchTerm, `${path}[${i}]`)
             if (result) return result
           }
         } else {
-          // Chercher dans l'objet actuel
           for (const [key, value] of Object.entries(data)) {
-            // Vérifier si la clé ou la valeur contient le terme recherché
             if (typeof value === 'string' && value.toLowerCase().includes(searchTerm.toLowerCase())) {
               console.log(`FOUND in ${path}.${key}: ${value}`)
               return { path: `${path}.${key}`, value, object: data }
             }
 
-            // Recherche récursive
             const result = searchInRawData(value, searchTerm, `${path}.${key}`)
             if (result) return result
           }
@@ -349,12 +340,10 @@ export default function BoutiquePage() {
       return null
     }
 
-    // Rechercher des termes spécifiques
     searchInRawData(rawData, 'Accélérateur')
     searchInRawData(rawData, 'Xiaomi')
     searchInRawData(rawData, 'Noir')
 
-    // Compter les produits bruts
     try {
       const countProducts = (data: any): number => {
         if (!data) return 0
@@ -370,16 +359,15 @@ export default function BoutiquePage() {
     }
   }
 
-  // Appliquer tous les filtres
   useEffect(() => {
     filterProducts()
   }, [searchQuery, searchTags, priceRange, categories, inStockOnly, products])
 
-  // Fonction pour gérer la recherche depuis le composant SearchBar
   const handleSearch = (query: string, tags: string[]) => {
     setSearchQuery(query)
     setSearchTags(tags)
     fetchInitialProducts(query, true)
+    setIsMobileFilterOpen(false)
   }
 
   const handleFilterChange = (newPriceRange: number[], newCategories: string[], newInStockOnly: boolean) => {
@@ -395,12 +383,10 @@ export default function BoutiquePage() {
 
     console.log("Commencer filtrage avec", products.length, "produits")
 
-    // Filtre par recherche textuelle avec logging
     if (searchQuery) {
       const lowercaseQuery = searchQuery.toLowerCase()
       console.log("Recherche de:", lowercaseQuery)
 
-      // Alternatives de recherche (avec et sans tirets)
       const queryAlternatives = [
         lowercaseQuery,
         lowercaseQuery.replace(/-/g, ' '),
@@ -410,7 +396,6 @@ export default function BoutiquePage() {
 
       console.log("Alternatives de recherche:", queryAlternatives)
 
-      // Recherche améliorée plus flexible
       filtered = filtered.filter(product => {
         const title = product.title.toLowerCase()
         const description = product.description?.toLowerCase() || ''
@@ -419,7 +404,6 @@ export default function BoutiquePage() {
         const tags = product.tags?.map(t => t.toLowerCase()) || []
         const variantTitles = product.variants.edges.map(edge => edge.node.title.toLowerCase())
 
-        // Normaliser les valeurs du produit (alternatives avec/sans tirets)
         const productValues = [
           title,
           title.replace(/-/g, ' '),
@@ -432,12 +416,10 @@ export default function BoutiquePage() {
           ...variantTitles
         ]
 
-        // Vérifier si l'une des alternatives de recherche correspond à l'une des valeurs du produit
         const matches = queryAlternatives.some(query =>
           productValues.some(value => value.includes(query))
         )
 
-        // Gestion spéciale pour "Accélérateur Xiaomi - Noir"
         if (lowercaseQuery === "accélérateur xiaomi - noir" ||
             lowercaseQuery === "accélérateur xiaomi noir") {
           const isXiaomi = (title.includes("xiaomi") || vendor.includes("xiaomi"))
@@ -451,7 +433,6 @@ export default function BoutiquePage() {
           return specialMatch
         }
 
-        // Log les correspondances trouvées
         if (matches) {
           console.log("Produit correspondant trouvé:", product.title, "- ID:", product.id)
         }
@@ -462,7 +443,6 @@ export default function BoutiquePage() {
       console.log("Après recherche textuelle:", filtered.length, "produits")
     }
 
-    // Filtre par tags
     if (searchTags.length > 0) {
       console.log("Filtrage par tags:", searchTags)
       filtered = filtered.filter(product => {
@@ -471,7 +451,6 @@ export default function BoutiquePage() {
           const productType = product.productType || ''
           const vendor = product.vendor || ''
 
-          // Gestion spéciale pour le tag "Xiaomi"
           if (tag === "Xiaomi") {
             return product.title.toLowerCase().includes("xiaomi") ||
                    vendor.toLowerCase().includes("xiaomi") ||
@@ -490,7 +469,6 @@ export default function BoutiquePage() {
       console.log("Après filtrage par tags:", filtered.length, "produits")
     }
 
-    // Filtre par prix
     if (priceRange[0] > 0 || priceRange[1] < 20000) {
       filtered = filtered.filter(product => {
         const price = parseFloat(product.priceRange.minVariantPrice.amount)
@@ -499,7 +477,6 @@ export default function BoutiquePage() {
       console.log("Après filtrage par prix:", filtered.length, "produits")
     }
 
-    // Filtre par catégorie
     if (categories.length > 0) {
       filtered = filtered.filter(product => {
         return categories.some(category =>
@@ -510,7 +487,6 @@ export default function BoutiquePage() {
       console.log("Après filtrage par catégorie:", filtered.length, "produits")
     }
 
-    // Filtre par stock
     if (inStockOnly) {
       filtered = filtered.filter(product => {
         return product.availableForSale === true ||
@@ -521,7 +497,6 @@ export default function BoutiquePage() {
 
     console.log("Résultat final:", filtered.length, "produits")
 
-    // Si la recherche est spécifiquement pour "Accélérateur Xiaomi" et aucun résultat
     if (searchQuery?.toLowerCase().includes("accélérateur xiaomi") && filtered.length === 0) {
       console.warn("ATTENTION: Recherche 'Accélérateur Xiaomi' sans résultats!")
       console.log("Liste complète des produits disponibles:", products.map(p => p.title))
@@ -530,50 +505,8 @@ export default function BoutiquePage() {
     setFilteredProducts(filtered)
   }
 
-  // Appliquer la pagination avec un calcul fiable
-  useEffect(() => {
-    if (!filteredProducts.length) {
-      setDisplayedProducts([]);
-      return;
-    }
-
-    console.log(`Pagination (avant): Produits filtrés total: ${filteredProducts.length}, page: ${currentPage}, produits par page: ${productsPerPage}`);
-
-    // Calculer le nombre total de pages correctement
-    const totalPageCount = Math.max(1, Math.ceil(filteredProducts.length / productsPerPage));
-
-    // S'assurer que la page actuelle est valide
-    let validPage = currentPage;
-    if (currentPage > totalPageCount) {
-      validPage = totalPageCount;
-      console.log(`Correction auto de la page: ${currentPage} → ${validPage} (total pages: ${totalPageCount})`);
-      setCurrentPage(validPage);
-      return; // On sort pour éviter une boucle, le setCurrentPage déclenchera un nouveau rendu
-    }
-
-    // Calculer l'index de début et de fin pour cette page
-    const startIndex = (validPage - 1) * productsPerPage;
-    const endIndex = Math.min(startIndex + productsPerPage, filteredProducts.length);
-
-    console.log(`Pagination: Page ${validPage}/${totalPageCount}, affichage produits ${startIndex+1} à ${endIndex} sur ${filteredProducts.length}`);
-
-    // Vérifier si la plage est valide
-    if (startIndex >= filteredProducts.length) {
-      console.error(`ERREUR: startIndex (${startIndex}) >= nombre de produits (${filteredProducts.length})`);
-      // Corriger en revenant à la première page
-      setCurrentPage(1);
-      return;
-    }
-
-    // Découper les produits pour cette page
-    const slicedProducts = filteredProducts.slice(startIndex, endIndex);
-    console.log(`Produits affichés: ${slicedProducts.length}, premier produit: ${slicedProducts[0]?.title || 'aucun'}`);
-
-    setDisplayedProducts(slicedProducts);
-  }, [currentPage, filteredProducts, productsPerPage]);
-
   const handlePageChange = (page: number) => {
-    const maxPage = Math.max(1, Math.ceil(filteredProducts.length / productsPerPage));
+    const maxPage = Math.max(1, Math.ceil(filteredProducts.length / productsPerPage))
 
     if (page < 1) {
       page = 1;
@@ -583,7 +516,6 @@ export default function BoutiquePage() {
 
     console.log(`Changement de page: ${currentPage} → ${page} (max: ${maxPage})`);
     setCurrentPage(page);
-    // Faire défiler vers le haut de la page
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
@@ -596,11 +528,12 @@ export default function BoutiquePage() {
 
     console.log(`Rendu pagination: Page actuelle ${currentPage}/${totalPageCount}`);
 
-    const visiblePages = 5;
+    const isMobile = typeof window !== 'undefined' && window.innerWidth < 640;
+    const visiblePages = isMobile ? 3 : 5;
+
     let startPage = Math.max(1, currentPage - Math.floor(visiblePages / 2));
     const endPage = Math.min(totalPageCount, startPage + visiblePages - 1);
 
-    // Ajuster startPage si on est près de la fin
     if (endPage - startPage + 1 < visiblePages) {
       startPage = Math.max(1, endPage - visiblePages + 1);
     }
@@ -611,27 +544,29 @@ export default function BoutiquePage() {
     }
 
     return (
-      <div className="flex justify-center items-center space-x-2 mt-8">
+      <div className="flex justify-center items-center flex-wrap gap-2 mt-8">
         <Button
           variant="outline"
           size="icon"
           disabled={currentPage === 1}
           onClick={() => handlePageChange(currentPage - 1)}
+          className="h-8 w-8 sm:h-10 sm:w-10"
         >
           <ChevronLeft className="h-4 w-4" />
         </Button>
 
-        {startPage > 1 && (
+        {!isMobile && startPage > 1 && (
           <>
             <Button
               variant={currentPage === 1 ? "default" : "outline"}
               size="sm"
               onClick={() => handlePageChange(1)}
+              className="h-8 w-8 sm:h-10 sm:w-10 p-0"
             >
               1
             </Button>
             {startPage > 2 && (
-              <span className="px-2">...</span>
+              <span className="px-1">...</span>
             )}
           </>
         )}
@@ -642,20 +577,22 @@ export default function BoutiquePage() {
             variant={currentPage === page ? "default" : "outline"}
             size="sm"
             onClick={() => handlePageChange(page)}
+            className="h-8 w-8 sm:h-10 sm:w-10 p-0"
           >
             {page}
           </Button>
         ))}
 
-        {endPage < totalPageCount && (
+        {!isMobile && endPage < totalPageCount && (
           <>
             {endPage < totalPageCount - 1 && (
-              <span className="px-2">...</span>
+              <span className="px-1">...</span>
             )}
             <Button
               variant={currentPage === totalPageCount ? "default" : "outline"}
               size="sm"
               onClick={() => handlePageChange(totalPageCount)}
+              className="h-8 w-8 sm:h-10 sm:w-10 p-0"
             >
               {totalPageCount}
             </Button>
@@ -667,6 +604,7 @@ export default function BoutiquePage() {
           size="icon"
           disabled={currentPage === totalPageCount}
           onClick={() => handlePageChange(currentPage + 1)}
+          className="h-8 w-8 sm:h-10 sm:w-10"
         >
           <ChevronRight className="h-4 w-4" />
         </Button>
@@ -674,7 +612,6 @@ export default function BoutiquePage() {
     );
   }
 
-  // Ajouter la fonction pour récupérer tous les produits de tous les canaux
   const fetchAllChannelsProducts = async () => {
     setIsLoadingAllChannels(true);
     try {
@@ -693,7 +630,6 @@ export default function BoutiquePage() {
         const products = data.data.data.products.edges.map((edge: any) => edge.node);
         console.log(`${products.length} produits trouvés dans tous les canaux`);
 
-        // Vérifier si le produit test est présent
         const testProducts = products.filter((p: any) =>
           p.title.toLowerCase().includes("test")
         );
@@ -716,13 +652,10 @@ export default function BoutiquePage() {
     }
   };
 
-  // Fonction pour générer des produits simulés
   const generateMockProducts = (): Product[] => {
     console.log("[Boutique] Génération de produits simulés");
 
-    // Liste de produits simulés
     const mockProducts: Product[] = [
-      // Trottinettes électriques
       {
         id: "gid://shopify/Product/1",
         title: "Xiaomi Mi Pro 2",
@@ -864,7 +797,6 @@ export default function BoutiquePage() {
           ]
         }
       },
-      // Accessoires
       {
         id: "gid://shopify/Product/4",
         title: "Casque de protection",
@@ -929,7 +861,6 @@ export default function BoutiquePage() {
           ]
         }
       },
-      // Pièces détachées
       {
         id: "gid://shopify/Product/5",
         title: "Batterie Xiaomi M365",
@@ -1035,69 +966,136 @@ export default function BoutiquePage() {
         <Navigation />
       </div>
 
-      <main className="container mx-auto px-4 pt-24 pb-16">
+      <main className="container mx-auto px-4 pt-20 sm:pt-24 pb-16">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          className="py-12"
+          className="py-6 sm:py-12"
         >
-          <div className="flex flex-col items-center mb-16">
-            <h1 className="text-5xl font-bold mb-8 text-center bg-clip-text text-transparent bg-gradient-to-r from-white to-white/70">
-              Notre Collection
+          <div className="flex flex-col items-center mb-8 sm:mb-16">
+            <h1 className="text-3xl sm:text-5xl font-bold mb-6 text-center bg-clip-text text-transparent bg-gradient-to-r from-white to-white/70">
+              {tagFilter ? `${tagFilter}s` : "Notre Collection"}
             </h1>
             <div className="w-full max-w-3xl">
               <SearchBar onSearch={handleSearch} />
             </div>
           </div>
 
-          <div className="flex items-center justify-between">
-            <h1 className="text-3xl font-semibold">Boutique</h1>
-            <Button
-              variant="outline"
-              onClick={() => fetchInitialProducts('', true)}
-              className="flex items-center gap-2"
-              disabled={loading}
-            >
-              <RefreshCw className={`h-4 w-4 ${loading ? 'animate-spin' : ''}`} />
-              Actualiser
-            </Button>
+          {tagFilter && (
+            <div className="mb-6 flex items-center justify-between">
+              <div className="flex items-center">
+                <Badge variant="outline" className="mr-2">
+                  {tagFilter}
+                </Badge>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => {
+                    setTagFilter(null);
+                    setSearchTags([]);
+                    filterProducts();
+                    // Mise à jour de l'URL sans rechargement de page
+                    if (typeof window !== 'undefined') {
+                      const url = new URL(window.location.href);
+                      url.searchParams.delete('tag');
+                      window.history.pushState({}, '', url);
+                    }
+                  }}
+                  className="h-7 text-xs"
+                >
+                  Effacer le filtre
+                </Button>
+              </div>
+            </div>
+          )}
+
+          <div className="flex items-center justify-between mb-6">
+            <h2 className="text-xl sm:text-3xl font-semibold">Boutique</h2>
+
+            <div className="flex gap-2">
+              <Sheet>
+                <SheetTrigger asChild>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="flex md:hidden items-center gap-1 rounded-full px-3"
+                  >
+                    <Filter className="h-4 w-4" />
+                    <span className="sr-only sm:not-sr-only sm:inline-block">Filtres</span>
+                  </Button>
+                </SheetTrigger>
+                <SheetContent side="left" className="pt-20 w-[85vw] max-w-[320px]">
+                  <SheetHeader>
+                    <SheetTitle>Filtres</SheetTitle>
+                  </SheetHeader>
+                  <ProductFilter onFilterChange={handleFilterChange} />
+                </SheetContent>
+              </Sheet>
+
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => fetchInitialProducts('', true)}
+                className="flex items-center gap-1 rounded-full px-3"
+                disabled={loading}
+              >
+                <RefreshCw className={`h-4 w-4 ${loading ? 'animate-spin' : ''}`} />
+                <span className="sr-only sm:not-sr-only sm:inline-block">Actualiser</span>
+              </Button>
+            </div>
           </div>
 
           <div className="flex flex-col md:flex-row gap-6 w-full mt-6">
-            <div className="w-full md:w-1/4">
+            <div className="hidden md:block w-full md:w-1/4">
               <ProductFilter
                 onFilterChange={handleFilterChange}
               />
             </div>
 
             <div className="flex-1">
+              <div className="mb-4 text-xs sm:text-sm text-gray-500 flex flex-col sm:flex-row sm:justify-between">
+                <span>
+                  {filteredProducts.length} produit{filteredProducts.length > 1 ? 's' : ''} trouvé{filteredProducts.length > 1 ? 's' : ''}
+                </span>
+                <span className="mt-1 sm:mt-0">
+                  Page {currentPage} / {Math.max(1, Math.ceil(filteredProducts.length / productsPerPage))}
+                </span>
+              </div>
+
               {loading ? (
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
                   {[...Array(6)].map((_, i) => (
-                    <div key={i} className="h-96 bg-neutral-900/50 rounded-lg animate-pulse" />
+                    <div key={i} className="h-64 sm:h-80 bg-neutral-900/50 rounded-lg animate-pulse" />
                   ))}
                 </div>
               ) : error ? (
-                <div className="text-center text-red-500">{error}</div>
+                <div className="text-center py-8 bg-red-500/10 rounded-lg border border-red-500/20">
+                  <p className="text-base sm:text-lg text-red-500">{error}</p>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="mt-4"
+                    onClick={() => fetchInitialProducts('', true)}
+                  >
+                    Réessayer
+                  </Button>
+                </div>
               ) : filteredProducts.length === 0 ? (
-                <div className="text-center py-12">
-                  <p className="text-xl">Aucun produit ne correspond à votre recherche</p>
-                  <p className="text-gray-500 mt-2">Essayez de modifier vos critères de recherche</p>
+                <div className="text-center py-8 sm:py-12 bg-neutral-900/20 rounded-lg border border-neutral-800">
+                  <p className="text-lg sm:text-xl mb-2">Aucun produit ne correspond à votre recherche</p>
+                  <p className="text-gray-500 text-sm sm:text-base mb-4">Essayez de modifier vos critères de recherche</p>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => fetchInitialProducts('', true)}
+                  >
+                    Réinitialiser
+                  </Button>
                 </div>
               ) : (
                 <>
-                  <div className="mb-4 text-sm text-gray-500 flex justify-between items-center">
-                    <span>
-                      {filteredProducts.length} produit{filteredProducts.length > 1 ? 's' : ''} trouvé{filteredProducts.length > 1 ? 's' : ''}
-                      sur un total de {products.length}
-                    </span>
-                    <span>
-                      Page {currentPage} sur {Math.max(1, Math.ceil(filteredProducts.length / productsPerPage))}
-                    </span>
-                  </div>
-
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
                     {displayedProducts.map((product) => (
                       <ProductCard key={product.id} product={product} />
                     ))}

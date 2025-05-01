@@ -149,6 +149,10 @@ export function ProductDetails({ handle }: ProductDetailsProps) {
   const variant = getSelectedVariantInfo()
   const hasPromotion = variant?.compareAtPrice && parseFloat(variant.compareAtPrice.amount) > parseFloat(variant.price.amount)
 
+  const price = variant?.price ? parseFloat(variant.price.amount) : 0
+  const compareAtPrice = variant?.compareAtPrice ? parseFloat(variant.compareAtPrice.amount) : null
+  const currency = variant?.price?.currencyCode || 'EUR'
+
   return (
     <div className="py-12">
       {/* Fil d'Ariane */}
@@ -284,15 +288,13 @@ export function ProductDetails({ handle }: ProductDetailsProps) {
             </div>
 
             {/* Prix */}
-            <div className="mt-3 flex items-baseline gap-2">
-              <p className={`text-2xl font-medium ${hasPromotion ? 'text-red-500' : 'text-primary'}`}>
-                {variant && formatPrice(variant.price.amount, variant.price.currencyCode)}
-              </p>
-              {hasPromotion && variant?.compareAtPrice && (
-                <p className="text-lg line-through text-gray-500">
-                  {formatPrice(variant.compareAtPrice.amount, variant.compareAtPrice.currencyCode)}
-                </p>
+            <div className="flex items-baseline gap-2 mt-2">
+              {compareAtPrice && (
+                <div className="text-muted-foreground line-through">
+                  {formatPrice(compareAtPrice.toString(), currency)}
+                </div>
               )}
+              <h3 className="text-2xl font-bold">{formatPrice(price.toString(), currency)}</h3>
             </div>
 
             {/* Note produit */}

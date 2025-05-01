@@ -26,7 +26,16 @@ import {
   Shield,
   RefreshCw,
   Star,
-  Share2
+  Share2,
+  Calendar,
+  Package,
+  PackageCheck,
+  Clock,
+  CreditCard,
+  HelpCircle,
+  Camera,
+  X,
+  Settings
 } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { Tab } from '@headlessui/react'
@@ -42,14 +51,53 @@ import { Badge } from '@/components/ui/badge'
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip'
 import ProductSchema from '@/app/productschema'
 
-// Exemples de caractéristiques produit à personnaliser selon vos produits
-const productFeatures = [
-  { name: "Autonomie", value: "Jusqu'à 65km", icon: <RefreshCw className="h-5 w-5" /> },
-  { name: "Garantie", value: "1 an", icon: <Shield className="h-5 w-5" /> },
-  { name: "Livraison", value: "2-4 jours", icon: <Truck className="h-5 w-5" /> }
+// Informations de livraison et garantie
+const deliveryInfo = [
+  {
+    title: "Livraison standard",
+    delay: "2-4 jours ouvrés",
+    price: "Gratuite dès 50€ d'achat",
+    description: "Livraison à domicile par transporteur",
+    icon: <Truck className="h-5 w-5" />
+  },
+  {
+    title: "Livraison express",
+    delay: "24-48h ouvrées",
+    price: "12.90€",
+    description: "Réception le lendemain pour toute commande passée avant 13h",
+    icon: <Package className="h-5 w-5" />
+  },
+  {
+    title: "Retrait en magasin",
+    delay: "Sous 2h",
+    price: "Gratuit",
+    description: "Disponible dans nos 3 boutiques Trott'e Perf",
+    icon: <Clock className="h-5 w-5" />
+  }
 ]
 
-// Exemples d'avis clients (à remplacer par de vrais avis)
+// Exemples de caractéristiques produit
+const productFeatures = [
+  { name: "Autonomie", value: "Jusqu'à 65km", icon: <RefreshCw className="h-5 w-5" /> },
+  { name: "Garantie", value: "2 ans", icon: <Shield className="h-5 w-5" /> },
+  { name: "Paiement", value: "En 3x sans frais", icon: <CreditCard className="h-5 w-5" /> }
+]
+
+// Options de financement
+const financingOptions = [
+  {
+    title: "Paiement en 3x sans frais",
+    description: "Payez en 3 mensualités avec votre carte bancaire",
+    provider: "Alma"
+  },
+  {
+    title: "Crédit à la consommation",
+    description: "Financez votre trottinette sur 10 à 36 mois",
+    provider: "Sofinco"
+  }
+]
+
+// Exemples d'avis clients
 const reviews = [
   {
     id: 1,
@@ -88,6 +136,8 @@ export default function ProductPage({ params }: ProductPageProps) {
   const [quantity, setQuantity] = useState(1)
   const [activeImageIndex, setActiveImageIndex] = useState(0)
   const [relatedProducts, setRelatedProducts] = useState<any[]>([])
+  const [activeTab, setActiveTab] = useState('description')
+  const [showAllImages, setShowAllImages] = useState(false)
   const { addToCart, isAuthenticated, fetchCart } = useCartStore()
   const router = useRouter()
 
@@ -207,6 +257,25 @@ export default function ProductPage({ params }: ProductPageProps) {
     ));
   };
 
+  // Extraire les caractéristiques techniques du produit (à partir des métadonnées ou description)
+  const extractTechnicalFeatures = () => {
+    // Dans un cas réel, cette fonction extrairait les caractéristiques à partir des métadonnées du produit
+    // Ici nous utilisons des données fictives pour l'exemple
+    return [
+      { name: "Moteur", value: "500W nominal, 800W max" },
+      { name: "Batterie", value: "48V 13Ah (624Wh)" },
+      { name: "Vitesse max", value: "25 km/h (bridé) / 40 km/h (débridé)" },
+      { name: "Charge max", value: "120 kg" },
+      { name: "Poids", value: "16.5 kg" },
+      { name: "Dimensions", value: "108 x 43 x 114 cm" },
+      { name: "Pneus", value: "10 pouces, pneumatiques" },
+      { name: "Suspension", value: "Avant et arrière" },
+      { name: "Freins", value: "Disque avant et arrière" },
+      { name: "Temps de charge", value: "5-6 heures" },
+      { name: "Certification", value: "CE, RoHS, EN17128" }
+    ];
+  };
+
   if (loading) {
     return (
       <div className="min-h-screen bg-background">
@@ -250,79 +319,105 @@ export default function ProductPage({ params }: ProductPageProps) {
   // Calculer la note moyenne
   const averageRating = reviews.reduce((sum, review) => sum + review.rating, 0) / reviews.length;
 
+  // Récupérer les caractéristiques techniques
+  const technicalFeatures = extractTechnicalFeatures();
+
   return (
     <div className="min-h-screen bg-background">
       <Navigation />
       <main className="pt-24 pb-16">
-        {/* Ajouter le ProductSchema ici */}
-        {product && <ProductSchema product={product} />}
-
         {/* Fil d'Ariane */}
-        <div className="container mx-auto px-4 mb-4">
-          <nav className="flex items-center space-x-2 text-sm text-muted-foreground">
-            <Link href="/" className="hover:text-foreground transition-colors">
-              Accueil
-            </Link>
-            <ChevronRight className="h-4 w-4" />
-            <Link href="/boutique" className="hover:text-foreground transition-colors">
+        <div className="container mx-auto px-4 py-4">
+          <div className="flex items-center text-sm text-muted-foreground mb-4">
+            <Link href="/boutique" className="hover:text-primary transition-colors">
               Boutique
             </Link>
-            <ChevronRight className="h-4 w-4" />
-            <span className="text-foreground font-medium truncate max-w-[200px]">
-              {product.title}
-            </span>
-          </nav>
+            <ChevronRight className="h-4 w-4 mx-2" />
+            {product.productType && (
+              <>
+                <Link href={`/boutique?categorie=${encodeURIComponent(product.productType)}`} className="hover:text-primary transition-colors">
+                  {product.productType}
+                </Link>
+                <ChevronRight className="h-4 w-4 mx-2" />
+              </>
+            )}
+            <span className="text-foreground font-medium truncate">{product.title}</span>
+          </div>
         </div>
 
-        {/* Section principale du produit */}
-        <section className="container mx-auto px-4 mb-16">
-          <div className="grid lg:grid-cols-2 gap-12">
-            {/* Galerie d'images */}
-            <div className="space-y-4">
-              <div className="relative aspect-square overflow-hidden rounded-xl bg-muted">
-                <AnimatePresence mode="wait">
-                  <motion.div
-                    key={activeImageIndex}
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    transition={{ duration: 0.3 }}
-                    className="absolute inset-0"
-                  >
-                    <Image
-                      src={activeImage}
-                      alt={product.title}
-                      fill
-                      className="object-cover"
-                      priority
-                    />
-                  </motion.div>
-                </AnimatePresence>
+        {/* Informations produit principales */}
+        <section className="container mx-auto px-4">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
+            {/* Galerie photos */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+              className="space-y-4"
+            >
+              {/* Image principale */}
+              <div className="relative aspect-square rounded-xl overflow-hidden bg-muted border border-muted">
+                <Image
+                  src={activeImage}
+                  alt={product.title}
+                  fill
+                  priority
+                  className="object-cover"
+                />
 
-                {/* Contrôles de navigation pour la galerie */}
+                {/* Bouton pour voir toutes les images */}
                 {productImages.length > 1 && (
-                  <>
-                    <button
-                      onClick={() => setActiveImageIndex(prev => (prev - 1 + productImages.length) % productImages.length)}
-                      className="absolute left-3 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-background/80 backdrop-blur-sm flex items-center justify-center text-foreground z-10 hover:bg-background transition-colors"
-                      aria-label="Image précédente"
-                    >
-                      <ChevronLeft className="h-5 w-5" />
-                    </button>
-                    <button
-                      onClick={() => setActiveImageIndex(prev => (prev + 1) % productImages.length)}
-                      className="absolute right-3 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-background/80 backdrop-blur-sm flex items-center justify-center text-foreground z-10 hover:bg-background transition-colors"
-                      aria-label="Image suivante"
-                    >
-                      <ChevronRight className="h-5 w-5" />
-                    </button>
-                  </>
+                  <button
+                    onClick={() => setShowAllImages(true)}
+                    className="absolute right-4 bottom-4 bg-black/70 text-white p-2 rounded-full hover:bg-black transition-colors"
+                  >
+                    <Camera className="h-5 w-5" />
+                  </button>
                 )}
               </div>
 
-              {/* Miniatures des images */}
+              {/* Modal pour voir toutes les images */}
+              <AnimatePresence>
+                {showAllImages && (
+                  <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    className="fixed inset-0 z-50 bg-black/80 flex items-center justify-center p-4"
+                  >
+                    <div className="max-w-5xl w-full bg-background rounded-xl overflow-hidden">
+                      <div className="flex justify-between items-center p-4 border-b">
+                        <h3 className="font-medium">Galerie photos: {product.title}</h3>
+                        <button onClick={() => setShowAllImages(false)} className="p-2 rounded-full hover:bg-muted">
+                          <X className="h-5 w-5" />
+                        </button>
+                      </div>
+                      <div className="p-4">
+                        <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                          {productImages.map((image: any, index: number) => (
+                            <div key={image.url} className="aspect-square relative rounded-md overflow-hidden cursor-pointer border">
+                              <Image
+                                src={image.url}
+                                alt={`${product.title} - Image ${index + 1}`}
+                                fill
+                                className="object-cover hover:scale-105 transition-transform"
+                                onClick={() => {
+                                  setActiveImageIndex(index);
+                                  setShowAllImages(false);
+                                }}
+                              />
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+
+              {/* Miniatures */}
               {productImages.length > 1 && (
-                <div className="grid grid-cols-5 gap-2">
+                <div className="grid grid-cols-6 gap-2">
                   {productImages.map((image: any, index: number) => (
                     <button
                       key={image.url}
@@ -344,12 +439,18 @@ export default function ProductPage({ params }: ProductPageProps) {
                   ))}
                 </div>
               )}
-            </div>
+            </motion.div>
 
             {/* Informations produit */}
-            <div className="space-y-8">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.1 }}
+              className="space-y-8"
+            >
               {/* En-tête du produit */}
               <div className="space-y-4">
+                {/* Tags et état du stock */}
                 <div className="flex gap-3 flex-wrap">
                   {product.tags?.map((tag: string) => (
                     <Badge key={tag} variant="outline" className="bg-primary/5 text-primary">
@@ -361,8 +462,15 @@ export default function ProductPage({ params }: ProductPageProps) {
                       Rupture de stock
                     </Badge>
                   )}
+                  {selectedVariant?.availableForSale && (
+                    <Badge variant="default" className="bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300 border-0">
+                      <PackageCheck className="h-3.5 w-3.5 mr-1" />
+                      En stock
+                    </Badge>
+                  )}
                 </div>
 
+                {/* Titre et évaluations */}
                 <h1 className="text-3xl md:text-4xl font-bold tracking-tight">{product.title}</h1>
 
                 <div className="flex items-center gap-4">
@@ -374,162 +482,391 @@ export default function ProductPage({ params }: ProductPageProps) {
                   </span>
                 </div>
 
-                <p className="text-3xl font-medium">
-                  {formatPrice(selectedVariant?.price.amount || '0', selectedVariant?.price.currencyCode || 'EUR')}
-                </p>
+                {/* Prix et vendeur */}
+                <div className="flex flex-col md:flex-row md:items-end justify-between">
+                  <div>
+                    <p className="text-3xl font-medium">
+                      {formatPrice(selectedVariant?.price.amount || '0', selectedVariant?.price.currencyCode || 'EUR')}
+                    </p>
+                    <p className="text-sm text-muted-foreground mt-1">
+                      TVA incluse
+                    </p>
+                  </div>
+                  {product.vendor && (
+                    <div className="mt-2 md:mt-0">
+                      <p className="text-sm text-muted-foreground">
+                        Vendu par <span className="font-medium text-foreground">{product.vendor}</span>
+                      </p>
+                    </div>
+                  )}
+                </div>
               </div>
 
               {/* Caractéristiques principales */}
-              <div className="grid grid-cols-3 gap-4">
+              <div className="grid grid-cols-3 gap-3">
                 {productFeatures.map((feature) => (
-                  <div key={feature.name} className="flex flex-col items-center justify-center p-4 bg-muted/50 rounded-lg text-center">
-                    <div className="mb-2 text-primary">{feature.icon}</div>
+                  <div key={feature.name} className="flex flex-col items-center justify-center p-3 bg-muted/50 rounded-lg text-center">
+                    <div className="mb-1.5 text-primary">{feature.icon}</div>
                     <span className="text-sm font-medium">{feature.name}</span>
-                    <span className="text-sm text-muted-foreground">{feature.value}</span>
+                    <span className="text-xs text-muted-foreground">{feature.value}</span>
                   </div>
                 ))}
               </div>
 
-              {/* Description du produit */}
-              <div className="prose prose-sm max-w-none">
-                <div dangerouslySetInnerHTML={{ __html: product.descriptionHtml }} />
+              {/* Description courte du produit */}
+              <div className="text-sm text-muted-foreground border-l-4 border-muted pl-4 py-1">
+                {product.description}
               </div>
 
               {/* Sélection des variantes */}
               {product.variants.edges.length > 1 && (
-                <div className="space-y-4">
-                  <h3 className="font-medium">Variantes</h3>
-                  <div className="grid md:grid-cols-2 gap-3">
-                    {product.variants.edges.map(({ node: variant }: any) => (
-                      <Button
-                        key={variant.id}
-                        variant={selectedVariant?.id === variant.id ? "default" : "outline"}
-                        className="w-full justify-start h-auto py-3 flex items-center"
-                        onClick={() => setSelectedVariant(variant)}
-                        disabled={!variant.availableForSale}
-                      >
-                        <div className="flex justify-between items-center w-full">
-                          <span>{variant.title}</span>
-                          {selectedVariant?.id === variant.id && (
-                            <Check className="h-4 w-4 ml-2" />
-                          )}
+                <div className="space-y-4 bg-muted/30 p-4 rounded-xl">
+                  <h3 className="font-medium flex items-center gap-2">
+                    <Truck className="h-4 w-4" />
+                    Options de livraison
+                  </h3>
+                  <div className="space-y-3">
+                    {deliveryInfo.map((option, index) => (
+                      <div key={index} className="flex items-start gap-3 p-2 rounded-lg hover:bg-muted/70 transition-colors">
+                        <div className="p-2 bg-primary/10 rounded-full text-primary">
+                          {option.icon}
                         </div>
-                      </Button>
+                        <div>
+                          <div className="flex items-center">
+                            <p className="font-medium">{option.title}</p>
+                            <Badge variant="outline" className="ml-2 px-1.5 py-0 text-xs">
+                              {option.price}
+                            </Badge>
+                          </div>
+                          <p className="text-xs text-muted-foreground mt-0.5">
+                            {option.delay} - {option.description}
+                          </p>
+                        </div>
+                      </div>
                     ))}
                   </div>
                 </div>
               )}
 
               {/* Sélection de quantité et ajout au panier */}
-              <div className="space-y-4">
+              <div className="flex flex-col space-y-4">
                 <div className="flex items-center">
-                  <span className="mr-4 font-medium">Quantité</span>
-                  <div className="flex items-center border rounded-md">
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      className="h-10 rounded-none rounded-l-md"
+                  <div className="flex items-center border rounded-lg overflow-hidden">
+                    <button
+                      type="button"
                       onClick={() => changeQuantity(-1)}
-                      disabled={quantity <= 1}
+                      className="p-2 text-gray-600 hover:bg-gray-100 focus:outline-none"
                     >
                       <Minus className="h-4 w-4" />
-                    </Button>
-                    <div className="w-12 text-center">{quantity}</div>
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      className="h-10 rounded-none rounded-r-md"
+                    </button>
+                    <input
+                      type="number"
+                      className="w-12 text-center p-2 focus:outline-none border-x"
+                      value={quantity}
+                      readOnly
+                    />
+                    <button
+                      type="button"
                       onClick={() => changeQuantity(1)}
+                      className="p-2 text-gray-600 hover:bg-gray-100 focus:outline-none"
                     >
                       <Plus className="h-4 w-4" />
-                    </Button>
+                    </button>
                   </div>
+                  <span className="ml-3 text-sm text-muted-foreground">
+                    {selectedVariant?.availableForSale ? (
+                      <>Produit en stock</>
+                    ) : (
+                      <>Produit en rupture de stock</>
+                    )}
+                  </span>
                 </div>
 
-                <div className="flex sm:flex-row flex-col gap-4">
+                <div className="flex flex-col sm:flex-row gap-3">
                   <Button
-                    size="lg"
-                    className="flex-1 h-12"
                     onClick={handleAddToCart}
-                    disabled={addingToCart || !selectedVariant?.availableForSale}
+                    disabled={!selectedVariant?.availableForSale || addingToCart}
+                    className="flex-1 h-12"
                   >
                     {addingToCart ? (
                       <>
-                        <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+                        <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                         Ajout en cours...
                       </>
-                    ) : !selectedVariant?.availableForSale ? (
-                      'Produit indisponible'
                     ) : (
                       <>
-                        <ShoppingBag className="mr-2 h-5 w-5" />
+                        <ShoppingBag className="mr-2 h-4 w-4" />
                         Ajouter au panier
                       </>
                     )}
                   </Button>
 
-                  <Button
-                    size="lg"
-                    variant="outline"
-                    className="h-12"
-                    asChild
-                  >
-                    <a href={`mailto:?subject=Regarde ce produit: ${product.title}&body=J'ai trouvé ce produit sur Trott-E-Perf et je pense qu'il pourrait t'intéresser: ${typeof window !== 'undefined' ? window.location.href : ''}`}>
-                      <Share2 className="mr-2 h-5 w-5" />
-                      Partager
-                    </a>
-                  </Button>
+                  <TooltipProvider>
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <Button variant="outline" size="icon" className="h-12 w-12 shrink-0">
+                          <Share2 className="h-4 w-4" />
+                        </Button>
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        <p>Partager ce produit</p>
+                      </TooltipContent>
+                    </Tooltip>
+                  </TooltipProvider>
                 </div>
-              </div>
 
-              {/* Informations supplémentaires */}
-              <Accordion type="single" collapsible className="w-full">
-                <AccordionItem value="shipping">
-                  <AccordionTrigger>Livraison et retours</AccordionTrigger>
-                  <AccordionContent>
-                    <div className="space-y-2">
-                      <p className="text-sm">Livraison standard en 2-4 jours ouvrés.</p>
-                      <p className="text-sm">Livraison express disponible (24h).</p>
-                      <p className="text-sm">Retours gratuits sous 30 jours.</p>
+                {/* Options de financement */}
+                {financingOptions.length > 0 && (
+                  <div className="bg-muted/30 p-3 rounded-lg mt-3">
+                    <h4 className="text-sm font-medium mb-2 flex items-center">
+                      <CreditCard className="mr-2 h-4 w-4 text-primary" />
+                      Options de financement disponibles
+                    </h4>
+                    <div className="space-y-1">
+                      {financingOptions.map((option, index) => (
+                        <p key={index} className="text-xs text-muted-foreground flex items-start">
+                          <ChevronRight className="h-3 w-3 mr-1 mt-0.5 text-primary" />
+                          <span>
+                            <span className="font-medium text-foreground">{option.title}</span> - {option.description}
+                          </span>
+                        </p>
+                      ))}
                     </div>
-                  </AccordionContent>
-                </AccordionItem>
-                <AccordionItem value="warranty">
-                  <AccordionTrigger>Garantie</AccordionTrigger>
-                  <AccordionContent>
-                    <div className="space-y-2">
-                      <p className="text-sm">Garantie constructeur: 1 an pièces et main d'œuvre.</p>
-                      <p className="text-sm">Extension de garantie disponible jusqu'à 3 ans.</p>
-                      <p className="text-sm">Support technique dédié 7j/7.</p>
+                  </div>
+                )}
+              </div>
+            </motion.div>
+          </div>
+        </section>
+
+        {/* Onglets d'information détaillée */}
+        <section className="container mx-auto px-4 mt-16">
+          <div className="border rounded-xl overflow-hidden bg-background">
+            <div className="flex flex-col sm:flex-row">
+              <Tab.Group>
+                <Tab.List className="flex flex-row sm:flex-col sm:min-w-[200px] border-b sm:border-b-0 sm:border-r">
+                  <Tab as={Fragment}>
+                    {({ selected }) => (
+                      <button
+                        className={`
+                          flex items-center w-full px-5 py-4 text-left border-b sm:border-b-0 sm:border-r
+                          ${selected
+                            ? 'border-primary bg-primary/5 text-primary'
+                            : 'border-transparent hover:bg-muted/50 text-muted-foreground'}
+                          transition-colors focus:outline-none
+                        `}
+                      >
+                        <Info className="h-4 w-4 mr-2 shrink-0" />
+                        <span className="truncate">Description détaillée</span>
+                      </button>
+                    )}
+                  </Tab>
+                  <Tab as={Fragment}>
+                    {({ selected }) => (
+                      <button
+                        className={`
+                          flex items-center w-full px-5 py-4 text-left border-b sm:border-b-0 sm:border-r
+                          ${selected
+                            ? 'border-primary bg-primary/5 text-primary'
+                            : 'border-transparent hover:bg-muted/50 text-muted-foreground'}
+                          transition-colors focus:outline-none
+                        `}
+                      >
+                        <Settings className="h-4 w-4 mr-2 shrink-0" />
+                        <span className="truncate">Caractéristiques techniques</span>
+                      </button>
+                    )}
+                  </Tab>
+                  <Tab as={Fragment}>
+                    {({ selected }) => (
+                      <button
+                        className={`
+                          flex items-center w-full px-5 py-4 text-left border-b sm:border-b-0 sm:border-r
+                          ${selected
+                            ? 'border-primary bg-primary/5 text-primary'
+                            : 'border-transparent hover:bg-muted/50 text-muted-foreground'}
+                          transition-colors focus:outline-none
+                        `}
+                      >
+                        <Shield className="h-4 w-4 mr-2 shrink-0" />
+                        <span className="truncate">Garantie et SAV</span>
+                      </button>
+                    )}
+                  </Tab>
+                  <Tab as={Fragment}>
+                    {({ selected }) => (
+                      <button
+                        className={`
+                          flex items-center w-full px-5 py-4 text-left
+                          ${selected
+                            ? 'border-primary bg-primary/5 text-primary'
+                            : 'border-transparent hover:bg-muted/50 text-muted-foreground'}
+                          transition-colors focus:outline-none
+                        `}
+                      >
+                        <HelpCircle className="h-4 w-4 mr-2 shrink-0" />
+                        <span className="truncate">Foire aux questions</span>
+                      </button>
+                    )}
+                  </Tab>
+                </Tab.List>
+                <Tab.Panels className="flex-1 p-6">
+                  <Tab.Panel>
+                    <div className="prose prose-sm max-w-none">
+                      <div dangerouslySetInnerHTML={{ __html: product.descriptionHtml }} />
                     </div>
-                  </AccordionContent>
-                </AccordionItem>
-                <AccordionItem value="specifications">
-                  <AccordionTrigger>Spécifications techniques</AccordionTrigger>
-                  <AccordionContent>
-                    <div className="grid grid-cols-2 gap-y-2 gap-x-4">
-                      <div className="text-sm font-medium">Moteur</div>
-                      <div className="text-sm">1000W</div>
-                      <div className="text-sm font-medium">Batterie</div>
-                      <div className="text-sm">48V 15Ah</div>
-                      <div className="text-sm font-medium">Autonomie</div>
-                      <div className="text-sm">Jusqu'à 65km</div>
-                      <div className="text-sm font-medium">Vitesse max</div>
-                      <div className="text-sm">25 km/h (bridée)</div>
-                      <div className="text-sm font-medium">Temps de charge</div>
-                      <div className="text-sm">4-5 heures</div>
-                      <div className="text-sm font-medium">Poids</div>
-                      <div className="text-sm">25 kg</div>
+                  </Tab.Panel>
+                  <Tab.Panel>
+                    <div className="overflow-x-auto">
+                      <table className="min-w-full divide-y divide-border">
+                        <thead className="bg-muted/50">
+                          <tr>
+                            <th scope="col" className="px-4 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">
+                              Caractéristique
+                            </th>
+                            <th scope="col" className="px-4 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">
+                              Valeur
+                            </th>
+                          </tr>
+                        </thead>
+                        <tbody className="bg-background divide-y divide-border">
+                          {technicalFeatures.map((feature, index) => (
+                            <tr key={index} className={index % 2 === 0 ? 'bg-muted/20' : ''}>
+                              <td className="px-4 py-3 text-sm font-medium">
+                                {feature.name}
+                              </td>
+                              <td className="px-4 py-3 text-sm text-muted-foreground">
+                                {feature.value}
+                              </td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
                     </div>
-                  </AccordionContent>
-                </AccordionItem>
-              </Accordion>
+                  </Tab.Panel>
+                  <Tab.Panel>
+                    <div className="space-y-6">
+                      <div>
+                        <h3 className="text-lg font-medium mb-3">Garantie constructeur</h3>
+                        <p className="text-sm text-muted-foreground mb-4">
+                          Tous nos produits bénéficient d'une garantie constructeur de 2 ans pièces et main d'œuvre.
+                          Cette garantie couvre tous les défauts de fabrication et les problèmes techniques non liés
+                          à une utilisation inappropriée ou à un accident.
+                        </p>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                          <div className="bg-muted/30 p-4 rounded-lg">
+                            <h4 className="font-medium text-sm mb-2">Ce qui est couvert</h4>
+                            <ul className="text-xs text-muted-foreground space-y-1">
+                              <li className="flex items-start">
+                                <Check className="h-3.5 w-3.5 text-green-500 mr-1.5 mt-0.5" />
+                                <span>Défauts de fabrication</span>
+                              </li>
+                              <li className="flex items-start">
+                                <Check className="h-3.5 w-3.5 text-green-500 mr-1.5 mt-0.5" />
+                                <span>Dysfonctionnements électroniques</span>
+                              </li>
+                              <li className="flex items-start">
+                                <Check className="h-3.5 w-3.5 text-green-500 mr-1.5 mt-0.5" />
+                                <span>Problèmes de batterie (hors usure normale)</span>
+                              </li>
+                              <li className="flex items-start">
+                                <Check className="h-3.5 w-3.5 text-green-500 mr-1.5 mt-0.5" />
+                                <span>Problèmes de moteur</span>
+                              </li>
+                            </ul>
+                          </div>
+                          <div className="bg-muted/30 p-4 rounded-lg">
+                            <h4 className="font-medium text-sm mb-2">Ce qui n'est pas couvert</h4>
+                            <ul className="text-xs text-muted-foreground space-y-1">
+                              <li className="flex items-start">
+                                <Minus className="h-3.5 w-3.5 text-red-500 mr-1.5 mt-0.5" />
+                                <span>Usure normale des pneus et plaquettes de frein</span>
+                              </li>
+                              <li className="flex items-start">
+                                <Minus className="h-3.5 w-3.5 text-red-500 mr-1.5 mt-0.5" />
+                                <span>Dommages causés par accidents ou chutes</span>
+                              </li>
+                              <li className="flex items-start">
+                                <Minus className="h-3.5 w-3.5 text-red-500 mr-1.5 mt-0.5" />
+                                <span>Utilisation non conforme (compétition, sauts...)</span>
+                              </li>
+                              <li className="flex items-start">
+                                <Minus className="h-3.5 w-3.5 text-red-500 mr-1.5 mt-0.5" />
+                                <span>Modifications du produit</span>
+                              </li>
+                            </ul>
+                          </div>
+                        </div>
+                      </div>
+                      <div>
+                        <h3 className="text-lg font-medium mb-3">Service après-vente</h3>
+                        <p className="text-sm text-muted-foreground mb-4">
+                          Notre service après-vente est disponible pour vous accompagner en cas de problème avec votre produit.
+                          Vous pouvez nous contacter par téléphone, email ou directement en boutique.
+                        </p>
+                        <Link href="/contact">
+                          <Button variant="outline" className="mt-2">
+                            Contacter le SAV
+                          </Button>
+                        </Link>
+                      </div>
+                    </div>
+                  </Tab.Panel>
+                  <Tab.Panel>
+                    <div className="space-y-4">
+                      <Accordion type="single" collapsible className="w-full">
+                        <AccordionItem value="faq-1">
+                          <AccordionTrigger className="text-base">
+                            Quelle est l'autonomie réelle de cette trottinette ?
+                          </AccordionTrigger>
+                          <AccordionContent className="text-muted-foreground">
+                            L'autonomie indiquée est mesurée dans des conditions optimales (poids du conducteur de 75kg,
+                            terrain plat, vitesse modérée). Dans des conditions réelles d'utilisation, l'autonomie peut
+                            être réduite de 20 à 30% selon le poids du conducteur, le dénivelé, la vitesse et la température extérieure.
+                          </AccordionContent>
+                        </AccordionItem>
+                        <AccordionItem value="faq-2">
+                          <AccordionTrigger className="text-base">
+                            Comment entretenir la batterie pour optimiser sa durée de vie ?
+                          </AccordionTrigger>
+                          <AccordionContent className="text-muted-foreground">
+                            Pour maximiser la durée de vie de votre batterie, évitez de la décharger complètement,
+                            rechargez-la régulièrement même après une utilisation courte, évitez de la laisser exposée
+                            à des températures extrêmes, et utilisez toujours le chargeur d'origine fourni avec votre trottinette.
+                          </AccordionContent>
+                        </AccordionItem>
+                        <AccordionItem value="faq-3">
+                          <AccordionTrigger className="text-base">
+                            Cette trottinette est-elle étanche ?
+                          </AccordionTrigger>
+                          <AccordionContent className="text-muted-foreground">
+                            Cette trottinette possède une certification IP54, ce qui signifie qu'elle est protégée
+                            contre les projections d'eau de toutes directions et contre la poussière. Elle peut
+                            être utilisée par temps légèrement pluvieux, mais n'est pas conçue pour rouler dans des
+                            flaques d'eau ou sous forte pluie.
+                          </AccordionContent>
+                        </AccordionItem>
+                        <AccordionItem value="faq-4">
+                          <AccordionTrigger className="text-base">
+                            Quelles sont les pièces d'usure à surveiller ?
+                          </AccordionTrigger>
+                          <AccordionContent className="text-muted-foreground">
+                            Les principales pièces d'usure à surveiller sont les pneus, les plaquettes de frein,
+                            les roulements et la batterie. Nous recommandons une vérification tous les 500km ou tous
+                            les 3 mois pour assurer un fonctionnement optimal de votre trottinette.
+                          </AccordionContent>
+                        </AccordionItem>
+                      </Accordion>
+                    </div>
+                  </Tab.Panel>
+                </Tab.Panels>
+              </Tab.Group>
             </div>
           </div>
         </section>
 
-        {/* Section Avis Clients */}
-        <section className="bg-muted/30 py-14">
+        {/* Avis clients */}
+        <section className="bg-muted/30 py-14 mt-16">
           <div className="container mx-auto px-4">
             <h2 className="text-2xl font-bold mb-10 text-center">Avis clients</h2>
 
@@ -570,26 +907,51 @@ export default function ProductPage({ params }: ProductPageProps) {
                   href={`/boutique/${relatedProduct.handle}`}
                   className="group"
                 >
-                  <div className="aspect-square rounded-lg overflow-hidden bg-muted mb-4 relative">
+                  <div className="aspect-square rounded-lg overflow-hidden bg-muted mb-4 relative border">
                     <Image
                       src={relatedProduct.images.edges[0]?.node.url || '/placeholder-product.png'}
                       alt={relatedProduct.title}
                       fill
                       className="object-cover transition-transform group-hover:scale-105"
                     />
+                    {/* Badge promotionnel si nécessaire */}
+                    {Math.random() > 0.7 && (
+                      <div className="absolute top-2 left-2">
+                        <Badge className="bg-primary hover:bg-primary">Promo</Badge>
+                      </div>
+                    )}
                   </div>
-                  <h3 className="font-medium group-hover:text-primary transition-colors">{relatedProduct.title}</h3>
+                  <h3 className="font-medium group-hover:text-primary transition-colors line-clamp-1">{relatedProduct.title}</h3>
                   <p className="text-sm text-muted-foreground mt-1">
                     {formatPrice(
                       relatedProduct.priceRange.minVariantPrice.amount,
                       relatedProduct.priceRange.minVariantPrice.currencyCode
                     )}
                   </p>
+                  {/* Caractéristiques principales */}
+                  <div className="mt-2 flex items-center text-xs text-muted-foreground">
+                    <RefreshCw className="h-3 w-3 mr-1" />
+                    <span className="mr-3">Autonomie: 45km</span>
+                    <Settings className="h-3 w-3 mr-1" />
+                    <span>500W</span>
+                  </div>
                 </Link>
               ))}
             </div>
+
+            <div className="mt-8 text-center">
+              <Button variant="outline" asChild>
+                <Link href="/boutique">
+                  Voir tous les produits
+                  <ChevronRight className="ml-1 h-4 w-4" />
+                </Link>
+              </Button>
+            </div>
           </section>
         )}
+
+        {/* Structured data pour SEO */}
+        <ProductSchema product={product} variants={product.variants.edges} />
       </main>
       <Footer />
     </div>
