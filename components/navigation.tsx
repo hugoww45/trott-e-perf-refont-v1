@@ -122,6 +122,21 @@ function MobileMenu({ isOpen, onClose }: { isOpen: boolean; onClose: () => void 
         </motion.button>
 
         <div style={{ marginTop: '80px' }}>
+          <div style={{
+            display: 'flex',
+            justifyContent: 'center',
+            marginBottom: '30px'
+          }}>
+            <Image
+              src="/logo-trotteperf-fb.png"
+              alt="Trott-E-Perf Logo"
+              width={80}
+              height={80}
+              className="object-contain"
+              priority
+            />
+          </div>
+
           <motion.div
             style={{ marginBottom: '30px' }}
             initial={{ opacity: 0, y: 20 }}

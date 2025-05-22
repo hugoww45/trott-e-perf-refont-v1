@@ -34,12 +34,12 @@ export function PressSection() {
                   <path d="M10 6h8v4h-8V6Z" />
                 </svg>
               </div>
-              <h3 className="font-semibold text-lg">TechMobilité Magazine</h3>
+              <h3 className="font-semibold text-lg">ActuOrleans</h3>
             </div>
             <blockquote className="text-neutral-300 italic mb-4">
-              "Trott e Perf se distingue par son expertise et la qualité de ses produits dans le secteur des trottinettes électriques haut de gamme."
+              "Ce grand atelier de trottinettes électriques unique en France se situe à Orléans."
             </blockquote>
-            <p className="text-sm text-neutral-400">Juin 2023</p>
+            <p className="text-sm text-neutral-400">8 février 2025</p>
           </motion.div>
 
           {/* Article 2 */}

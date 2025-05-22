@@ -282,7 +282,7 @@ export const BlurImage = ({
 }: ImageProps) => {
   const [isLoading, setLoading] = useState(true);
   return (
-    <div className="absolute inset-0 bg-neutral-200 dark:bg-neutral-800 animate-pulse z-5">
+    <div className="absolute inset-0 bg-neutral-200 dark:bg-neutral-800 z-5">
       <Image
         className={cn(
           "transition duration-500 ease-in-out z-10",

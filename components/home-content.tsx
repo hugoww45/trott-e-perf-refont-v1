@@ -111,32 +111,6 @@ const services = [
   },
 ]
 
-// Double the clients array to create a seamless loop
-const clients = [
-  {
-    name: "TechMobile",
-    logo: "https://images.unsplash.com/photo-1599305445671-ac291c95aaa9?w=200&h=100&fit=crop&crop=center&q=80",
-  },
-  {
-    name: "EcoRide",
-    logo: "https://images.unsplash.com/photo-1599305445671-ac291c95aaa9?w=200&h=100&fit=crop&crop=center&q=80",
-  },
-  {
-    name: "UrbanMove",
-    logo: "https://images.unsplash.com/photo-1599305445671-ac291c95aaa9?w=200&h=100&fit=crop&crop=center&q=80",
-  },
-  {
-    name: "SmartWay",
-    logo: "https://images.unsplash.com/photo-1599305445671-ac291c95aaa9?w=200&h=100&fit=crop&crop=center&q=80",
-  },
-  {
-    name: "GreenPath",
-    logo: "https://images.unsplash.com/photo-1599305445671-ac291c95aaa9?w=200&h=100&fit=crop&crop=center&q=80",
-  },
-]
-
-const infiniteClients = [...clients, ...clients] // Double the array for seamless loop
-
 const revealText = [
   "Chaque détail compte.",
   "Chaque innovation rapproche de la perfection.",
@@ -246,21 +220,6 @@ export function HomeContent() {
 
     setCurrentSlide(prevSlide);
   };
-
-  // Contrôle du défilement des clients
-  useEffect(() => {
-    controls.start({
-      x: [0, -50 * clients.length],
-      transition: {
-        x: {
-          repeat: Infinity,
-          repeatType: "loop",
-          duration: 20,
-          ease: "linear",
-        },
-      },
-    })
-  }, [controls])
 
   return (
     <>

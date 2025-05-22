@@ -8,13 +8,13 @@ import { Navigation } from "@/components/navigation"
 import { Footer } from "@/components/footer"
 
 const contactInfo = {
-  address: "123 Avenue des Champs-Élysées, 75008 Paris",
-  phone: "+33 1 23 45 67 89",
-  email: "contact@trotteperf.com",
+  address: "2 All. des Roseraies, 45100 Orléans",
+  phone: "+33 9 87 28 52 44",
+  email: "contact@trott-e-perf.fr",
   social: [
-    { name: "Twitter", url: "https://twitter.com" },
-    { name: "Instagram", url: "https://instagram.com" },
-    { name: "LinkedIn", url: "https://linkedin.com" }
+    { name: "Facebook", url: "https://www.facebook.com/Trott.e.Perf/" },
+    { name: "Instagram", url: "https://www.instagram.com/trott.e.perf/" },
+    { name: "LinkedIn", url: "https://www.linkedin.com/company/trott-e-perf/" }
   ]
 }
 

@@ -841,7 +841,7 @@ export default function ReparationPage() {
               >
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent z-10"></div>
                 <Image
-                  src="/r-1.jpg"
+                  src="/image-atelier.jpg"
                   alt="Atelier de réparation Trott-E-Perf"
                   fill
                   className="object-cover"
@@ -877,11 +877,7 @@ export default function ReparationPage() {
               </motion.div>
 
               {/* Élément décoratif */}
-              <motion.div
-                className="absolute -bottom-6 -left-6 w-64 h-64 rounded-full border border-gray-800"
-                animate={{ rotate: 360 }}
-                transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-              />
+
             </div>
           </div>
         </div>
