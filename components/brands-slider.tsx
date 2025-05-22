@@ -1,24 +1,24 @@
 'use client'
 
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { motion, useAnimationControls } from 'framer-motion'
 
 // Liste des marques distribuées
 const brands = [
-  { name: 'MAGURA', logo: '/logo.png' }, // Utiliser temporairement le logo existant
-  { name: 'PMT', logo: '/logo.png' },
-  { name: 'Galfer', logo: '/logo.png' },
-  { name: 'Hope', logo: '/logo.png' },
-  { name: 'MT Helmet', logo: '/logo.png' },
-  { name: 'Nami', logo: '/logo.png' },
-  { name: 'Vsett', logo: '/logo.png' },
-  { name: 'Kaboo', logo: '/logo.png' },
-  { name: 'Dualtron', logo: '/logo.png' },
-  { name: 'Teverun', logo: '/logo.png' },
-  { name: 'Hikerboy', logo: '/logo.png' },
-  { name: 'Kuickwheel', logo: '/logo.png' },
-  { name: 'MiniWalker', logo: '/logo.png' },
-  { name: 'Invoxia', logo: '/logo.png' }
+  { name: 'MAGURA', logo: '/logo-magurat.png' }, // Utiliser temporairement le logo existant
+  { name: 'PMT', logo: '/logo-pmt.png' },
+  { name: 'Galfer', logo: '/logo-galfer.png' },
+  { name: 'Hope', logo: '/logo-hope.png' },
+  { name: 'MT Helmet', logo: '/logo-mthelmet.png' },
+  { name: 'Nami', logo: '/logo-nami.png' },
+  { name: 'Vsett', logo: '/logo-vsett.png' },
+  { name: 'Kaboo', logo: '/logo-kaboo.png' },
+  { name: 'Dualtron', logo: '/logo-dualtron.png' },
+  { name: 'Teverun', logo: '/logo-teverun.png' },
+  { name: 'Hikerboy', logo: '/logo-hikerboy.png' },
+  { name: 'Kuickwheel', logo: '/logo-kuickwheel.png' },
+  { name: 'MiniWalker', logo: '/logo-miniwalker.png' },
+  { name: 'Invoxia', logo: '/logo-invoxia.png' }
 ]
 
 // Dupliquer la liste des marques pour créer une animation en boucle infinie
@@ -27,11 +27,32 @@ const infiniteBrands = [...brands, ...brands]
 export function BrandsSlider() {
   const controls = useAnimationControls()
   const containerRef = useRef<HTMLDivElement>(null)
+  const [isMobile, setIsMobile] = useState(false)
+
+  // Détection de la taille d'écran
+  useEffect(() => {
+    const checkIfMobile = () => {
+      setIsMobile(window.innerWidth < 768)
+    }
+
+    // Vérification initiale
+    checkIfMobile()
+
+    // Ajouter un listener pour le redimensionnement
+    window.addEventListener('resize', checkIfMobile)
+
+    // Nettoyage
+    return () => {
+      window.removeEventListener('resize', checkIfMobile)
+    }
+  }, [])
 
   useEffect(() => {
     const animate = async () => {
       const containerWidth = containerRef.current?.offsetWidth || 0
-      const duration = 30 // Durée en secondes pour un cycle complet
+
+      // Durée plus courte sur mobile (15s) et plus longue sur desktop (30s)
+      const duration = isMobile ? 15 : 30
 
       // Animation infinie
       await controls.start({
@@ -46,7 +67,7 @@ export function BrandsSlider() {
     }
 
     animate()
-  }, [controls])
+  }, [controls, isMobile]) // Relancer l'animation quand isMobile change
 
   return (
     <section className="py-16 bg-black overflow-hidden">

@@ -4,6 +4,7 @@ import { Inter } from 'next/font/google'
 import { ThemeProvider } from "@/components/theme-provider"
 import { ProductProvider } from "@/components/shop/product-provider"
 import { Toaster } from "@/components/ui/sonner"
+import CookieConsent from '@/components/CookieConsent'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -74,9 +75,7 @@ export const metadata: Metadata = {
     google: "à-compléter-avec-votre-code-de-vérification",
   },
   icons: {
-    icon: "/favicon.ico",
-    shortcut: "/favicon-16x16.png",
-    apple: "/apple-touch-icon.png",
+    icon: "/favico.png",
   },
 }
 
@@ -134,6 +133,7 @@ export default function RootLayout({
           <ProductProvider>
             {children}
             <Toaster position="bottom-right" />
+            <CookieConsent />
           </ProductProvider>
         </ThemeProvider>
       </body>

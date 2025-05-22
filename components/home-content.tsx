@@ -308,9 +308,6 @@ export function HomeContent() {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.2, duration: 0.5 }}
                 >
-                  <span className="text-sm font-medium bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full">
-                    TROTT-E-PERF EXCELLENCE
-                  </span>
                 </motion.div>
 
                 {/* Titres principaux */}
@@ -353,7 +350,7 @@ export function HomeContent() {
                   <Link href={headerSlides[currentSlide].buttonLink}>
                     <Button
                       size="lg"
-                      className="rounded-none bg-white text-black hover:bg-white/90 transition-all duration-300 h-12 min-w-[180px] text-base"
+                      className="rounded-sm bg-white text-black hover:bg-white/90 transition-all duration-300 h-12 min-w-[180px] text-base"
                     >
                       {headerSlides[currentSlide].buttonText}
                       <ArrowRight className="ml-2 h-4 w-4" />
@@ -478,28 +475,28 @@ export function HomeContent() {
             </motion.div>
           </div>
 
-          <Carousel
-            items={services.map((service, index) => (
-              <Card
-                key={service.title}
-                card={{
-                  title: service.title,
-                  category: service.category,
-                  content: service.content,
-                  src: service.src
-                }}
-                index={index}
-                layout
-              />
-            ))}
-          />
+          <div className="relative">
+            <Carousel
+              items={services.map((service, index) => (
+                <Card
+                  key={service.title}
+                  card={{
+                    title: service.title,
+                    category: service.category,
+                    content: service.content,
+                    src: service.src
+                  }}
+                  index={index}
+                  layout
+                />
+              ))}
+            />
+          </div>
         </div>
       </section>
 
       {/* SECTION - DISTRIBUTEUR OFFICIEL */}
       <BrandsSlider />
-
-
 
       {/* Text Reveal Section */}
       <TextReveal>{revealText}</TextReveal>
