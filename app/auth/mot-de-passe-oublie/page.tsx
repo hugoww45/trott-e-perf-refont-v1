@@ -7,8 +7,7 @@ import { Footer } from "@/components/footer"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { getStorefrontApiUrl, getPublicTokenHeaders } from '@/lib/shopify/client'
-import { CUSTOMER_RECOVER_MUTATION } from '@/lib/shopify/queries'
+
 import Link from 'next/link'
 import { toast } from 'sonner'
 import { Mail, ArrowRight } from 'lucide-react'
@@ -26,30 +25,33 @@ export default function ForgotPasswordPage() {
     setSuccess(false)
 
     try {
-      const response = await fetch(getStorefrontApiUrl(), {
+      const response = await fetch('/api/reset-request', {
         method: 'POST',
-        headers: getPublicTokenHeaders(),
+        headers: {
+          'Content-Type': 'application/json',
+        },
         body: JSON.stringify({
-          query: CUSTOMER_RECOVER_MUTATION,
-          variables: {
-            email,
-          },
+          email,
         }),
       })
 
-      const { data } = await response.json()
+      const data = await response.json()
 
-      if (data?.customerRecover?.customerUserErrors?.length > 0) {
-        setError(data.customerRecover.customerUserErrors[0].message)
-        toast.error(data.customerRecover.customerUserErrors[0].message)
-      } else {
+      if (!response.ok) {
+        throw new Error(data.error || 'Une erreur est survenue')
+      }
+
+      if (data.success) {
         setSuccess(true)
-        toast.success('Instructions envoyées par email')
+        toast.success(data.message || 'Instructions envoyées par email')
         setEmail('')
+      } else {
+        throw new Error(data.error || 'Une erreur est survenue')
       }
     } catch (err) {
-      setError('Une erreur est survenue')
-      toast.error('Une erreur est survenue')
+      const errorMessage = err instanceof Error ? err.message : 'Une erreur est survenue'
+      setError(errorMessage)
+      toast.error(errorMessage)
       console.error('Password recovery error:', err)
     } finally {
       setLoading(false)
