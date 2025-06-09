@@ -98,7 +98,6 @@ const repairProcess = [
     title: "Diagnostic Initial",
     description: "Analyse complète de votre trottinette pour identifier précisément le problème.",
     details: "Nos techniciens examinent systématiquement les composants électroniques, mécaniques et structurels pour garantir un diagnostic précis.",
-    duration: "30 min",
     color: "border-gray-500/30 bg-gray-700/5",
     iconColor: "text-gray-300"
   },
@@ -107,7 +106,6 @@ const repairProcess = [
     title: "Devis Détaillé",
     description: "Proposition transparente et sans surprise avec options personnalisées.",
     details: "Vous recevez un devis complet avec plusieurs options adaptées à vos besoins et votre budget, sans frais cachés.",
-    duration: "1h",
     color: "border-gray-400/30 bg-gray-600/5",
     iconColor: "text-gray-200"
   },
@@ -115,8 +113,7 @@ const repairProcess = [
     icon: Wrench,
     title: "Réparation",
     description: "Intervention par nos experts qualifiés avec des pièces d'origine.",
-    details: "Nos réparateurs certifiés utilisent exclusivement des pièces d'origine ou de qualité équivalente pour assurer performance et durabilité.",
-    duration: "2-4h",
+    details: "Nos réparateurs certifiés utilisent exclusivement des pièces d'origine en conformité avec les constructeurs.",
     color: "border-gray-300/30 bg-gray-500/5",
     iconColor: "text-gray-100"
   },
@@ -125,7 +122,6 @@ const repairProcess = [
     title: "Tests Qualité",
     description: "Vérification complète et essais rigoureux post-réparation.",
     details: "Nous effectuons des contrôles de sécurité et de performance exhaustifs avant de vous remettre votre trottinette en parfait état de fonctionnement.",
-    duration: "1h",
     color: "border-gray-200/30 bg-gray-400/5",
     iconColor: "text-white"
   }
@@ -161,23 +157,23 @@ const commonIssues = [
 const faqs = [
   {
     question: "Combien de temps prend une réparation standard ?",
-    answer: "La plupart des réparations sont effectuées en 24 à 48 heures. Pour les cas complexes nécessitant des pièces spécifiques, nous vous communiquons un délai précis lors du diagnostic."
+    answer: "La plupart des réparations sont effectuées en 5 jours ouvrés. Pour les cas complexes nécessitant des pièces spécifiques, nous vous communiquons le délai lors du diagnostic."
+  },
+  {
+    question: "Proposé vous un service de réparation express ?",
+    answer: "Oui. pour certaine intervention, nous pouvons vous proposer un service unique nommé FastRepair elle garantie une intervention à J pour tout dépos avant 17h (hors venredi)."
   },
   {
     question: "Utilisez-vous uniquement des pièces d'origine ?",
     answer: "Oui, nous utilisons exclusivement des pièces d'origine ou de qualité équivalente approuvées par les constructeurs pour garantir performance, sécurité et longévité."
   },
   {
-    question: "Proposez-vous un service de réparation à domicile ?",
-    answer: "Oui, pour certaines interventions, notre équipe mobile peut se déplacer chez vous. Ce service est disponible dans un rayon de 30km autour de notre atelier."
-  },
-  {
     question: "Quelle garantie offrez-vous sur les réparations ?",
-    answer: "Toutes nos réparations sont garanties 6 mois pièces et main d'œuvre. Cette garantie couvre les défauts de fabrication et les problèmes liés directement à notre intervention."
+    answer: "Toutes nos réparations sont garanties 3 mois pièces et main d'œuvre. Cette garantie couvre la panne lié à notre intervention. (hors accident ou mauvaise utilisation)"
   },
   {
     question: "Comment obtenir un devis pour ma trottinette ?",
-    answer: "Vous pouvez nous contacter par téléphone, via notre formulaire en ligne ou directement en boutique. Un diagnostic initial gratuit sera effectué avant toute proposition de devis."
+    answer: "Vous pouvez nous contacter par téléphone, ou directement dans notre boutique pour établir un devis précis. Ce dernier est gratuit et pour tout réparation faite en concession notre diagnostic est offert."
   }
 ]
 
@@ -213,7 +209,7 @@ const advantages = [
   },
   {
     icon: ClipboardCheck,
-    title: "Garantie 6 Mois",
+    title: "Garantie 3 Mois",
     description: "Toutes nos réparations sont couvertes par une garantie pièces et main d'œuvre."
   },
   {
@@ -603,15 +599,6 @@ export default function ReparationPage() {
                 Prendre rendez-vous
                 <ArrowRight className="ml-2 h-4 w-4" />
               </Button>
-
-              <Button
-                variant="outline"
-                size="lg"
-                className="rounded-full px-8 h-14 text-base font-medium border-gray-700 hover:bg-white/10 backdrop-blur-md"
-              >
-                <Play className="mr-2 h-4 w-4" />
-                Voir notre processus
-              </Button>
             </motion.div>
           </motion.div>
         </div>
@@ -716,18 +703,7 @@ export default function ReparationPage() {
                 />
               )
             })}
-          </motion.div>
-
-          <div className="mt-16 text-center">
-            <Button
-              variant="default"
-              size="lg"
-              className="rounded-full px-8 h-14 text-base font-medium bg-gradient-to-r from-gray-200 to-gray-400 hover:from-gray-300 hover:to-gray-500 border-none"
-            >
-              Demander un diagnostic
-              <ArrowRight className="ml-2 h-4 w-4" />
-            </Button>
-          </div>
+          </motion.div>s
         </div>
       </section>
 
@@ -754,7 +730,7 @@ export default function ReparationPage() {
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.1 }}
             >
-              Des solutions adaptées pour les pannes et dysfonctionnements les plus courants rencontrés par nos clients.
+              Des solutions adaptées pour les pannes et dysfonctionnements rencontrés par nos clients.
             </motion.p>
           </div>
 
@@ -872,7 +848,7 @@ export default function ReparationPage() {
                   transition={{ duration: 0.5, delay: 0.9 }}
                 >
                   <Zap className="w-4 h-4 text-gray-300" />
-                  <span className="text-sm font-medium">+2000 réparations</span>
+                  <span className="text-sm font-medium">+10,000 réparations</span>
                 </motion.div>
               </motion.div>
 
@@ -1014,14 +990,6 @@ export default function ReparationPage() {
                     viewport={{ once: true }}
                     transition={{ duration: 0.6, delay: 0.2 }}
                   >
-                    <Button
-                      variant="default"
-                      size="lg"
-                      className="rounded-full px-8 h-14 text-base font-medium bg-white text-black hover:bg-white/90"
-                    >
-                      Prendre rendez-vous
-                      <ArrowRight className="ml-2 h-4 w-4" />
-                    </Button>
                   </motion.div>
                 </div>
 

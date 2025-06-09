@@ -104,11 +104,11 @@ const benefits = [
   },
   {
     title: "Formation continue",
-    description: "Budget formation personnalisé et accès à des ressources d'apprentissage premium."
+    description: "Formation personnalisé et accès à des ressources d'apprentissage premium."
   },
   {
     title: "Mobilité verte",
-    description: "Trottinette électrique offerte et remise sur tous nos produits."
+    description: "Trottinette de fonction mise à disposition pour nos collaborateurs."
   },
   {
     title: "Santé & Bien-être",
@@ -268,15 +268,6 @@ export default function CarriersPage() {
                     Découvrir nos offres
                     <ChevronRight className="ml-2 h-4 w-4" />
                   </Button>
-
-                  <Button
-                    variant="outline"
-                    size="lg"
-                    className="rounded-full px-8 h-14 text-base font-medium border-white/20 hover:bg-white/10"
-                  >
-                    Notre culture
-                    <ArrowUpRight className="ml-2 h-4 w-4" />
-                  </Button>
                 </motion.div>
               </div>
             </motion.div>
@@ -331,7 +322,7 @@ export default function CarriersPage() {
               {[
                 { title: "Innovation", number: "24/7", description: "Recherche constante d'amélioration" },
                 { title: "Qualité", number: "100%", description: "Engagement pour l'excellence" },
-                { title: "Impact", number: "+500", description: "Tonnes de CO₂ économisées" }
+                { title: "Impact", number: "+10", description: "Tonnes de CO₂ économisées" }
               ].map((item, index) => (
                 <motion.div
                   key={item.title}

@@ -253,30 +253,6 @@ export default function CustomisationPage() {
                 Une expérience unique où chaque détail reflète votre vision.
                 Votre trottinette, à votre image.
               </motion.p>
-
-              {/* CTA boutons */}
-              <motion.div
-                className="flex flex-col sm:flex-row gap-4 items-center justify-center"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.7, delay: 0.9 }}
-              >
-                <Button
-                  size="lg"
-                  className="rounded-full bg-gradient-to-r from-purple-500 to-amber-500 hover:opacity-90 min-w-[200px] transition-all duration-300 h-14 text-base font-medium"
-                >
-                  Personnaliser maintenant
-                  <ArrowRight className="ml-2 h-4 w-4" />
-                </Button>
-
-                <Button
-                  variant="outline"
-                  size="lg"
-                  className="rounded-full border-white/20 hover:bg-white/10 min-w-[200px] transition-all duration-300 h-14 text-base font-medium"
-                >
-                  En savoir plus
-                </Button>
-              </motion.div>
             </div>
           </div>
 
@@ -358,11 +334,6 @@ export default function CustomisationPage() {
 
                       <h3 className="text-2xl font-semibold mb-4">{feature.title}</h3>
                       <p className="text-gray-400 mb-6">{feature.description}</p>
-
-                      <div className="inline-flex items-center text-sm font-medium text-white/70 group-hover:text-white transition-colors">
-                        <span>En savoir plus</span>
-                        <ArrowUpRight className="ml-2 h-4 w-4 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
-                      </div>
                     </div>
                   </motion.div>
                 ))}
@@ -584,14 +555,6 @@ export default function CustomisationPage() {
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: 0.8 }}
               >
-                <Button
-                  variant="outline"
-                  size="lg"
-                  className="rounded-full border-white/20 hover:bg-white/10 transition-all duration-300 group"
-                >
-                  <span>Comprendre le processus en détail</span>
-                  <ChevronRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
-                </Button>
               </motion.div>
             </div>
           </div>
@@ -631,7 +594,7 @@ export default function CustomisationPage() {
             >
               <div className="grid grid-cols-3 bg-white/5 p-6">
                 <div className="text-center font-medium text-lg">Fonctionnalité</div>
-                <div className="text-center font-medium text-lg">Standard</div>
+                <div className="text-center font-medium text-lg">Original</div>
                 <div className="text-center font-medium text-lg">Personnalisé</div>
               </div>
 

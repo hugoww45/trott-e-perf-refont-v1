@@ -72,18 +72,18 @@ export default function StepsSection() {
     {
       number: 1,
       title: "Choisissez votre trottinette",
-      description: "Parcourez notre gamme et sélectionnez le modèle qui correspond à vos besoins.",
+      description: "Parcourez notre catalogue et sélectionnez le modèle qui correspond à vos besoins.",
       icon: <span>🛴</span>,
     },
     {
       number: 2,
-      title: "Sélectionnez le financement",
+      title: "Sélectionnez votre financement",
       description: "Choisissez l'option de paiement qui vous convient le mieux.",
       icon: <span>💰</span>,
     },
     {
       number: 3,
-      title: "Roulez tranquille",
+      title: "Rider tranquille",
       description: "Profitez de votre nouvelle trottinette et de votre liberté de mouvement.",
       icon: <span>🚀</span>,
     },

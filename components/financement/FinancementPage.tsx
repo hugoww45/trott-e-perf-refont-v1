@@ -96,7 +96,7 @@ export default function FinancementPage() {
               </h2>
 
               <p className="text-gray-400 text-base md:text-lg px-4 sm:px-0">
-                Notre technologie propriétaire combine simplicité d'utilisation et sécurité de pointe pour une expérience de financement exceptionnelle.
+                Notre service de financement combine simplicité d'utilisation et sécrurité garantie pour une expérience de financement exceptionnelle.
               </p>
             </motion.div>
 
@@ -110,7 +110,7 @@ export default function FinancementPage() {
                 },
                 {
                   title: "Traitement rapide",
-                  description: "Décision instantanée pour votre demande de financement sans attente.",
+                  description: "Un conseiller vous recontacte dans les plus brefs délais.",
                   color: "bg-blue-500"
                 },
                 {
@@ -148,7 +148,6 @@ export default function FinancementPage() {
                         transition={{ duration: 0.5, delay: 0.2 + index * 0.1 }}
                         className={`h-[1px] ${feature.color} mr-3`}
                       />
-                      <span className="text-xs md:text-sm font-medium text-primary opacity-0 group-hover:opacity-100 transition-opacity duration-300">En savoir plus</span>
                     </div>
                   </div>
                 </motion.div>

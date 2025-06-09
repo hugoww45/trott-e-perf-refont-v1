@@ -165,24 +165,6 @@ function SolutionCard({ title, subtitle, description, icon, index, color, benefi
               ))}
             </motion.div>
           )}
-
-          <div className="mt-auto pt-6 flex items-center">
-            <motion.div
-              initial={{ width: 0 }}
-              animate={{ width: isHovered ? 120 : 0 }}
-              transition={{ duration: 0.3 }}
-              className={`h-[1px] ${color} mr-3`}
-            />
-            <motion.span
-              className="text-sm font-medium text-primary inline-flex items-center opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-              initial={{ x: 0 }}
-              animate={{ x: isHovered ? 5 : 0 }}
-              transition={{ duration: 0.3 }}
-            >
-              En savoir plus
-              <ArrowRight className="ml-1 w-4 h-4" />
-            </motion.span>
-          </div>
         </div>
       </div>
     </motion.div>
@@ -198,8 +180,8 @@ export default function SolutionsSection() {
   const solutions = [
     {
       title: "Paiement en plusieurs fois",
-      subtitle: "Jusqu'à 4× sans frais",
-      description: "Réglez votre achat en 4 paiements échelonnés sur 3 mois, sans aucun frais supplémentaire.",
+      subtitle: "Jusqu'à 3 à 60x",
+      description: "Réglez votre achat en 3 à 60 paiements échelonnés.",
       icon: <CreditCard className="h-6 w-6 text-primary" />,
       color: "bg-gray-500",
       benefits: [
@@ -210,14 +192,14 @@ export default function SolutionsSection() {
     },
     {
       title: "Crédit partenaire",
-      subtitle: "12 à 36 mois",
-      description: "Financez votre trottinette sur une durée plus longue grâce à notre partenaire financier.",
+      subtitle: "LOA et LLD disponibles",
+      description: "Possibilité de souscrire à un crédit LOA ou LLD pour financer votre trottinette.",
       icon: <CalendarRange className="h-6 w-6 text-primary" />,
       color: "bg-gray-500",
       benefits: [
-        "Taux avantageux",
-        "Mensualités réduites",
-        "Flexible et personnalisable"
+        "Flexible et personnalisable",
+        "S'adapte à votre besoins",
+        "Support dédié"
       ]
     },
     {
@@ -242,10 +224,9 @@ export default function SolutionsSection() {
     color: "bg-gray-500",
     highlight: true,
     benefits: [
-      "Réponse en 24h maximum",
+      "Réponse en rapide",
       "Documents dématérialisés",
-      "Accompagnement personnalisé",
-      "Garantie satisfait ou remboursé"
+      "+90% de clients satisfaits"
     ]
   };
 

@@ -9,22 +9,22 @@ import { useRef } from "react"
 
 const milestones = [
   {
-    year: "2020",
+    year: "2018",
     title: "Création",
-    description: "Lancement de notre vision d'une mobilité urbaine innovante."
+    description: "Nessance de l'idée de la création de la marque Trott e Perf."
   },
   {
-    year: "2021",
-    title: "Innovation",
+    year: "20",
+    title: "Concrétisation",
     description: "Développement de notre première gamme de trottinettes haute performance."
   },
   {
     year: "2022",
     title: "Expansion",
-    description: "Ouverture de notre premier showroom et centre technique."
+    description: "Ouverture de notre premier concession et centre technique."
   },
   {
-    year: "2023",
+    year: "2025",
     title: "Excellence",
     description: "Reconnaissance internationale et développement de nouvelles technologies."
   }
@@ -49,10 +49,10 @@ const expertise = [
 ]
 
 const stats = [
-  { number: "1500+", label: "Clients Satisfaits" },
+  { number: "2200+", label: "Clients Satisfaits" },
   { number: "98%", label: "Taux de Satisfaction" },
   { number: "24/7", label: "Support Technique" },
-  { number: "3", label: "Brevets Déposés" }
+  { number: "1", label: "Nombre de concession" }
 ]
 
 export default function AboutPage() {

@@ -72,19 +72,19 @@ export default function FaqSection() {
     },
     {
       question: "Puis-je régler avec une carte bancaire prépayée ?",
-      answer: "Le paiement en 4 fois sans frais n'est généralement pas compatible avec les cartes prépayées. Nous acceptons les cartes Visa, Mastercard et American Express."
+      answer: "Le paiement en 3 fois n'est généralement pas compatible avec les cartes prépayées. Nous acceptons les cartes Visa, Mastercard et American Express."
     },
     {
       question: "Puis-je solder le crédit à tout moment ?",
-      answer: "Oui, vous pouvez solder votre crédit à tout moment sans pénalités. Il vous suffit de contacter notre partenaire financier pour obtenir un décompte à jour."
+      answer: "Oui, vous pouvez solder votre crédit à tout moment. Il vous suffit de contacter notre partenaire financier pour obtenir un décompte à jour."
     },
     {
       question: "Quel est le montant minimum pour financer un achat ?",
-      answer: "Le paiement en plusieurs fois est disponible pour les achats à partir de 100€. Pour les solutions de crédit, le montant minimum est de 200€."
+      answer: "Le montant minimum sera étudié en fonction de votre situation."
     },
     {
       question: "Comment puis-je suivre mes paiements ?",
-      answer: "Vous pouvez suivre vos paiements échelonnés directement sur votre espace client. Pour les crédits, notre partenaire financier vous fournira un accès à votre espace dédié."
+      answer: "Vous pouvez suivre vos paiements échelonnés directement sur votre espace client de notre partenaire financier."
     }
   ];
 
