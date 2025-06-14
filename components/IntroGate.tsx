@@ -105,7 +105,7 @@ export default function IntroGate({ children }: IntroGateProps) {
 
         {/* Logo */}
         <div className="z-10 mb-16">
-          <Image src="/static/logo_couleur.svg" alt="Logo" width={200} height={200} priority />
+          <Image src="/logo_couleur.svg" alt="Logo" width={200} height={200} priority />
         </div>
 
         <div className="z-10 flex flex-col items-center justify-center text-center max-w-4xl mx-auto space-y-10">

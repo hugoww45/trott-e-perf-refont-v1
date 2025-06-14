@@ -128,7 +128,7 @@ function MobileMenu({ isOpen, onClose }: { isOpen: boolean; onClose: () => void 
             marginBottom: '-100px'
           }}>
             <Image
-              src="/static/logo-trotteperf-fb.png"
+              src="/logo-trotteperf-fb.png"
               alt="Trott-E-Perf Logo"
               width={299}
               height={120}
@@ -414,7 +414,7 @@ export function Navigation() {
           <div className="flex items-center justify-between">
             <Link href="/" className="flex items-center space-x-4">
               <Image
-                src="/static/logo.png"
+                src="/logo.png"
                 alt="Trott-E-Perf Logo"
                 width={70}
                 height={20}

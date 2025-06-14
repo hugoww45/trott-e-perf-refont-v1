@@ -544,7 +544,7 @@ export default function ReparationPage() {
             playsInline
             className="object-cover object-center w-full h-full"
           >
-            <source src="/static/video-back-landing-2.mp4" type="video/mp4" />
+            <source src="/video-back-landing-2.mp4" type="video/mp4" />
           </video>
         </div>
 
@@ -811,7 +811,7 @@ export default function ReparationPage() {
               >
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent z-10"></div>
                 <Image
-                  src="/static/image-atelier.jpg"
+                  src="/image-atelier.jpg"
                   alt="Atelier de réparation Trott-E-Perf"
                   fill
                   className="object-cover"
@@ -997,7 +997,7 @@ export default function ReparationPage() {
                   transition={{ duration: 0.8, delay: 0.3 }}
                 >
                   <Image
-                    src="/static/r-3.jpg"
+                    src="/r-3.jpg"
                     alt="Service réparation Trott-E-Perf"
                     fill
                     className="object-cover"

@@ -42,7 +42,7 @@ export default function AssurancePage() {
             transition={{ duration: 3, ease: "easeOut" }}
           >
             <Image
-              src="/static/header-p3.jpg"
+              src="/header-p3.jpg"
               alt="Assurance trottinette"
               fill
               className="object-cover opacity-30 blur-[1px]"
@@ -548,7 +548,7 @@ export default function AssurancePage() {
               <div className="relative h-[400px] md:h-[500px] rounded-2xl overflow-hidden">
                 <div className="absolute inset-0 bg-gradient-to-tr from-black/80 via-black/50 to-transparent z-10"></div>
                 <Image
-                  src="/static/header-p2.jpg"
+                  src="/header-p2.jpg"
                   alt="Support client"
                   fill
                   className="object-cover"

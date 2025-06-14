@@ -27,7 +27,7 @@ export default function CtaSection() {
       <div className="absolute inset-0 z-0">
         <div className="absolute inset-0 bg-gradient-to-b from-neutral-950 via-black to-black"></div>
         <Image
-          src="/static/header-p3.jpg"
+          src="/header-p3.jpg"
           alt="Contact"
           fill
           className="object-cover mix-blend-overlay opacity-20"

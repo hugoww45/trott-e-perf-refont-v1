@@ -193,7 +193,7 @@ export default function CulturePage() {
               }}
             >
               <Image
-                src="/static/header-p3.jpg"
+                src="/header-p3.jpg"
                 alt="Notre culture d'entreprise"
                 fill
                 className="object-cover brightness-[0.3]"

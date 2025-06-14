@@ -23,7 +23,7 @@ export default function ConstructionPage() {
           <div className="flex justify-center">
             <div className="relative w-64 h-32">
               <Image
-                src="/static/logo_couleur.svg"
+                src="/logo_couleur.svg"
                 alt="Trott-e Perf Logo"
                 fill
                 className="object-contain animate-pulse-slow"

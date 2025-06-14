@@ -132,7 +132,7 @@ export default function AboutPage() {
             >
               <div className="absolute inset-0 bg-gradient-to-r from-background via-background/50 to-transparent md:from-transparent z-10" />
               <Image
-                src="/static/header-p2.jpg"
+                src="/header-p2.jpg"
                 alt="Innovation"
                 fill
                 className="object-cover"
@@ -275,7 +275,7 @@ export default function AboutPage() {
           >
             <div className="absolute inset-0 bg-black/70 backdrop-blur-sm z-10" />
             <Image
-              src="/static/header-p3.jpg"
+              src="/header-p3.jpg"
               alt="Notre Vision"
               fill
               className="object-cover"

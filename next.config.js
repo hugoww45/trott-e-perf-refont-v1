@@ -2,7 +2,11 @@
 const nextConfig = {
   // Supprimer le mode export statique pour permettre la génération dynamique de pages
   // output: 'export',
-  images: { unoptimized: true },
+  images: {
+    unoptimized: true,
+    domains: ['localhost'],
+    formats: ['image/webp', 'image/avif'],
+  },
   eslint: {
     ignoreDuringBuilds: true,
   },
