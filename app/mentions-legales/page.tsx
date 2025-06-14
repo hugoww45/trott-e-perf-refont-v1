@@ -26,7 +26,7 @@ export default function MentionsLegalesPage() {
                 <p>
                   Le site Trott-E-Perf est édité par la société Trott-E-Perf, SARL au capital de 10 000 euros,
                   immatriculée au Registre du Commerce et des Sociétés de Paris sous le numéro 123 456 789,
-                  dont le siège social est situé au 123 Avenue des Trottinettes, 75001 Paris, France.
+                  dont le siège social est situé au 2 All. des Roseraies, 45100 Orléans.
                 </p>
                 <p>
                   N° de TVA intracommunautaire : FR 12 345 678 901<br />
@@ -72,7 +72,7 @@ export default function MentionsLegalesPage() {
                   Conformément au Règlement Général sur la Protection des Données (RGPD) et à la loi Informatique
                   et Libertés modifiée, vous disposez d'un droit d'accès, de rectification, d'effacement, de
                   limitation, de portabilité et d'opposition aux données vous concernant. Vous pouvez exercer
-                  ces droits en nous contactant à l'adresse : dpo@trott-e-perf.com
+                  ces droits en nous contactant à l'adresse : contact@trott-e-perf.fr
                 </p>
 
                 <h2 className="text-xl font-semibold mt-8 mb-4">6. Loi applicable et juridiction</h2>

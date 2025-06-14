@@ -160,8 +160,8 @@ export default function PolitiqueCookiesPage() {
                   Si vous avez des questions concernant notre politique de cookies, veuillez nous contacter à :
                 </p>
                 <p className="mt-2">
-                  Email : dpo@trott-e-perf.com<br />
-                  Adresse postale : 123 Avenue des Trottinettes, 75001 Paris, France<br />
+                  Email : contact@trott-e-perf.fr<br />
+                  Adresse postale : 2 All. des Roseraies, 45100 Orléans<br />
                   Téléphone : 09 87 28 52 44
                 </p>
               </div>

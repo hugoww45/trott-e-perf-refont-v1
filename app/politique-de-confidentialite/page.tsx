@@ -115,7 +115,7 @@ export default function PolitiqueConfidentialitePage() {
                 </ul>
                 <p className="mt-4">
                   Pour exercer ces droits ou pour toute question concernant le traitement de vos données personnelles,
-                  vous pouvez nous contacter à l'adresse : dpo@trott-e-perf.com
+                  vous pouvez nous contacter à l'adresse : contact@trott-e-perf.fr
                 </p>
 
                 <h2 className="text-xl font-semibold mt-8 mb-4">8. Sécurité des données</h2>
@@ -146,8 +146,8 @@ export default function PolitiqueConfidentialitePage() {
                   de protection des données, veuillez nous contacter à :
                 </p>
                 <p className="mt-2">
-                  Email : dpo@trott-e-perf.com<br />
-                  Adresse postale : 123 Avenue des Trottinettes, 75001 Paris, France<br />
+                  Email : contact@trott-e-perf.fr<br />
+                  Adresse postale : 2 All. des Roseraies, 45100 Orléans<br />
                   Téléphone : 09 87 28 52 44
                 </p>
               </div>

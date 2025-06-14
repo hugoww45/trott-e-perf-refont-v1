@@ -272,7 +272,7 @@ export function HomeContent() {
                 {/* Titres principaux */}
                 <div className="mb-8">
                   <motion.h2
-                    className="text-6xl md:text-7xl lg:text-8xl font-bold tracking-tighter mb-2"
+                    className="text-7xl md:text-5xl lg:text-8xl font-bold tracking-tighter mb-2"
                     initial={{ opacity: 0, x: -50 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: 0.3, duration: 0.6 }}
@@ -280,7 +280,7 @@ export function HomeContent() {
                     {headerSlides[currentSlide].title}
                   </motion.h2>
                   <motion.h2
-                    className="text-6xl md:text-7xl lg:text-8xl font-bold tracking-tighter bg-clip-text text-transparent bg-gradient-to-r from-primary to-blue-400"
+                    className="text-7xl md:text-5xl lg:text-8xl font-bold tracking-tighter bg-clip-text text-transparent bg-gradient-to-r from-primary to-blue-400"
                     initial={{ opacity: 0, x: -50 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: 0.4, duration: 0.6 }}
