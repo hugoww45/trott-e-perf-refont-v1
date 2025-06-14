@@ -200,7 +200,7 @@ export default function CarriersPage() {
               }}
             >
               <Image
-                src="/header-p1.jpg"
+                src="/static/header-p1.jpg"
                 alt="Carrières chez Trott e Perf"
                 fill
                 className="object-cover brightness-[0.4]"

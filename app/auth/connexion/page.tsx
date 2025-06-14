@@ -180,7 +180,7 @@ export default function LoginPage() {
               >
                 <div className="relative w-12 h-12">
                   <Image
-                    src="/logo.png"
+                    src="/static/logo.png"
                     alt="Trott e Perf"
                     fill
                     className="object-contain"

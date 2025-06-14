@@ -64,7 +64,7 @@ export function Footer() {
           {/* Logo centré sans espace autour */}
           <div className="full flex justify-center items-center -mt-20 -mb-20">
               <Image
-                src="/logo-trotteperf-fb.png"
+                src="/static/logo-trotteperf-fb.png"
                 alt="Trott e Perf Logo"
                 width={220}
                 height={80}

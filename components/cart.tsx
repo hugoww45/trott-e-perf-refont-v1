@@ -169,7 +169,7 @@ export function Cart() {
           <div className="flex-1 flex flex-col items-center justify-center text-center px-4">
             <div className="relative w-40 h-40 mb-8">
               <Image
-                src="/placeholder-product.png"
+                src="/static/placeholder-product.png"
                 alt="Connexion requise"
                 fill
                 className="object-contain"
@@ -196,7 +196,7 @@ export function Cart() {
           <div className="flex-1 flex flex-col items-center justify-center text-center px-4">
             <div className="relative w-40 h-40 mb-8">
               <Image
-                src="/placeholder-product.png"
+                src="/static/placeholder-product.png"
                 alt="Panier vide"
                 fill
                 className="object-contain"

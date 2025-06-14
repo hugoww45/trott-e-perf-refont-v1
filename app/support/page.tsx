@@ -293,7 +293,7 @@ export default function SupportPage() {
               >
                 <div className="relative h-96 lg:h-[500px] w-full rounded-2xl overflow-hidden">
                   <Image
-                    src="/p-1.jpg"
+                    src="/static/p-1.jpg"
                     alt="Support technique Trott e Perf"
                     fill
                     className="object-cover"

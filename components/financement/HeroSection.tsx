@@ -38,7 +38,7 @@ export default function HeroSection() {
         >
           <div className="absolute inset-0 bg-gradient-to-b from-black/90 via-black/70 to-black/50 z-10" />
           <Image
-            src="/header-p2.jpg"
+            src="/static/header-p2.jpg"
             alt="Financement"
             fill
             priority

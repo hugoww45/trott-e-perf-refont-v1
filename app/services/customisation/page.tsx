@@ -157,7 +157,7 @@ export default function CustomisationPage() {
               className="w-full h-full will-change-transform will-change-opacity"
             >
               <Image
-                src="/r-3.jpg" // ou ton image perso
+                src="/static/r-3.jpg" // ou ton image perso
                 alt="Customisation trottinette"
                 fill
                 className="object-cover brightness-[0.4]"
