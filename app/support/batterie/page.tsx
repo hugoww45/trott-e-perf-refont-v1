@@ -113,25 +113,25 @@ const batteryPosts = [
     link: '/support/batterie/durabilite'
   },
   {
-    title: 'Guide de stockage longue durée',
+    title: 'Guide d\'entretien de la batterie',
     date: '14 février 2023',
-    excerpt: 'Les précautions à prendre pour stocker votre trottinette sans utilisation pendant plusieurs mois.',
+    excerpt: 'Les bonnes pratiques pour maintenir votre batterie en parfait état.',
     readTime: '4 min',
-    link: '/support/batterie/stockage'
+    link: '/support/batterie/entretien'
   },
   {
-    title: 'Comprendre les indicateurs de charge',
+    title: 'Optimiser l\'autonomie de votre batterie',
     date: '8 avril 2023',
-    excerpt: 'Décryptage des voyants et indicateurs de batterie pour anticiper les problèmes potentiels.',
+    excerpt: 'Conseils et astuces pour maximiser l\'autonomie de votre trottinette électrique.',
     readTime: '5 min',
-    link: '/support/batterie/indicateurs'
+    link: '/support/batterie/optimisation'
   },
   {
-    title: 'Conseils d\'utilisation par temps extrêmes',
+    title: 'Diagnostic des problèmes de batterie',
     date: '29 juillet 2023',
-    excerpt: 'Comment adapter l\'utilisation de votre trottinette électrique lors de températures très chaudes ou très froides.',
+    excerpt: 'Comment identifier et résoudre les problèmes courants de batterie.',
     readTime: '7 min',
-    link: '/support/batterie/temperatures'
+    link: '/support/batterie/diagnostic'
   }
 ]
 

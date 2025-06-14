@@ -148,78 +148,28 @@ export default function CustomisationPage() {
       <div ref={containerRef}>
         {/* Hero Section - Style Apple */}
         <section className="relative min-h-screen flex flex-col justify-center overflow-hidden bg-black">
-          {/* Canvas de fond avec effet profondeur */}
-          <div className="absolute inset-0 w-full h-full">
-            <div className="absolute inset-0 bg-gradient-to-b from-black via-neutral-950 to-black z-10" />
-
-            {/* Image de fond avec effet de parallaxe subtil */}
+          {/* Image de fond façon page Carrière */}
+          <div className="absolute inset-0 w-full h-full z-0">
             <motion.div
-              className="absolute inset-0 w-full h-full"
-              initial={{ scale: 1.05 }}
-              animate={{ scale: 1 }}
-              transition={{ duration: 3, ease: "easeOut" }}
+              initial={{ scale: 1.2, opacity: 0.8 }}
+              animate={{ scale: 1, opacity: 1 }}
+              transition={{ duration: 2, ease: "easeOut" }}
+              className="w-full h-full will-change-transform will-change-opacity"
             >
               <Image
-                src="https://images.unsplash.com/photo-1604868189744-bf0227c9c85b"
+                src="/r-3.jpg" // ou ton image perso
                 alt="Customisation trottinette"
                 fill
-                className="object-cover opacity-30 blur-[1px]"
+                className="object-cover brightness-[0.4]"
                 priority
               />
+              <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/40 to-black/90" />
             </motion.div>
           </div>
 
-          {/* Overlays lumineux */}
-          <div className="absolute inset-0 z-20 overflow-hidden">
-            {/* Glow primaire */}
-            <motion.div
-              className="absolute top-1/3 left-1/4 w-[800px] h-[800px] rounded-full bg-purple-600/5 blur-[150px]"
-              animate={{
-                scale: [1, 1.1, 1],
-                opacity: [0.4, 0.6, 0.4],
-              }}
-              transition={{
-                duration: 8,
-                repeat: Infinity,
-                repeatType: "mirror",
-                ease: "easeInOut"
-              }}
-            />
-
-            {/* Glow secondaire */}
-            <motion.div
-              className="absolute bottom-1/4 right-1/4 w-[600px] h-[600px] rounded-full bg-amber-500/5 blur-[150px]"
-              animate={{
-                scale: [1, 1.15, 1],
-                opacity: [0.3, 0.5, 0.3],
-              }}
-              transition={{
-                duration: 10,
-                repeat: Infinity,
-                repeatType: "mirror",
-                ease: "easeInOut",
-                delay: 1
-              }}
-            />
-          </div>
-
-          {/* Contenu principal */}
-          <div className="container mx-auto px-4 relative z-30 mt-20">
+          {/* Contenu texte avec titre + sous-titre */}
+          <div className="container mx-auto px-4 relative z-20 mt-20">
             <div className="flex flex-col items-center">
-              {/* Badge premium */}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6 }}
-                className="mb-8"
-              >
-                <span className="inline-flex items-center px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-xl border border-white/20 text-sm font-medium text-white">
-                  <Paintbrush className="h-3.5 w-3.5 mr-2 text-purple-400" />
-                  Service Personnalisation
-                </span>
-              </motion.div>
-
-              {/* Titre avec animation séquentielle */}
               <div className="relative">
                 <motion.h1
                   className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold tracking-tight text-center mb-6 text-white"
@@ -243,9 +193,8 @@ export default function CustomisationPage() {
                 </motion.h1>
               </div>
 
-              {/* Sous-titre */}
               <motion.p
-                className="text-xl md:text-2xl text-gray-400 max-w-2xl mx-auto mb-12 text-center font-light"
+                className="text-xl md:text-2xl text-gray-300 max-w-2xl mx-auto mb-12 text-center font-light"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.6 }}
@@ -285,6 +234,7 @@ export default function CustomisationPage() {
             </div>
           </motion.div>
         </section>
+
 
         {/* Features Section */}
         <section className="py-32 bg-black relative overflow-hidden">
@@ -669,6 +619,7 @@ export default function CustomisationPage() {
                 </div>
 
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                  <Link href="/en-construction">
                   <Button
                     size="lg"
                     className="rounded-full bg-gradient-to-r from-purple-500 to-amber-500 hover:opacity-90 min-w-[220px] transition-all duration-300 h-14 text-base font-medium"
@@ -676,13 +627,16 @@ export default function CustomisationPage() {
                     Démarrer ma personnalisation
                     <ArrowRight className="ml-2 h-4 w-4" />
                   </Button>
+                  </Link>
+                  <Link href="/contact">
                   <Button
                     variant="outline"
                     size="lg"
                     className="rounded-full border-white/20 hover:bg-white/10 min-w-[200px] transition-all duration-300 h-14 text-base font-medium"
                   >
                     Contacter un expert
-                  </Button>
+                    </Button>
+                     </Link>
                 </div>
               </div>
             </motion.div>

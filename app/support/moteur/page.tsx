@@ -106,32 +106,32 @@ const motorSymptoms = [
 // Articles concernant les problèmes de moteur
 const motorPosts = [
   {
-    title: 'Optimiser les performances de votre moteur',
+    title: 'Guide d\'entretien du moteur',
     date: '18 juin 2023',
-    excerpt: 'Conseils d\'experts pour maintenir votre moteur au maximum de ses capacités et prolonger sa durée de vie.',
+    excerpt: 'Conseils et bonnes pratiques pour maintenir votre moteur en parfait état.',
     readTime: '5 min',
+    link: '/support/moteur/entretien'
+  },
+  {
+    title: 'Problèmes courants de moteur',
+    date: '3 mars 2023',
+    excerpt: 'Solutions et conseils pour résoudre les problèmes de moteur les plus fréquents.',
+    readTime: '4 min',
+    link: '/support/moteur/problemes'
+  },
+  {
+    title: 'Optimiser les performances du moteur',
+    date: '12 avril 2023',
+    excerpt: 'Conseils d\'experts pour maintenir votre moteur au maximum de ses capacités.',
+    readTime: '6 min',
     link: '/support/moteur/performance'
   },
   {
-    title: 'Comment identifier les bruits anormaux',
-    date: '3 mars 2023',
-    excerpt: 'Guide complet pour reconnaître les différents bruits que peut produire votre moteur et ce qu\'ils signifient.',
-    readTime: '4 min',
-    link: '/support/moteur/diagnostics-sonores'
-  },
-  {
-    title: 'Les avantages des moteurs brushless',
-    date: '12 avril 2023',
-    excerpt: 'Découvrez pourquoi les moteurs sans balais offrent de meilleures performances et une durabilité supérieure.',
-    readTime: '6 min',
-    link: '/support/moteur/technologie-brushless'
-  },
-  {
-    title: 'Protéger votre moteur des éléments',
+    title: 'Diagnostic des pannes moteur',
     date: '21 septembre 2023',
-    excerpt: 'Mesures préventives pour protéger le moteur de votre trottinette contre l\'eau, la poussière et les températures extrêmes.',
+    excerpt: 'Guide complet pour identifier et diagnostiquer les problèmes de moteur.',
     readTime: '8 min',
-    link: '/support/moteur/protection'
+    link: '/support/moteur/diagnostic'
   }
 ]
 

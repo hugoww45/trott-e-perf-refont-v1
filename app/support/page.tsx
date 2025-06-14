@@ -78,12 +78,8 @@ const faqs = [
     answer: "Pour maintenir votre trottinette en bon état, nettoyez-la régulièrement, vérifiez la pression des pneus chaque semaine, et gardez votre batterie entre 20% et 80% quand vous ne l'utilisez pas pendant une longue période."
   },
   {
-    question: "Quelle est la durée de garantie de mes produits ?",
-    answer: "Tous nos produits bénéficient d'une garantie de 2 ans. Notre extension de garantie Premium vous offre une couverture supplémentaire de 1 an pour une protection totale."
-  },
-  {
     question: "Comment programmer un rendez-vous en atelier ?",
-    answer: "Vous pouvez programmer un rendez-vous en atelier via notre application mobile, en appelant notre service client au 01 23 45 67 89, ou directement en boutique."
+    answer: "Vous pouvez programmer un rendez-vous en atelier, en appelant notre service client au 09 87 28 52 44, ou directement en boutique."
   },
   {
     question: "Puis-je échanger mon produit après l'achat ?",
@@ -133,23 +129,6 @@ export default function SupportPage() {
               <p className="text-xl text-neutral-600 dark:text-neutral-400 mb-8">
                 Explorez nos ressources ou contactez-nous pour toute assistance avec vos produits Trott e Perf.
               </p>
-
-              <form onSubmit={handleSearch} className="relative max-w-2xl mx-auto">
-                <Input
-                  type="text"
-                  placeholder="Rechercher un sujet, un produit ou une question..."
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full h-14 pl-12 pr-4 text-base rounded-xl bg-white dark:bg-neutral-900 border-2 border-neutral-200 dark:border-neutral-800 focus:border-blue-500 dark:focus:border-blue-400 focus:ring-blue-500/20"
-                />
-                <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-neutral-500 w-5 h-5" />
-                <Button
-                  type="submit"
-                  className="absolute right-1 top-1/2 transform -translate-y-1/2 h-12 px-5 bg-blue-600 hover:bg-blue-700 text-white rounded-lg"
-                >
-                  Rechercher
-                </Button>
-              </form>
             </motion.div>
           </div>
         </section>
@@ -173,7 +152,7 @@ export default function SupportPage() {
                 </div>
               </Link>
 
-              <Link href="/support/chat" className="bg-neutral-100 hover:bg-neutral-200 dark:bg-neutral-900 dark:hover:bg-neutral-800 transition-colors rounded-xl p-6 flex items-center gap-4 min-w-[280px] max-w-xs">
+              <Link href="/en-construction" className="bg-neutral-100 hover:bg-neutral-200 dark:bg-neutral-900 dark:hover:bg-neutral-800 transition-colors rounded-xl p-6 flex items-center gap-4 min-w-[280px] max-w-xs">
                 <div className="h-12 w-12 bg-green-500 text-white rounded-full flex items-center justify-center">
                   <MessageCircleQuestion className="h-5 w-5" />
                 </div>
@@ -183,7 +162,7 @@ export default function SupportPage() {
                 </div>
               </Link>
 
-              <Link href="/support/rdv" className="bg-neutral-100 hover:bg-neutral-200 dark:bg-neutral-900 dark:hover:bg-neutral-800 transition-colors rounded-xl p-6 flex items-center gap-4 min-w-[280px] max-w-xs">
+              <Link href="/contact" className="bg-neutral-100 hover:bg-neutral-200 dark:bg-neutral-900 dark:hover:bg-neutral-800 transition-colors rounded-xl p-6 flex items-center gap-4 min-w-[280px] max-w-xs">
                 <div className="h-12 w-12 bg-amber-500 text-white rounded-full flex items-center justify-center">
                   <Clock className="h-5 w-5" />
                 </div>
@@ -300,9 +279,11 @@ export default function SupportPage() {
                     </div>
                   </div>
                 </div>
-                <Button className="mt-10 h-12 px-6 bg-white text-black hover:bg-neutral-200">
-                  Trouver mon produit <ArrowRight className="ml-2 h-4 w-4" />
-                </Button>
+                <Link href="/boutique">
+                  <Button className="mt-10 h-12 px-6 bg-white text-black hover:bg-neutral-200">
+                    Trouver mon produit <ArrowRight className="ml-2 h-4 w-4" />
+                  </Button>
+                </Link>
               </motion.div>
               <motion.div
                 initial={{ opacity: 0, x: 30 }}
@@ -352,19 +333,6 @@ export default function SupportPage() {
                   <p className="text-neutral-600 dark:text-neutral-400">{faq.answer}</p>
                 </motion.div>
               ))}
-
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.4, delay: 0.6 }}
-                className="text-center mt-10"
-              >
-                <Link href="/support/faq">
-                  <Button className="h-12 px-6 bg-neutral-200 hover:bg-neutral-300 dark:bg-neutral-800 dark:hover:bg-neutral-700 text-black dark:text-white">
-                    Voir toutes les questions <ChevronRight className="ml-2 h-4 w-4" />
-                  </Button>
-                </Link>
-              </motion.div>
             </div>
           </div>
         </section>
@@ -386,12 +354,16 @@ export default function SupportPage() {
                   Service rapide et de qualité dans tous nos centres.
                 </p>
                 <div className="flex flex-wrap justify-center gap-4">
-                  <Button className="h-12 px-6 bg-blue-600 hover:bg-blue-700 text-white">
-                    Prendre rendez-vous
-                  </Button>
-                  <Button variant="outline" className="h-12 px-6 border-blue-600 text-blue-600 hover:bg-blue-50 dark:border-blue-400 dark:text-blue-400 dark:hover:bg-blue-950">
-                    Trouver un centre
-                  </Button>
+                  <Link href="/contact">
+                    <Button className="h-12 px-6 bg-blue-600 hover:bg-blue-700 text-white">
+                      Prendre rendez-vous
+                    </Button>
+                  </Link>
+                  <Link href="https://www.google.com/maps/place/Trott+e+Perf+-+R%C3%A9paration,+Vente+de+Trottinettes+%C3%89lectriques+%C3%A0+ORLEANS+-+Distributeur+Officiel+NAMI,+TEVERUN,+KAABO,+DUALTRON/@47.8830374,1.9050598,17z/data=!3m1!4b1!4m6!3m5!1s0x47e4e586b40925b5:0x60238827c620ce23!8m2!3d47.8830338!4d1.9076347!16s%2Fg%2F11p6820zt7?entry=ttu&g_ep=EgoyMDI1MDYxMC4xIKXMDSoASAFQAw%3D%3D">
+                    <Button variant="outline" className="h-12 px-6 border-blue-600 text-blue-600 hover:bg-blue-50 dark:border-blue-400 dark:text-blue-400 dark:hover:bg-blue-950">
+                      Trouver un centre
+                    </Button>
+                  </Link>
                 </div>
               </motion.div>
             </div>

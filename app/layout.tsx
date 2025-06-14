@@ -5,6 +5,8 @@ import { ThemeProvider } from "@/components/theme-provider"
 import { ProductProvider } from "@/components/shop/product-provider"
 import { Toaster } from "@/components/ui/sonner"
 import CookieConsent from '@/components/CookieConsent'
+import IntroGate from '@/components/IntroGate'
+import ResetIntroButton from '@/components/ResetIntroButton'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -131,9 +133,12 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <ProductProvider>
-            {children}
-            <Toaster position="bottom-right" />
-            <CookieConsent />
+            <IntroGate>
+              {children}
+              <Toaster position="bottom-right" />
+              <CookieConsent />
+              <ResetIntroButton />
+            </IntroGate>
           </ProductProvider>
         </ThemeProvider>
       </body>

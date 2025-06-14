@@ -261,13 +261,15 @@ export default function CarriersPage() {
                   transition={{ duration: 0.8, delay: 0.9 }}
                   className="flex flex-wrap gap-4 pt-4"
                 >
+                  <Link href="/en-construction">
                   <Button
                     size="lg"
                     className="rounded-full px-8 h-14 text-base font-medium bg-primary hover:bg-primary/90"
                   >
                     Découvrir nos offres
                     <ChevronRight className="ml-2 h-4 w-4" />
-                  </Button>
+                    </Button>
+                    </Link>
                 </motion.div>
               </div>
             </motion.div>

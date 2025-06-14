@@ -134,7 +134,7 @@ export default function CtaSection() {
                         </div>
                         <div>
                           <div className="text-sm text-white/60">Email</div>
-                          <div className="text-white font-medium">contact@trott-e-perf.com</div>
+                          <div className="text-white font-medium">contact@trott-e-perf.fr</div>
                         </div>
                       </div>
 
@@ -146,7 +146,7 @@ export default function CtaSection() {
                         </div>
                         <div>
                           <div className="text-sm text-white/60">Téléphone</div>
-                          <div className="text-white font-medium">01 23 45 67 89</div>
+                          <div className="text-white font-medium">09 87 28 52 44</div>
                         </div>
                       </div>
                     </div>

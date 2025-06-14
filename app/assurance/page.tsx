@@ -236,7 +236,7 @@ export default function AssurancePage() {
 
         {/* Scroll indicator */}
         <motion.div
-          className="absolute bottom-10 left-1/2 -translate-x-1/2 z-30"
+          className="absolute bottom-10 left-0 right-0 mx-auto z-30 flex justify-center items-center"
           initial={{ opacity: 0 }}
           animate={{ opacity: 0.7, y: [0, 8, 0] }}
           transition={{
@@ -244,7 +244,7 @@ export default function AssurancePage() {
             y: { delay: 2, duration: 1.5, repeat: Infinity, repeatType: "loop" }
           }}
         >
-          <div className="hidden md:block sm:block flex-col items-center gap-2">
+          <div className="flex flex-col items-center gap-2">
             <span className="text-xs uppercase tracking-widest text-gray-500">Découvrir</span>
             <svg
               xmlns="http://www.w3.org/2000/svg"

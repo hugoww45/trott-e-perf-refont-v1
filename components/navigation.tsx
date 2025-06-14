@@ -46,10 +46,10 @@ const navItems = [
       {
         title: "Nos services",
         links: [
-          { name: "Assurance", href: "/assurance" },
-          { name: "Financement", href: "/financement" },
           { name: "Réparation", href: "/services/reparation" },
           { name: "Customisation", href: "/services/customisation" },
+          { name: "Assurance", href: "/assurance" },
+          { name: "Financement", href: "/financement" },
         ]
       },
       {
@@ -121,17 +121,17 @@ function MobileMenu({ isOpen, onClose }: { isOpen: boolean; onClose: () => void 
           <X style={{ color: 'white', width: '20px', height: '20px' }} />
         </motion.button>
 
-        <div style={{ marginTop: '80px' }}>
+        <div style={{ marginTop: '-100px' }}>
           <div style={{
             display: 'flex',
             justifyContent: 'center',
-            marginBottom: '30px'
+            marginBottom: '-100px'
           }}>
             <Image
               src="/logo-trotteperf-fb.png"
               alt="Trott-E-Perf Logo"
-              width={80}
-              height={80}
+              width={299}
+              height={120}
               className="object-contain"
               priority
             />
@@ -420,7 +420,9 @@ export function Navigation() {
                 height={20}
                 className="object-contain"
               />
-              <span className={cn("text-xl font-bold text-white", textColor)}>Trott e Perf</span>
+              <span className={cn("hidden md:inline text-xl font-bold text-white", textColor)}>
+              Trott e Perf
+            </span>
             </Link>
 
             {/* Menu principal desktop */}

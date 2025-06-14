@@ -99,7 +99,7 @@ const services = [
   {
     title: "Customisation",
     category: "Services",
-    src: "/header-p3.jpg",
+    src: "/personnalisation.jpg",
     content: (
       <div className="prose dark:prose-invert">
         <p>
@@ -403,13 +403,20 @@ export function HomeContent() {
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
                 viewport={{ once: true, margin: "-10%" }}
-                className="bg-neutral-900/50 backdrop-blur-sm rounded-xl p-6 border border-neutral-800"
+                className="bg-neutral-900/50 backdrop-blur-sm rounded-xl p-6 border border-neutral-800
+                hover:bg-neutral-800/50 hover:border-primary/50 hover:scale-105 transition-all duration-300
+                cursor-pointer group"
               >
-                <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mb-4">
-                  <feature.icon className="h-6 w-6 text-primary" />
+                <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mb-4
+                group-hover:bg-primary/20 group-hover:scale-110 transition-all duration-300">
+                  <feature.icon className="h-6 w-6 text-primary group-hover:text-primary/80" />
                 </div>
-                <h3 className="text-xl font-semibold mb-2">{feature.title}</h3>
-                <p className="text-gray-400">{feature.description}</p>
+                <h3 className="text-xl font-semibold mb-2 group-hover:text-primary transition-colors duration-300">
+                  {feature.title}
+                </h3>
+                <p className="text-gray-400 group-hover:text-gray-300 transition-colors duration-300">
+                  {feature.description}
+                </p>
               </motion.div>
             ))}
           </div>

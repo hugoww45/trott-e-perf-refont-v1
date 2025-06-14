@@ -16,7 +16,7 @@ export function ProductFilter({ onFilterChange }: ProductFilterProps) {
   const [selectedCategories, setSelectedCategories] = useState<string[]>([])
   const [inStock, setInStock] = useState(false)
 
-  const categories = ['Urbaine', 'Sport', 'Tout-terrain', 'Accessoires', 'Vêtements']
+  const categories = ['Trottinette électrique', 'Accessoires', 'Pièces détachées', 'Equipement de sécurité']
 
   useEffect(() => {
     if (onFilterChange) {

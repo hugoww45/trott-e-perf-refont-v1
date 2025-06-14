@@ -65,17 +65,6 @@ export default function TestimonialSection() {
                   d'esprit et flexibilité dans votre expérience de mobilité.
                 </p>
 
-                <motion.div
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
-                  transition={{ duration: 0.5, delay: 0.7 }}
-                  className="inline-flex items-center group cursor-pointer mt-4"
-                >
-                  <span className="text-primary font-medium mr-2 group-hover:mr-4 transition-all duration-300">
-                    Découvrir nos offres
-                  </span>
-                  <ArrowRight className="h-5 w-5 text-primary transform group-hover:translate-x-1 transition-transform duration-300" />
-                </motion.div>
               </motion.div>
             </div>
 

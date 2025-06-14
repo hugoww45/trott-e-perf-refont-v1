@@ -98,14 +98,16 @@ const repairProcess = [
     title: "Diagnostic Initial",
     description: "Analyse complète de votre trottinette pour identifier précisément le problème.",
     details: "Nos techniciens examinent systématiquement les composants électroniques, mécaniques et structurels pour garantir un diagnostic précis.",
+    duration: "30min",
     color: "border-gray-500/30 bg-gray-700/5",
     iconColor: "text-gray-300"
   },
   {
     icon: Timer,
     title: "Devis Détaillé",
-    description: "Proposition transparente et sans surprise avec options personnalisées.",
+    description: "Proposition transparente et sans surprise avec ostions sersonnalisées.",
     details: "Vous recevez un devis complet avec plusieurs options adaptées à vos besoins et votre budget, sans frais cachés.",
+    duration: "24h",
     color: "border-gray-400/30 bg-gray-600/5",
     iconColor: "text-gray-200"
   },
@@ -114,6 +116,7 @@ const repairProcess = [
     title: "Réparation",
     description: "Intervention par nos experts qualifiés avec des pièces d'origine.",
     details: "Nos réparateurs certifiés utilisent exclusivement des pièces d'origine en conformité avec les constructeurs.",
+    duration: "2-5j",
     color: "border-gray-300/30 bg-gray-500/5",
     iconColor: "text-gray-100"
   },
@@ -122,6 +125,7 @@ const repairProcess = [
     title: "Tests Qualité",
     description: "Vérification complète et essais rigoureux post-réparation.",
     details: "Nous effectuons des contrôles de sécurité et de performance exhaustifs avant de vous remettre votre trottinette en parfait état de fonctionnement.",
+    duration: "1h",
     color: "border-gray-200/30 bg-gray-400/5",
     iconColor: "text-white"
   }
@@ -552,18 +556,6 @@ export default function ReparationPage() {
             transition={{ duration: 0.8 }}
             className="text-center max-w-4xl mx-auto"
           >
-            <motion.div
-              initial={{ opacity: 0, y: 15 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2, duration: 0.6 }}
-              className="mb-4"
-            >
-              <span className="inline-flex items-center px-3 py-1 rounded-full bg-white/10 backdrop-blur-xl text-xs font-medium">
-                <Wrench className="h-3 w-3 mr-1.5 text-gray-300" />
-                Service Premium
-              </span>
-            </motion.div>
-
             <motion.h1
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
@@ -571,7 +563,7 @@ export default function ReparationPage() {
               className="text-4xl sm:text-6xl lg:text-7xl font-bold tracking-tight mb-4 leading-[1.1]"
             >
               <span className="block">Service de</span>
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-gray-300 via-white to-gray-300">
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-gray-400 via-white to-gray-400">
                 Réparation Expert
               </span>
             </motion.h1>
@@ -591,14 +583,16 @@ export default function ReparationPage() {
               transition={{ delay: 0.5, duration: 0.6 }}
               className="flex flex-col sm:flex-row gap-4 justify-center"
             >
+              <Link href="/contact">
               <Button
                 variant="default"
                 size="lg"
                 className="rounded-full px-8 h-14 text-base font-medium bg-gradient-to-r from-gray-200 to-gray-400 hover:from-gray-300 hover:to-gray-500 border-none"
               >
-                Prendre rendez-vous
-                <ArrowRight className="ml-2 h-4 w-4" />
-              </Button>
+                  Prendre rendez-vous
+                  <ArrowRight className="ml-2 h-4 w-4" />
+                </Button>
+              </Link>
             </motion.div>
           </motion.div>
         </div>
@@ -799,7 +793,7 @@ export default function ReparationPage() {
                   size="lg"
                   className="rounded-full px-8 h-14 text-base font-medium border-gray-700 hover:bg-white/10"
                 >
-                  <Link href="/a-propos">
+                  <Link href="/carrieres">
                     En savoir plus sur notre équipe
                   </Link>
                 </Button>
@@ -920,14 +914,16 @@ export default function ReparationPage() {
               transition={{ duration: 0.6, delay: 0.4 }}
             >
               <p className="text-gray-300 mb-6">Vous avez d'autres questions ?</p>
-              <Button
-                variant="default"
-                size="lg"
-                className="rounded-full px-8 h-14 text-base font-medium bg-gradient-to-r from-gray-200 to-gray-400 hover:from-gray-300 hover:to-gray-500 border-none"
-              >
-                Nous contacter
-                <ArrowRight className="ml-2 h-4 w-4" />
-              </Button>
+              <Link href="/contact">
+                <Button
+                  variant="default"
+                  size="lg"
+                  className="rounded-full px-8 h-14 text-base font-medium bg-gradient-to-r from-gray-200 to-gray-400 hover:from-gray-300 hover:to-gray-500 border-none"
+                >
+                  Nous contacter
+                  <ArrowRight className="ml-2 h-4 w-4" />
+                </Button>
+              </Link>
             </motion.div>
           </div>
         </div>

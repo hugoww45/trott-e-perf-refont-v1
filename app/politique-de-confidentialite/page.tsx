@@ -148,7 +148,7 @@ export default function PolitiqueConfidentialitePage() {
                 <p className="mt-2">
                   Email : dpo@trott-e-perf.com<br />
                   Adresse postale : 123 Avenue des Trottinettes, 75001 Paris, France<br />
-                  Téléphone : 01 23 45 67 89
+                  Téléphone : 09 87 28 52 44
                 </p>
               </div>
             </motion.div>

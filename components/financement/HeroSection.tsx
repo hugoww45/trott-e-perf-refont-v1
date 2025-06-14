@@ -5,6 +5,7 @@ import { motion, useTransform, useScroll, AnimatePresence } from "framer-motion"
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import { ChevronDown, CreditCard, ArrowRight, Shield, Clock, Star } from "lucide-react";
+import Link from "next/link";
 
 export default function HeroSection() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -148,17 +149,25 @@ export default function HeroSection() {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.7, delay: 0.5 }}
                 >
-                  <Button
-                    className="px-8 py-6 text-lg bg-primary text-black hover:bg-primary/90 transition-all group"
-                    size="lg"
-                  >
-                    <span>Simuler mon financement</span>
-                    <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
-                  </Button>
+                  <Link href="/en-construction">
+                    <Button
+                      className="px-8 py-6 text-lg bg-primary text-black hover:bg-primary/90 transition-all group"
+                      size="lg"
+                    >
+                      <span>Simuler mon financement</span>
+                      <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+                    </Button>
+                  </Link>
                   <Button
                     className="px-8 py-6 text-lg bg-transparent border border-white/20 text-white hover:bg-white/10 transition-all"
                     variant="outline"
                     size="lg"
+                    onClick={() => {
+                      const solutionsSection = document.getElementById('solutions-section');
+                      if (solutionsSection) {
+                        solutionsSection.scrollIntoView({ behavior: 'smooth' });
+                      }
+                    }}
                   >
                     En savoir plus
                   </Button>
@@ -214,11 +223,6 @@ export default function HeroSection() {
                         <div className="text-white font-bold mt-1">{amount}€</div>
                       </motion.div>
                     ))}
-                  </div>
-
-                  <div className="flex justify-between text-gray-400 text-sm border-t border-white/10 pt-4">
-                    <span>Taux d'intérêt</span>
-                    <span className="text-white font-medium">0%</span>
                   </div>
                 </div>
               </div>

@@ -462,7 +462,7 @@ export function ProductDetails({ handle }: ProductDetailsProps) {
                   <Info className="h-5 w-5 mr-2 flex-shrink-0 mt-0.5" />
                   <div>
                     <p className="font-medium">Questions sur ce produit?</p>
-                    <p>Contactez notre service client au 01 23 45 67 89 ou par email à support@boutique.com</p>
+                    <p>Contactez notre service client au 09 87 28 52 44 ou par email à support@boutique.com</p>
                   </div>
                 </li>
               </ul>

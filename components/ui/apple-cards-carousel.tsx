@@ -117,7 +117,7 @@ export const Carousel = ({ items, initialScroll = 0 }: CarouselProps) => {
             ))}
           </div>
         </div>
-        <div className="flex justify-end gap-2 mr-6 md:mr-10 mt-4">
+        {/* <div className="flex justify-end gap-2 mr-6 md:mr-10 mt-4">
           <button
             className="relative z-40 h-10 w-10 rounded-full bg-gray-100 dark:bg-neutral-800 flex items-center justify-center disabled:opacity-50 transition-opacity"
             onClick={scrollLeft}
@@ -132,7 +132,7 @@ export const Carousel = ({ items, initialScroll = 0 }: CarouselProps) => {
           >
             <IconArrowNarrowRight className="h-6 w-6 text-gray-500 dark:text-gray-300" />
           </button>
-        </div>
+        </div> */}
       </div>
     </CarouselContext.Provider>
   );

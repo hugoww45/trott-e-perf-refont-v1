@@ -1116,10 +1116,22 @@ export default function BoutiquePage() {
               </div>
 
               {loading ? (
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
-                  {[...Array(6)].map((_, i) => (
-                    <div key={i} className="h-64 sm:h-80 bg-neutral-900/50 rounded-lg animate-pulse" />
-                  ))}
+                <div className="flex flex-col items-center justify-center py-16 space-y-6">
+                  <div className="relative">
+                    <div className="w-16 h-16 border-4 border-primary/20 border-t-primary rounded-full animate-spin"></div>
+                    <div className="absolute inset-0 w-16 h-16 border-4 border-transparent border-r-primary/50 rounded-full animate-ping"></div>
+                  </div>
+                  <div className="text-center space-y-2">
+                    <h3 className="text-xl font-semibold text-primary">Chargement de nos produits</h3>
+                    <p className="text-muted-foreground max-w-md">
+                      Nous préparons notre sélection de trottinettes et accessoires pour vous...
+                    </p>
+                  </div>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 w-full mt-8 opacity-30">
+                    {[...Array(6)].map((_, i) => (
+                      <div key={i} className="h-64 sm:h-80 bg-neutral-900/30 rounded-lg animate-pulse" />
+                    ))}
+                  </div>
                 </div>
               ) : error ? (
                 <div className="text-center py-8 bg-red-500/10 rounded-lg border border-red-500/20">
@@ -1156,9 +1168,15 @@ export default function BoutiquePage() {
                   {renderPagination()}
 
                   {loadingMore && (
-                    <div className="flex justify-center items-center mt-8">
-                      <Loader2 className="h-8 w-8 animate-spin text-primary" />
-                      <span className="ml-2">Chargement des produits...</span>
+                    <div className="flex flex-col items-center justify-center mt-12 space-y-4">
+                      <div className="relative">
+                        <div className="w-12 h-12 border-3 border-primary/20 border-t-primary rounded-full animate-spin"></div>
+                        <div className="absolute inset-0 w-12 h-12 border-3 border-transparent border-r-primary/50 rounded-full animate-pulse"></div>
+                      </div>
+                      <div className="text-center">
+                        <p className="text-primary font-medium">Chargement de produits supplémentaires...</p>
+                        <p className="text-sm text-muted-foreground mt-1">Un instant, nous récupérons plus d'articles pour vous</p>
+                      </div>
                     </div>
                   )}
                 </>

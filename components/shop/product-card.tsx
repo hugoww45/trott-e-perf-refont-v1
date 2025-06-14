@@ -47,7 +47,7 @@ export function ProductCard({ product }: ProductCardProps) {
   const isAvailable = product.availableForSale || product.variants.edges.some(edge => edge.node.availableForSale)
 
   // Obtient l'URL de l'image principale ou une image par défaut
-  const imageUrl = product.images?.edges?.[0]?.node?.url || '/images/product-placeholder.jpg'
+  const imageUrl = product.images?.edges?.[0]?.node?.url || '/placeholder-product.png'
   const imageAlt = product.images?.edges?.[0]?.node?.altText || product.title
 
   return (
@@ -84,7 +84,11 @@ export function ProductCard({ product }: ProductCardProps) {
               alt={imageAlt}
               fill
               sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-              className="object-cover transition-transform duration-500 group-hover:scale-105"
+              className={`transition-transform duration-500 group-hover:scale-105 ${
+                imageUrl === '/placeholder-product.png'
+                  ? 'object-contain p-4'
+                  : 'object-cover'
+              }`}
             />
           )}
           <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />

@@ -242,7 +242,7 @@ export default function SolutionsSection() {
   };
 
   return (
-    <section className="py-28 bg-black relative overflow-hidden">
+    <section className="relative py-28 overflow-hidden" id="solutions-section">
       {/* Background elements */}
       <div className="absolute top-0 left-0 w-full h-24 bg-gradient-to-b from-background to-transparent z-10"></div>
       <div className="absolute bottom-0 left-0 w-full h-24 bg-gradient-to-t from-background to-transparent z-10"></div>

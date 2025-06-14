@@ -14,7 +14,7 @@ const milestones = [
     description: "Nessance de l'idée de la création de la marque Trott e Perf."
   },
   {
-    year: "20",
+    year: "2020",
     title: "Concrétisation",
     description: "Développement de notre première gamme de trottinettes haute performance."
   },
@@ -99,7 +99,7 @@ export default function AboutPage() {
                   Mouvement
                 </h1>
                 <p className="text-xl text-gray-400 leading-relaxed">
-                  Depuis 2020, nous repoussons les limites de l'innovation pour créer les solutions de mobilité les plus avancées.
+                  Depuis 2018, nous repoussons les limites de l'innovation pour créer les solutions de mobilité les plus avancées.
                 </p>
               </motion.div>
 

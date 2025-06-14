@@ -78,7 +78,7 @@ const deliveryInfo = [
 
 // Exemples de caractéristiques produit
 const productFeatures = [
-  { name: "Autonomie", value: "Jusqu'à 65km", icon: <RefreshCw className="h-5 w-5" /> },
+  { name: "Stock", value: "Stock en France", icon: <RefreshCw className="h-5 w-5" /> },
   { name: "Garantie", value: "2 ans", icon: <Shield className="h-5 w-5" /> },
   { name: "Paiement", value: "En 3x sans frais", icon: <CreditCard className="h-5 w-5" /> }
 ]
@@ -95,31 +95,6 @@ const financingOptions = [
     description: "Financez votre trottinette sur 10 à 36 mois",
     provider: "Sofinco"
   }
-]
-
-// Exemples d'avis clients
-const reviews = [
-  {
-    id: 1,
-    rating: 5,
-    content: "Je suis vraiment satisfait de cet achat. La trottinette est puissante et l'autonomie correspond à ce qui est annoncé.",
-    author: "Thomas R.",
-    date: "15/04/2023",
-  },
-  {
-    id: 2,
-    rating: 4,
-    content: "Très bonne trottinette, robuste et confortable. Je retire une étoile pour le délai de livraison un peu long.",
-    author: "Sophie M.",
-    date: "28/03/2023",
-  },
-  {
-    id: 3,
-    rating: 5,
-    content: "Le service est impeccable et le produit est à la hauteur de mes attentes. Je recommande vivement !",
-    author: "Lucas D.",
-    date: "10/05/2023",
-  },
 ]
 
 interface ProductPageProps {
@@ -316,9 +291,6 @@ export default function ProductPage({ params }: ProductPageProps) {
   const productImages = product.images?.edges?.map((edge: any) => edge.node) || []
   const activeImage = productImages[activeImageIndex]?.url || '/placeholder-product.png'
 
-  // Calculer la note moyenne
-  const averageRating = reviews.reduce((sum, review) => sum + review.rating, 0) / reviews.length;
-
   // Récupérer les caractéristiques techniques
   const technicalFeatures = extractTechnicalFeatures();
 
@@ -472,15 +444,6 @@ export default function ProductPage({ params }: ProductPageProps) {
 
                 {/* Titre et évaluations */}
                 <h1 className="text-3xl md:text-4xl font-bold tracking-tight">{product.title}</h1>
-
-                <div className="flex items-center gap-4">
-                  <div className="flex items-center gap-1">
-                    {renderStars(averageRating)}
-                  </div>
-                  <span className="text-sm text-muted-foreground">
-                    {reviews.length} avis
-                  </span>
-                </div>
 
                 {/* Prix et vendeur */}
                 <div className="flex flex-col md:flex-row md:items-end justify-between">
@@ -661,7 +624,7 @@ export default function ProductPage({ params }: ProductPageProps) {
                       </button>
                     )}
                   </Tab>
-                  <Tab as={Fragment}>
+                  {/* <Tab as={Fragment}>
                     {({ selected }) => (
                       <button
                         className={`
@@ -676,7 +639,7 @@ export default function ProductPage({ params }: ProductPageProps) {
                         <span className="truncate">Caractéristiques techniques</span>
                       </button>
                     )}
-                  </Tab>
+                  </Tab> */}
                   <Tab as={Fragment}>
                     {({ selected }) => (
                       <button
@@ -861,36 +824,6 @@ export default function ProductPage({ params }: ProductPageProps) {
                   </Tab.Panel>
                 </Tab.Panels>
               </Tab.Group>
-            </div>
-          </div>
-        </section>
-
-        {/* Avis clients */}
-        <section className="bg-muted/30 py-14 mt-16">
-          <div className="container mx-auto px-4">
-            <h2 className="text-2xl font-bold mb-10 text-center">Avis clients</h2>
-
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {reviews.map((review) => (
-                <div key={review.id} className="bg-background p-6 rounded-lg shadow-sm border">
-                  <div className="flex justify-between items-start mb-4">
-                    <div>
-                      <p className="font-medium">{review.author}</p>
-                      <p className="text-sm text-muted-foreground">{review.date}</p>
-                    </div>
-                    <div className="flex">
-                      {renderStars(review.rating)}
-                    </div>
-                  </div>
-                  <p className="text-sm">{review.content}</p>
-                </div>
-              ))}
-            </div>
-
-            <div className="mt-10 text-center">
-              <Button variant="outline">
-                Voir tous les avis
-              </Button>
             </div>
           </div>
         </section>
